@@ -1,6 +1,6 @@
 function [xgrid,ygrid, dose_plane2]=readOPG(rs_dose_file_name)
 
-% Read opg file export from OminPro separated using comma.
+% Read dose and coordiantes form an opg file export from RayStation and OminPro separated using comma.
 
 
 % read all lines into a cell array.
@@ -44,14 +44,21 @@ end
 
 dosePlane=numPlane(:,2:end);
 
-ygrid=numPlane(:,1);
 
-ygrid=ygrid';
-dose_plane2=dosePlane;
+% flip right to left
 
-xgrid=xgrid';
-ygrid=ygrid';
+dose_plane2Temp1=fliplr(dosePlane);
 
+dose_plane2=dose_plane2Temp1;
+
+
+% make the image center at (0,0).
+
+
+[m,n]=size(dose_plane2);
+
+ygrid=(-m/2+1:m/2)';
+xgrid=(-n/2+1:n/2)';
 
 end
 

@@ -70,7 +70,9 @@ handles.reference_epid='No';
 
 % read configration file from N driver. It is a configure file.
 
-epidConfigFile='H:\IMRT\PatientQA\AUTOEPIDRESOURCE\autoEPIDDirConfigBeta.ini';
+epidConfigFile='H:\IMRT\PatientQA\AUTOEPIDRESOURCE\autoEPIDDirConfigBetaRS.ini';
+
+% epidConfigFile='C:\temp\temp51\autoEPIDDirConfigBeta.ini';
 
 %epidConfigFile='C:\AUTOEPIDRESOURCE\autoEPIDDirConfig.ini';
 
@@ -79,11 +81,11 @@ if exist(epidConfigFile,'file')
     
     % logging event
     
-    eventLogger('The dir configure file exists','INFO','AutoEPID')
+    eventLogger('The dir configure file exists','INFO','AutoEPID');
     
 else
     
-    eventLogger('The dir configure file does exists or could not be found.','INFO','AutoEPID')
+    eventLogger('The dir configure file does exists or could not be found.','INFO','AutoEPID');
     
 end 
     

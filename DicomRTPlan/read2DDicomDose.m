@@ -1,5 +1,8 @@
 function [ x, y,dose ] = read2DDicomDose(dicom_file,offset)
-% Read dicom dose and coordinates from RT dicom dose.
+% Read dicom dose and coordinates from  2D RT dicom file exported from
+% RayStaion.
+
+
 
 filename=dicom_file;
 

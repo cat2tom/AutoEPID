@@ -1,11 +1,11 @@
 function [xgrid,ygrid, dose_plane2]=readDicomDose(dicom_dose_file)
 
-% Extract the plane dsoe at given depth. 
+% Extract coordinate and the 2D plane dose at given depth (eg. 5.4cm depth) from a 3D Dicom Dose file 
 
 offset=[0 0 0];
 
 % The EPID plane is located at y=6.92.
-loc=6.92;%cm
+loc=6.69;%cm
 orient='y';
 
 % Judge if the file is 2D or 3D dicom file.
@@ -35,26 +35,41 @@ if is3DDicomFile
     dose_plane2c=interploagedDose2D;
     
     
-    % swap the x and y axis.
+  
+    % flip left right 
     
-    dose_plane2=flipud(dose_plane2c);
+    dose_plane2d=fliplr(dose_plane2c);
     
-    xgrid=xTemp';
-    ygrid=yTemp';
+    % make sure the center of image matrix is at (0,0)
     
+    
+    dose_plane2=dose_plane2d;
+    [m,n]=size(dose_plane2);
+    
+    ygrid=(-m/2+1:m/2)';
+    xgrid=(-n/2+1:n/2)';
+%     
        
 else
     
     
     [ dicom_x, dicom_y,dose2D ] = read2DDicomDose(dicom_dose_file,offset);
     
-    xgrid=dicom_x';
-    
-    ygrid=dicom_y;
-    
-    dose_plane2=dose2D;
-    
 
+    % flip up and down the image data
+    dose2DTemp=dose2D;
+    
+    dose2DTemp1=flipud(dose2DTemp);
+    dose2DTemp2=fliplr(dose2DTemp1);
+    
+    % make the image center at (0,0).
+    dose_plane2=dose2DTemp2;
+    
+    [m,n]=size(dose_plane2);
+    
+    ygrid=(-m/2+1:m/2)';
+    xgrid=(-n/2+1:n/2)';
+     
 end 
 
 
