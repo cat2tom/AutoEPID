@@ -1,0 +1,257 @@
+<deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
+  <configuration build-checksum="4226123289" file="C:\AitangResearch\inHouseSoftWare\AutoEPID\PDFReportLIb\pdfLib\AUTOEPIDPLUS_V2.prj" location="C:\AitangResearch\inHouseSoftWare\AutoEPID\PDFReportLIb\pdfLib" name="AUTOEPIDPLUS_V2" preferred-package-location="C:\AitangResearch\inHouseSoftWare\AutoEPID\CompiledExe\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="Application Compiler">
+    <param.appname>AUTOEPIDPLUS_V2</param.appname>
+    <param.icon />
+    <param.icons />
+    <param.version>5.11</param.version>
+    <param.authnamewatermark />
+    <param.email />
+    <param.company />
+    <param.summary />
+    <param.description />
+    <param.screenshot />
+    <param.guid />
+    <param.net.saved.interface />
+    <param.installpath.string>\AUTOEPIDPLUS_V2\</param.installpath.string>
+    <param.installpath.combo>option.installpath.programfiles</param.installpath.combo>
+    <param.logo />
+    <param.install.notes />
+    <param.intermediate>C:\AitangResearch\inHouseSoftWare\AutoEPID\CompiledExe\for_testing</param.intermediate>
+    <param.files.only>C:\AitangResearch\inHouseSoftWare\AutoEPID\CompiledExe\for_redistribution_file_only</param.files.only>
+    <param.output>C:\AitangResearch\inHouseSoftWare\AutoEPID\CompiledExe\for_redistribution</param.output>
+    <param.enable.clean.build>false</param.enable.clean.build>
+    <param.user.defined.mcr.options />
+    <param.embed.ctf>true</param.embed.ctf>
+    <param.target.type>subtarget.standalone</param.target.type>
+    <param.support.packages />
+    <param.required.mcr.products>
+      <item>35000</item>
+      <item>35010</item>
+      <item>35001</item>
+    </param.required.mcr.products>
+    <param.web.mcr>true</param.web.mcr>
+    <param.package.mcr>true</param.package.mcr>
+    <param.no.mcr>false</param.no.mcr>
+    <param.web.mcr.name>MyAppInstaller_web</param.web.mcr.name>
+    <param.package.mcr.name>MyAppInstaller_mcr</param.package.mcr.name>
+    <param.no.mcr.name>MyAppInstaller_app</param.no.mcr.name>
+    <param.windows.command.prompt>true</param.windows.command.prompt>
+    <param.create.log>false</param.create.log>
+    <param.log.file />
+    <unset>
+      <param.icon />
+      <param.icons />
+      <param.authnamewatermark />
+      <param.email />
+      <param.company />
+      <param.summary />
+      <param.description />
+      <param.screenshot />
+      <param.guid />
+      <param.net.saved.interface />
+      <param.installpath.string />
+      <param.installpath.combo />
+      <param.logo />
+      <param.enable.clean.build />
+      <param.user.defined.mcr.options />
+      <param.embed.ctf />
+      <param.target.type />
+      <param.support.packages />
+      <param.web.mcr />
+      <param.no.mcr />
+      <param.web.mcr.name />
+      <param.package.mcr.name />
+      <param.no.mcr.name />
+      <param.windows.command.prompt />
+      <param.create.log />
+      <param.log.file />
+    </unset>
+    <fileset.main>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\manualmatching\AUTOEPIDPLUS_V2.m</file>
+    </fileset.main>
+    <fileset.resources>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\CalculateSummaryData.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\checkarg.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\convertHisFileIntoImage4.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\dftregistration.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\dicomImageResize3.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\dicomImageTurn90.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\dicomMoveOrigin3.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\EImage.fig</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\EImage.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\elektaHISToDosePinnacle5.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\elektaHISToDoseXio5.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\epidSiemensToDosePinacle.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\epidSiemensToDosePinacle9.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\epidSiemensToDoseXio8.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\epidSiemensToDoseXio9.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\fileType.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\findGangtryandCollimatorAngleFromPinTPSFile.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\findLogFile.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\findTPSFileNameFromGantryAngle2.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\flipDicomUpDown.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\Gamma.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\gamma2dnewandgammaangle.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\gamma2dnewandgammaangleNoReg.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\GammaImage.fig</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\GammaImage.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\GammaNoReg.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\getAllFiles.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\getElektaDoseFactor3.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\getEPIDLogStruct.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\getFieldName.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\getFileList.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\getFramePixelFactor.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\getHISFieldName.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\getHISFileName.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\getHISImageUID.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\getHISPatientName3.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\getHISStationName.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\getHISTreatmentName.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\getPatientInformationFromDicom.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\getSiemensDoseFactor.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\getSiemensSubFrameNumber.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\hisLogToStructure.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\ImageCompare.fig</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\ImageCompare.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\inpaint_nans_bc.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\listEPIDFile.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\pinElektaToGamma2.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\pinElektaToGamma2_manual.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\pinElektaToGamma2_noReg.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\pinElektaToGamma2_noReg_manual.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\pinElektaToGamma2_Vmat.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\pinElektaToGamma2_Vmat_noReg.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\pinElektaToProfile2.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\pinElektaToProfile2_noReg.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\pinElektaToProfile2_Vmat.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\pinElektaToProfile2_Vmat_noReg.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\pinSiemensToGamma2.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\pinSiemensToGamma2b.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\pinSiemensToProfile2.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\profileGammaAnalysisElektaPin2.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\profileGammaAnalysisElektaPin2_manual.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\profileGammaAnalysisElektaPin2_noReg.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\profileGammaAnalysisElektaPin2_noReg_manual.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\profileGammaAnalysisElektaPin2_Vmat.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\profileGammaAnalysisElektaPin2_Vmat_noReg.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\profileGammaAnalysisSiemensPin.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\profileGammaAnalysisSiemensPin2.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\progressbar.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\readHISfile.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\readHISLog.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\readPinnacleDose2.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\readPinnacleDose3.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\readPinnacleDose3b.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\readPinnacleDose4.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\AUTOEPIDIMRT4\readPinnacleDose4b.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\configLib\ConfigLib\IniConfig.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\configLib\ConfigLib\readAutoEPIDConfigFile.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\DicomRTPlan\dicomDoseTOmat.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\DicomRTPlan\getPlaneAt.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\DicomRTPlan\read2DDicomDose.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\DicomRTPlan\readDicomDose.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\EPIDCalibration\deleteEPIDCalFactor.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\EPIDCalibration\epidcal3.fig</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\EPIDCalibration\epidcal3.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\EPIDCalibration\EPIDCalibration_Callback_Elekta.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\EPIDCalibration\EPIDCalibration_Callback_Siemens.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\EPIDCalibration\writeEPIDCalFactor.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\EPIDCalibration\writeEPIDCalFactorFFF.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\EPIDOSE_CF\elektaHISToDosePinnacle5_CF.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\EPIDOSE_CF\elektaHISToDosePinnacle5_CFM.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\EPIDOSE_CF\elektaHISToDoseXio5_CF.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\EPIDOSE_CF\EPIDDOSE_CF.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\external\isodd\iseven.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\external\isodd\isodd.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\ImageFeature\getGLCMFromEPID.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\ImageFeature\getGLCMFromEPIDTPS.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\ImageFeature\getGLCMFromTPS.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\ImageFeature\GLCM_Features4.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\logging4matlab\eventLogger.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\manualmatching\AUTOEPIDPLUS_V2.fig</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\manualmatching\AUTOIMRT13_Callback3_CF_PDF.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\manualmatching\AUTOIMRT13_Callback3_CF_PDF_noReg.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\manualmatching\comments.fig</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\manualmatching\comments.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\manualmatching\findMachineFromDir.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\manualmatching\getEPIDFileExtCell.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\manualmatching\getPSFFromLog.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\manualmatching\getTPSFileExtCell.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\manualmatching\Mannual_Callback3_CF_PDF.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\manualmatching\Mannual_Callback3_CF_PDF_noReg.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\manualmatching\ManualMatching3.fig</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\manualmatching\ManualMatching3.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\manualmatching\readSiemensEPID.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\manualmatching\struc2xls.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\manualmatching\structfind.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\opglib\readOPG.m</file>
+      <file>${PROJECT_ROOT}\addBeamGammaProfile.m</file>
+      <file>${PROJECT_ROOT}\addGammaSummaryTable.m</file>
+      <file>${PROJECT_ROOT}\addPatientAndPhysicist.m</file>
+      <file>${PROJECT_ROOT}\generateAutoEPIDPDFReport.m</file>
+      <file>${PROJECT_ROOT}\generateHeadFooterAutoEPID.m</file>
+      <file>${PROJECT_ROOT}\generatePDFReport.m</file>
+      <file>${PROJECT_ROOT}\loadItextJarFiles.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\Utility\getFullUserName.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\Utility\speakFinished.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\Utility\str2Cell.m</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\Utility\writeCalFactorTxt.m</file>
+      <file>N:\PROJECTS\IMRT implementation\EPID Dosimetry Commissioning\AutoEPIDJarFiles\itext-pdfa-5.5.7.jar</file>
+      <file>N:\PROJECTS\IMRT implementation\EPID Dosimetry Commissioning\AutoEPIDJarFiles\itext-xtra-5.5.7.jar</file>
+      <file>N:\PROJECTS\IMRT implementation\EPID Dosimetry Commissioning\AutoEPIDJarFiles\itextpdf-5.5.7.jar</file>
+      <file>N:\PROJECTS\IMRT implementation\EPID Dosimetry Commissioning\AutoEPIDJarFiles\sqlite-jdbc-3.8.11.2.jar</file>
+    </fileset.resources>
+    <fileset.package />
+    <build-deliverables>
+      <file location="C:\AitangResearch\inHouseSoftWare\AutoEPID\CompiledExe\for_testing" name="splash.png" optional="false">C:\AitangResearch\inHouseSoftWare\AutoEPID\CompiledExe\for_testing\splash.png</file>
+      <file location="C:\AitangResearch\inHouseSoftWare\AutoEPID\CompiledExe\for_testing" name="AUTOEPIDPLUS_V2.exe" optional="false">C:\AitangResearch\inHouseSoftWare\AutoEPID\CompiledExe\for_testing\AUTOEPIDPLUS_V2.exe</file>
+      <file location="C:\AitangResearch\inHouseSoftWare\AutoEPID\CompiledExe\for_testing" name="readme.txt" optional="true">C:\AitangResearch\inHouseSoftWare\AutoEPID\CompiledExe\for_testing\readme.txt</file>
+    </build-deliverables>
+    <workflow />
+    <matlab>
+      <root>C:\Program Files\MATLAB\MATLAB Production Server\R2015a</root>
+      <toolboxes>
+        <toolbox name="matlabhdlcoder" />
+        <toolbox name="fixedpoint" />
+        <toolbox name="embeddedcoder" />
+        <toolbox name="matlabcoder" />
+      </toolboxes>
+      <toolbox>
+        <matlabhdlcoder>
+          <enabled>true</enabled>
+        </matlabhdlcoder>
+      </toolbox>
+      <toolbox>
+        <fixedpoint>
+          <enabled>true</enabled>
+        </fixedpoint>
+      </toolbox>
+      <toolbox>
+        <embeddedcoder>
+          <enabled>true</enabled>
+        </embeddedcoder>
+      </toolbox>
+      <toolbox>
+        <matlabcoder>
+          <enabled>true</enabled>
+        </matlabcoder>
+      </toolbox>
+    </matlab>
+    <platform>
+      <unix>false</unix>
+      <mac>false</mac>
+      <windows>true</windows>
+      <win2k>false</win2k>
+      <winxp>false</winxp>
+      <vista>false</vista>
+      <linux>false</linux>
+      <solaris>false</solaris>
+      <osver>6.2</osver>
+      <os32>false</os32>
+      <os64>true</os64>
+      <arch>win64</arch>
+      <matlab>true</matlab>
+    </platform>
+  </configuration>
+</deployment-project>
