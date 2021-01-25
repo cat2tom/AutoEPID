@@ -1,5 +1,5 @@
 
-function  dicomImageResize3(dicom_file_name)
+function  dicomImageResize3ScaleFactor(dicom_file_name, machine_name)
 
 % This function is to rescale the size of dicom image as did in IMRT
 % OmniPro.
@@ -16,16 +16,14 @@ data=dicomread(dicom_file_name);
 company=info1.Manufacturer;
 
 scale_factor=1;
-if strcmp(company,'ELEKTA')
-    
-    scale_factor=0.625;
-end 
 
-if strcmp(company,'Siemens Oncology Care Systems')
+if strcmp(machine_name,'M7Versa')
     
-    sid=info1.RTImageSID;
+    scale_factor=0.6201; % 0.253mm/pixel
     
-    scale_factor=1000.0/sid;
+else
+    
+     scale_factor=0.6127; % 0.250 mm/pixel
     
 end 
 

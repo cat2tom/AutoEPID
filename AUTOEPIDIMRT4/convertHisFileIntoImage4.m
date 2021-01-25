@@ -23,11 +23,19 @@ function [Ex,Ey,im,beam_name2] = convertHisFileIntoImage4(fileLocation,PSF,pixel
 % output: Cx,Cy is the spatial coordinates (cm) of images which is required for 
 %         Gamma dose calculation.
 
-% spatical resolution of image for Elekta was fixed in MM.
+% spatical resolution of image for Elekta was fixed in MM. This value coming from dicom info exported form iview.
 
 res_x=0.255;
 
 res_y=0.255;
+
+% 25/01/2020.  Change the res_x and res_y to 1 and leave it to rescale in function PinElektaToProfile2_Vmat_noReg
+
+%res_x=1;
+
+%res_y=1;
+
+
 
 
 % open HIS file for readings.
