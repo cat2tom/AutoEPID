@@ -13,19 +13,22 @@ data=dicomread(dicom_file_name);
 % scale factor
 % 
 
-company=info1.Manufacturer;
+
 
 scale_factor=1;
 
-if strcmp(machine_name,'M7Versa')
+
+if strcmp(machine_name,' M7Versa')
     
-    scale_factor=0.6201; % 0.253mm/pixel
+   scale_factor=0.6201; % 0.253mm/pixel
     
 else
     
      scale_factor=0.6127; % 0.250 mm/pixel
     
 end 
+
+scale_factor
 
 tmp2=info1.ImagePlanePixelSpacing;
 

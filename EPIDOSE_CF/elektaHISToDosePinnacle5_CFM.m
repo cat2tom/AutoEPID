@@ -123,7 +123,7 @@ dicomwrite(DoseImage2,epid_dose_image_name,header,'CreateMode','copy');
 
 % rescaled the dose image
 
- machine_name=his_station_name
+ machine_name=his_station_name; 
 
  dicomImageResize3ScaleFactor(epid_dose_image_name, machine_name);
  
