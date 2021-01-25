@@ -41,7 +41,7 @@ else
     % Parse the header for data (only the dimensions currently)
     Dim = header(9:10);
 
-    Cx=
+    
     % Read and reshape the data.
     im = uint16(fread(fid,Dim(1)*Dim(2),'uint16'));
     im = reshape(im,Dim)';
