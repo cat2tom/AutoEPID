@@ -6,6 +6,7 @@ function eventLogger(varargin)
 % The following variables are required for proper execution: 
 %   str: event to be logged (without final newline)
 %   varargin{2} (optional): varargin{2} of event (INFO, WARN, ERROR, etc) 
+%   varargin{3} (optinal): the progam's name or app name.
 %   guihandle (optional): handle to uitable handle to display events
 %
 % Author: Mark Geurts, mark.w.geurts@gmail.com and modified by Aitang Xing
@@ -27,6 +28,26 @@ function eventLogger(varargin)
 % Set GUI handle to be persistent between calls
 
 % set log file name and path to tempdir by default.
+
+% usage: 
+
+% One arg: 
+
+% eventLogger('the network connection is established')
+
+%Two args
+
+% eventLogger('WARN', 'This is a warning')
+
+% Three args: 
+
+% eventLogger('INFO','THIS IS for a program called AutoEPID', 'AutoEPID')
+
+% For all above situations, eventLogger will write to a consoel and a temporary file to 
+% system tempdir. If the third option is provided, it make a subdolder named as app under tempdir and then 
+% write the log file to this folder. This feature is very convenient for a project. As you can use it anywhere in your 
+% program or project. 
+
 
 
 
