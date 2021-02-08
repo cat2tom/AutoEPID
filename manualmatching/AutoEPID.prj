@@ -73,6 +73,7 @@
     </fileset.main>
     <fileset.resources>
       <file>C:\AitangResearch\inHouseSoftWare\AutoEPID</file>
+      <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\itextJarFiles\itext-pdfa-5.5.7.jar</file>
       <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\itextJarFiles\itext-xtra-5.5.7.jar</file>
       <file>C:\AitangResearch\inHouseSoftWare\AutoEPID\itextJarFiles\itextpdf-5.5.7.jar</file>
     </fileset.resources>
