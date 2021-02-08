@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="1724693381" file="C:\AitangResearch\inHouseSoftWare\AutoEPID\manualmatching\AutoEPID.prj" location="C:\AitangResearch\inHouseSoftWare\AutoEPID\manualmatching" name="AutoEPID" preferred-package-location="C:\AitangResearch\inHouseSoftWare\AutoEPID\manualmatching\AutoEPID\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration build-checksum="920371110" file="C:\AitangResearch\inHouseSoftWare\AutoEPID\manualmatching\AutoEPID.prj" location="C:\AitangResearch\inHouseSoftWare\AutoEPID\manualmatching" name="AutoEPID" preferred-package-location="C:\AitangResearch\inHouseSoftWare\AutoEPID\manualmatching\AutoEPID\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>AutoEPID</param.appname>
     <param.icon />
     <param.icons />
