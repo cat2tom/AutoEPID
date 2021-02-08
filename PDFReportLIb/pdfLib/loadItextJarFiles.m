@@ -8,8 +8,10 @@
 % 
 % javaaddpath('C:/autoMRISimQAResource/javaJarFiles/itext-xtra-5.5.7.jar')
 
-jar_dir='N:\PROJECTS\IMRT implementation\EPID Dosimetry Commissioning\AutoEPIDJarFiles';
+% jar_dir='N:\PROJECTS\IMRT implementation\EPID Dosimetry Commissioning\AutoEPIDJarFiles';
 
+
+jar_dir='C:\AitangResearch\inHouseSoftWare\AutoEPID\itextJarFiles';
 
 javaaddpath(fullfile(jar_dir,'itextpdf-5.5.7.jar'));
 
