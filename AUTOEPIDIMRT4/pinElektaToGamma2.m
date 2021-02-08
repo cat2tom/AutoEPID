@@ -22,6 +22,14 @@ function [gamma_result_file_name,numpass3b,avg3b,numpass2b,avg2b,beam_name2]=pin
       
         epiddose=imrotate(epiddose,-coll_angle,'nearest','loose'); 
         
+          
+         if coll_angle==90
+
+           epiddose=fliplr(epiddose);
+           
+         end 
+        
+        
              
 %        epiddose=imrotate(epiddose,-coll_angle,'bicubic','crop'); 
 

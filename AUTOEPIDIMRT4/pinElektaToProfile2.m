@@ -11,9 +11,17 @@ function profile_image_file_name=pinElektaToProfile2(pin_tps_file, epid_his_file
  
  if coll_angle~=0
  
-%       epiddose=imrotate(epiddose,-coll_angle,'bicubic','crop');
-  
+
         epiddose=imrotate(epiddose,-coll_angle,'nearest','loose');
+        
+        
+         if coll_angle==90
+
+           epiddose=fliplr(epiddose);
+           
+         end 
+        
+     
  end 
  
  %%  change to loose
@@ -59,7 +67,7 @@ function profile_image_file_name=pinElektaToProfile2(pin_tps_file, epid_his_file
    
  end % for choice for loose.
  
- %%
+%%
  
  
  
@@ -75,6 +83,8 @@ function profile_image_file_name=pinElektaToProfile2(pin_tps_file, epid_his_file
   Ex=Ex+(tpscol(1)-epidcol(1))*0.1;
   
   Ey=Ey+(tpsrow(1)-epidrow(1))*0.1;
+  
+
   
   epid_inter=interp2(Ex,Ey,epiddose,xgrid,ygrid','linear');
   
@@ -111,6 +121,23 @@ else
     image2=shiftedepid;
     
 end     
+
+%%
+%  [tpsrow2, tpscol2]=find(image1==max(image1(:)));
+%   
+%  [epidrow2,epidcol2]=find(image2==max(image2(:)));
+% 
+%  shift=[-(tpsrow2(1)-epidrow2(1))/2,(tpscol2(1)-epidcol2(1))*2]
+% %  shift=[0,160];
+% %  
+% %  shift=[8.5,14];
+% 
+% image2_shifted=imageTranslate(image2,shift);
+% 
+% image2=image2_shifted;
+
+
+%%
 
   
  hh=ImageCompare(image1,'TPS',image2,'EPID',xgrid',ygrid');

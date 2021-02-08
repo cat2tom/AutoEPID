@@ -20,7 +20,16 @@ function [gamma_result_file_name,numpass3b,avg3b,numpass2b,avg2b,beam_name2]=pin
       % comment out the built-in function. change to loose to make sure the
       % image not cut. 
       
+     
         epiddose=imrotate(epiddose,-coll_angle,'nearest','loose'); 
+        
+         
+         if coll_angle==90
+
+           epiddose=fliplr(epiddose);
+           
+         end 
+        
         
              
 %        epiddose=imrotate(epiddose,-coll_angle,'bicubic','crop'); 
@@ -94,7 +103,7 @@ epiddose=double(epiddose);
   epid_inter2=interp2(Ex,Ey,epiddose,xgrid,ygrid');
   
     
-  [tpsrow tpscol]=find(tpsdose==max(tpsdose(:)));
+  [tpsrow,tpscol]=find(tpsdose==max(tpsdose(:)));
   
   [epidrow,epidcol]=find(epid_inter2==max(epid_inter2(:)));
   
@@ -112,7 +121,7 @@ epiddose=double(epiddose);
   end 
   
  
-  [output shiftedepid] = dftregistration(fft2(tpsdose),fft2(epid_inter),100);
+  [output,shiftedepid] = dftregistration(fft2(tpsdose),fft2(epid_inter),100);
   
   
   %disp('This is the shifted rows and cols number:')
@@ -139,24 +148,50 @@ epiddose=double(epiddose);
   
 
    shiftedepid=abs(ifft2(shiftedepid));
+   
+   
    image1=tpsdose;
    image2=shiftedepid;
+
+   
    
    % adding for gyne situation.
    
  tmp_nan=isnan(shiftedepid);
  if any(tmp_nan)
     
-    shiftedepid=inpaint_nans_bc(shiftedepid,4);
+      shiftedepid=inpaint_nans_bc(shiftedepid,4);
     
-    %image2=epid_inter;
-%     image2=shiftedepid;
+%     image2=epid_inter;
+%       image2=shiftedepid;
+
+     
       
   else
     image2=shiftedepid;
     
  end     
    
+
+ %%
+%  [tpsrow2, tpscol2]=find(image1==max(image1(:)));
+%   
+%  [epidrow2,epidcol2]=find(image2==max(image2(:)));
+% 
+% 
+%  shift=[-(tpsrow2(1)-epidrow2(1))/2,(tpscol2(1)-epidcol2(1))*2];
+% %  shift=[0,160];
+% %  
+% %  shift=[8.5,14];
+% 
+% image2_shifted=imageTranslate(image2,shift);
+% 
+% image2=image2_shifted;
+
+%%
+ 
+ 
+ 
    
 %    image1=image1*0.95;
     xp=xgrid;
