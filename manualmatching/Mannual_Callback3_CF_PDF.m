@@ -378,7 +378,7 @@ if strcmp(file_type,'M1')||strcmp(file_type,'M2')||strcmp(file_type,'M5')||strcm
     
       % choose the directory    
       
-      h_driver_template_dir='H:\IMRT\PatientQA\Ekekta dicom template\Eleckta_template.dcm';
+      h_driver_template_dir='V:\CTC-LiverpoolOncology-Physics\IMRT\PatientQA\Ekekta dicom template\Eleckta_template.dcm';
 
       copyfile(h_driver_template_dir,dir_path);
      
