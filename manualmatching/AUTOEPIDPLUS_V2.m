@@ -70,7 +70,9 @@ handles.reference_epid='No';
 
 % read configration file from N driver. It is a configure file.
 
-epidConfigFile='H:\IMRT\PatientQA\AUTOEPIDRESOURCE\autoEPIDDirConfigBetaRS.ini';
+%epidConfigFile='H:\IMRT\PatientQA\AUTOEPIDRESOURCE\autoEPIDDirConfigBetaRS.ini';
+
+epidConfigFile='V:\CTC-LiverpoolOncology-Physics\IMRT\PatientQA\AUTOEPIDRESOURCE\autoEPIDDirConfig.ini';
 
 % epidConfigFile='C:\temp\temp51\autoEPIDDirConfigBeta.ini';
 
@@ -303,8 +305,8 @@ set(handles.physicist,'String',physicist_list);
 
 eventLogger('Just before loading calbiration file.','INFO','AutoEPID');
 
-load('H:\IMRT\PatientQA\AUTOEPIDRESOURCE\EPID_CALIBRATION.mat');
-
+%load('H:\IMRT\PatientQA\AUTOEPIDRESOURCE\EPID_CALIBRATION.mat');
+load('V:\CTC-LiverpoolOncology-Physics\IMRT\PatientQA\AUTOEPIDRESOURCE\EPID_CALIBRATION.mat');
 eventLogger('The calibration file was sucesfully loaded.','INFO','AutoEPID');
 
 
