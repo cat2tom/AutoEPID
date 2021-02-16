@@ -219,10 +219,12 @@ if strcmp(file_type,'HIS')
            
       % copy template to patient directory  
       
-      h_driver_template_dir='H:\IMRT\PatientQA\Ekekta dicom template\Eleckta_template.dcm';
-
-      copyfile(h_driver_template_dir,dir_path);
+          
       
+      copyfile(handles.dicom_template_dir,dir_path);
+
+%    
+%       
     
       
       %% 1. User choose yes for reference field.

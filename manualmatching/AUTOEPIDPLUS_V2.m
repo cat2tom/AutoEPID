@@ -68,15 +68,22 @@ handles.output = hObject;
 
 handles.reference_epid='No';
 
+% set the window title 
+
+
+
+
 % read configration file from N driver. It is a configure file.
 
 %epidConfigFile='H:\IMRT\PatientQA\AUTOEPIDRESOURCE\autoEPIDDirConfigBetaRS.ini';
 
-epidConfigFile='V:\CTC-LiverpoolOncology-Physics\IMRT\PatientQA\AUTOEPIDRESOURCE\autoEPIDDirConfig.ini';
+%epidConfigFile='V:\CTC-LiverpoolOncology-Physics\IMRT\PatientQA\AUTOEPIDRESOURCE\autoEPIDDirConfig.ini';
 
 % epidConfigFile='C:\temp\temp51\autoEPIDDirConfigBeta.ini';
 
-%epidConfigFile='C:\AUTOEPIDRESOURCE\autoEPIDDirConfig.ini';
+epidConfigFile='C:\autoEPIDConfigfile\autoEPIDDirConfig.ini';
+
+handles.config_dir='C:\autoEPIDConfigfile\';
 
 
 if exist(epidConfigFile,'file')
@@ -92,12 +99,12 @@ else
 end 
     
 
-[deleteNetWork,mapNetWork,patientInputDir,dicomTemplateDir,imrtOutputDir,vmatOutputDir,epidCalFile,version_info] = readAutoEPIDConfigFile(epidConfigFile );
+[deleteNetWork,mapNetWork,patientInputDir,dicomTemplateDir,imrtOutputDir,vmatOutputDir,epidCalFile,version_info,escan_dir] = readAutoEPIDConfigFile(epidConfigFile );
 
-% only for ctrix version and use configration file to set up.
+% set program vesion 
 
-% system('net use u: /delete');
-% system('net use u: \\10.33.72.198\udrive /user:apps physics99 /persistent:no');
+set(handles.auto_epid_main,'name',version_info);
+
 
 eventLogger('Started to map U driver','INFO','AutoEPID');
 
@@ -120,18 +127,18 @@ end
 
 
 
-% handles.patient_list_dir='U:\Patient_QA'; 
-% handles.dicom_template_dir='H:\IMRT\PatientQA\Ekekta dicom template'; 
-
 handles.patient_list_dir=patientInputDir; 
 handles.dicom_template_dir=dicomTemplateDir; 
 
+setappdata(0,'dicom_template',handles.dicom_template_dir);
 
-% handles.output_dir='H:\IMRT\PatientQA\2017\IMRT'; 
-% handles.output_dir_vmat='H:\IMRT\PatientQA\2017\VMAT'; 
 
 handles.output_dir=imrtOutputDir; 
 handles.output_dir_vmat=vmatOutputDir; 
+
+handles.escan_dir=escan_dir;
+
+setappdata(0,'escan_dir',handles.escan_dir);
 
 
 guidata(hObject, handles); 
@@ -140,18 +147,13 @@ patient_list_dir=handles.patient_list_dir;
 output_dir=handles.output_dir;
 dicom_template_dir=handles.dicom_template_dir;
 
-% save('H:\IMRT\PatientQA\AUTOEPIDRESOURCE\resource.mat', 'patient_list_dir','-append');
-% save('H:\IMRT\PatientQA\AUTOEPIDRESOURCE\resource.mat', 'output_dir','-append');
-% save('H:\IMRT\PatientQA\AUTOEPIDRESOURCE\resource.mat', 'dicom_template_dir','-append');
    
 save(epidCalFile, 'patient_list_dir','-append');
 save(epidCalFile, 'output_dir','-append');
 save(epidCalFile, 'dicom_template_dir','-append');
-  
 
 % set default patient director and dicom template directory
    
-% load('H:\IMRT\PatientQA\AUTOEPIDRESOURCE\resource.mat');
 
 
 eventLogger('Just before loading resource file','INFO','AutoEPID');
@@ -160,36 +162,11 @@ load(epidCalFile);
 
 
 eventLogger('Resource file was loaded suscefully','INFO','AutoEPID');
-% if patient_list_dir==0
-%     
-%     handles.patient_list_dir='C:\'; 
-%    
-%    patient_list_dir=handles.patient_list_dir;
-%    save('H:\IMRT\PatientQA\AUTOEPIDRESOURCE\resource.mat', 'patient_list_dir','-append');
-%        
-% end
-% if dicom_template_dir==0
-%     
-%    handles.dicom_template_dir='C:\'; 
-%    
-%    dicom_template_dir=handles.dicom_template_dir;
-%    save('H:\IMRT\PatientQA\AUTOEPIDRESOURCE\resource.mat', 'dicom_template_dir','-append');
-%     
-% end
-% 
-% if output_dir==0
-%     
-%    handles.dicom_template_dir='C:\'; 
-%    
-%    output_dir=handles.output_dir;
-%    save('H:\IMRT\PatientQA\AUTOEPIDRESOURCE\resource.mat', 'dicom_template_dir','-append');
-%     
-% end
 
 
 
 % reload the patient
-% load('H:\IMRT\PatientQA\AUTOEPIDRESOURCE\resource.mat');
+
 
 handles.patient_list_dir=patient_list_dir;
 handles.dicom_template_dir=dicom_template_dir;
@@ -207,9 +184,12 @@ set(handles.all_output_dir,'string',output_dir);
 
 setappdata(0,'patient_list_dir',handles.patient_list_dir);
 
-setappdata(0,'output_dir',output_dir);
+all_output_dir=get(handles.all_output_dir);
+setappdata(0,'output_dir',all_output_dir);
 
 setappdata(0,'dicom_template_dir',handles.dicom_template_dir);
+
+setappdata(0,'cal_file',epidCalFile);
 
 
 disp(handles.all_input_dir);
@@ -305,8 +285,11 @@ set(handles.physicist,'String',physicist_list);
 
 eventLogger('Just before loading calbiration file.','INFO','AutoEPID');
 
-%load('H:\IMRT\PatientQA\AUTOEPIDRESOURCE\EPID_CALIBRATION.mat');
-load('V:\CTC-LiverpoolOncology-Physics\IMRT\PatientQA\AUTOEPIDRESOURCE\EPID_CALIBRATION.mat');
+
+
+load(epidCalFile);
+
+
 eventLogger('The calibration file was sucesfully loaded.','INFO','AutoEPID');
 
 
@@ -1776,11 +1759,9 @@ function treatment_type_SelectionChangeFcn(hObject, eventdata, handles)
 
           vmat_output_dir=get(handles.all_output_dir,'string');
           setappdata(0,'output_dir',vmat_output_dir);
-          
-%           handles.output_dir=get(handles.all_output_dir,'string');
-%  
-%           guidata(hObject,handles);
-%         
+       
+          guidata(hObject,handles);
+        
  end 
  
  
@@ -2093,7 +2074,8 @@ function pushbutton5_Callback(hObject, eventdata, handles)
  % copy to escan 
  
  if isfield(handles,'pdf_report_file_name')
- copyfile(handles.pdf_report_file_name,'S:\escan\Med Phys');
+     
+ copyfile(handles.pdf_report_file_name,handles.escan_dir);
  
  end 
  
@@ -2110,17 +2092,6 @@ function pushbutton5_Callback(hObject, eventdata, handles)
  end 
  
  
-
-% if strcmp(handles.treatment_type,'VMAT')
-%         
-%  ManualMatching2
-%  
-% end 
-% 
-% if strcmp(handles.treatment_type,'IMRT')
-%  AUTOIMRT13_Callback3_CF(handles)
-%  
-% end 
 
 
 
@@ -2290,7 +2261,7 @@ function pushbutton10_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-tmp3_dir=uigetdir('H:\IMRT\PatientQA\2015\','Please select a output folder');
+tmp3_dir=uigetdir('.','Please select a output folder');
 
 set(handles.all_output_dir,'string',tmp3_dir);
 
@@ -2626,8 +2597,9 @@ else
      set(handles.tps_folder,'string','TPS subfolder does not exist.Please check.');
         
 end     
-    
-epid_folder=fullfile(handles.patient_name,'EPID');
+
+handles.patient_name
+epid_folder=fullfile(handles.patient_name,'EPID')
 
 if exist(epid_folder,'dir')
     

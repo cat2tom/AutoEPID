@@ -5,7 +5,8 @@ function [ cal_file_name ] = writeEPIDCalFactor(output_dir,machine,cal_struct)
 %              Output: cal_file_name--the name of calibration.
 %              
 
-tmp1=fullfile(output_dir,'EPID_CALIBRATION.mat');
+%tmp1=fullfile(output_dir,'EPID_CALIBRATION.mat');
+tmp1=output_dir; % cal file with full path.
 
 final_date=cal_struct.date;
 if exist(tmp1,'file')

@@ -82,9 +82,11 @@ vmat_output_dir=getappdata(0,'vmat_output_dir');
 
 handles.vmat_output_dir=vmat_output_dir;
 
+
+handles.escan_dir=getappdata(0,'escan_dir');
+
 guidata(hObject,handles);
 
-% set(handles.patient_folder,'String','C:\aitangResearch\AutoEPID_developement\manualmatching');
 
 
 % set default TPS folder
@@ -168,7 +170,7 @@ else
   
     
 end 
-% set(handles.epid_default_dir,'String','C:\aitangResearch\AutoEPID_developement\manualmatching\epid');
+
 
 
 % grab the application data and set them up as hanldes.
@@ -198,20 +200,8 @@ handles.output = hObject;
 % get version info from appdata for pdf report
 
 
-
 handles.version_info=getappdata(0,'version_info');
 
-
-% get main_figure's handles
-
- %main_figure_handle=findobj('Tag','default_cf')
-% 
-% main_figure_handles=guidata(main_figure_handle)
-
-% handles.main_window_handle=main_figure_handle;
-
-% get CF from main windows.
-%cf_default=get(main_figure_handle,'String')
 
 
 
@@ -530,7 +520,7 @@ registrationType=getappdata(0,'registrationType');
    % copy the pdf report to escan
    
    if isfield(handles,'pdf_report_file_name')
-       copyfile(handles.pdf_report_file_name,'S:\escan\Med Phys');
+       copyfile(handles.pdf_report_file_name,handles.escan_dir);
        
    end
 
@@ -584,7 +574,7 @@ registrationType=getappdata(0,'registrationType');
 
 if isfield(handles,'pdf_report_file_name')
     
- copyfile(handles.pdf_report_file_name,'S:\escan\Med Phys');
+ copyfile(handles.pdf_report_file_name,handles.escan_dir);
  
 end 
 
@@ -606,32 +596,7 @@ end % end noReg if
 
 
 
-% handles=Mannual_Callback3_CF_PDF(hObject,handles);
 
-
-% %% 
-% isfield(handles,'pdf_report_file_name');
-% 
-% 
-% 
-% generateAutoEPIDPDFReport(handles);
-% 
-% % copy the pdf report to escan
-% 
-% if isfield(handles,'pdf_report_file_name')
-%  copyfile(handles.pdf_report_file_name,'S:\escan\Med Phys');
-%  
-% end 
-% 
-% % if pdf report file exists, then open it.
-% 
-% pdf_report_file=handles.pdf_report_file_name;
-% 
-% if exist(pdf_report_file,'file')
-%     
-%     open(pdf_report_file);
-%     
-% end 
 
 
 % --- Executes on selection change in matched_tps_list.

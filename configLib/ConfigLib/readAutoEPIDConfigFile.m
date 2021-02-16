@@ -1,4 +1,4 @@
-function [deleteNetWork,mapNetWork,patientInputDir,dicomTemplateDir,imrtOutputDir,vmatOutputDir,epidCalFile,version_info] = readAutoEPIDConfigFile(conFigFileName )
+function [deleteNetWork,mapNetWork,patientInputDir,dicomTemplateDir,imrtOutputDir,vmatOutputDir,epidCalFile,version_info,escan_dir] = readAutoEPIDConfigFile(conFigFileName )
 %{
 
 Read configuration from configure file for the program. 
@@ -72,6 +72,14 @@ epidCalFile=values{1};
 values= ini.GetValues(sections{7}, keys);
 
 version_info=values{1};
+
+% escan
+[keys, ~] = ini.GetKeys(sections{8});
+values= ini.GetValues(sections{8}, keys);
+
+escan_dir=values{1};
+
+
 
 end
 

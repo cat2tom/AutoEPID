@@ -59,17 +59,15 @@ handles.output = hObject;
 
 % set the physicsit list at start.
 
-physicist={' ','AW','RS','RG','JB','GG','PV','SA','AX','MJ','SD','JH','DT','TY','SR','VN','TE','AG','BB'};
+physicist={' ','AW','RS','RG','JB','GG','PV','SA','AX','MJ','SD','JH','DT','TY','SR','VN','TE','AG','BB','AE'};
 
 set(handles.physicist_list,'String',physicist);
 
 % set the default output dir
 
-% set(handles.output_dir,'String','H:\IMRT\PatientQA\AUTOEPIDRESOURCE');
 
-set(handles.output_dir,'String','H:\IMRT\PatientQA\AUTOEPIDRESOURCE');
-
-
+cal_file=getappdata(0,'cal_file');
+set(handles.output_dir,'String',cal_file);
 
 % set the default dose
 
@@ -213,7 +211,6 @@ dose=str2double(get(handles.dose,'String'));
 epid_image_file=handles.epid_image_file;
 
 output_dir=get(handles.output_dir,'string');
-
 % get message box pop up if no physicist selectecd.
 
 if ~isfield(handles,'physicist')
@@ -738,12 +735,16 @@ function pushbutton6_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton6 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-[file,path]=uigetfile('H:\IMRT\PatientQA\AUTOEPIDRESOURCE','Please select the file you want to inspect');
+
+
+%[file,path]=uigetfile('H:\IMRT\PatientQA\AUTOEPIDRESOURCE','Please select the file you want to inspect');
 
 % [file,path]=uigetfile('C:\aitangResearch\AutoEPID_developement\EPIDCalibration','Please select the file you want to inspect');
 
 
-cal_file=fullfile(path,file);
+%cal_file=fullfile(path,file);
+
+cal_file=getappdata(0,'cal_file');
 
 handles.selected_cal_file=cal_file;
 

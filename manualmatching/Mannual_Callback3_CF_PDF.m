@@ -31,10 +31,13 @@ tol=3; % dose tolerance
 
 % h_driver_dir=handles.output_dir;
 
-h_driver_dir=getappdata(0,'output_dir')
+h_driver_dir=getappdata(0,'output_dir');
 
-class(h_driver_dir)
+% set dicom template 
 
+handles.dicom_template=getappdata(0,'dicom_template');
+
+guidata(hObject,handles);
 
 % Physicist
   
@@ -55,6 +58,7 @@ if ~(exist(handles.patient_list_dir,'dir')==7)
     return;
     
 end 
+
 
 if ~(exist(h_driver_dir,'dir')==7)
     
@@ -370,15 +374,13 @@ if strcmp(file_type,'M1')||strcmp(file_type,'M2')||strcmp(file_type,'M5')||strcm
     ||strcmp(file_type,'M7')    
     
       % copy template file from H driver to v patient directory. change the
-      % following variable if the location is changed.
-      
-       % decide to get new pixel_to_dose factor or use default one
-      
-%       ref_field=questdlg('Did you take an image for a 10x10 field at same SID as IMRT field images?','Choose Yes or No','Yes','No','Yes');
+     
     
       % choose the directory    
       
-      h_driver_template_dir='V:\CTC-LiverpoolOncology-Physics\IMRT\PatientQA\Ekekta dicom template\Eleckta_template.dcm';
+      h_driver_template_dir=handles.dicom_template;
+      
+   
 
       copyfile(h_driver_template_dir,dir_path);
      
