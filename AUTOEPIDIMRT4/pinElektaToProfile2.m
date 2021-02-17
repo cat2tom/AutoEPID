@@ -122,6 +122,19 @@ else
     
 end     
 
+%% optimize the EPID shift.
+ 
+%  ref_image=image1;
+%  tar_image=image2;
+%  
+%  
+%  [shifted_tar_image,opt_x_shift,opt_y_shift] = optimizeImageRegistration(ref_image,tar_image )
+%  
+%  
+%  image2=shifted_tar_image;
+%  
+
+
 %%
 %  [tpsrow2, tpscol2]=find(image1==max(image1(:)));
 %   

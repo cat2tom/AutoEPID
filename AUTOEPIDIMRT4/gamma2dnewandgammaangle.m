@@ -122,7 +122,7 @@ end
 
 %c a l c u l a t e s th e gamma
 G = sqrt (G) ;
-fprintf( 'Elapsed?time?for?gamma?evaluation:?%6.4 f?seconds \n' ,toc ) ;
+%fprintf( 'Elapsed?time?for?gamma?evaluation:?%6.4 f?seconds \n' ,toc ) ;
 
 %Removes the added border
 
@@ -140,7 +140,7 @@ positionAngle(size1(1)+1:size1(1)+searchRange,: ) = [ ] ;
 positionAngle(:, size1(2)+1:size1(2)+searchRange ) = [ ] ;
 
 else
-   fprintf('Matrix?sizes?does?not?agree\n' );
+   %fprintf('Matrix?sizes?does?not?agree\n' );
 end
 
 
