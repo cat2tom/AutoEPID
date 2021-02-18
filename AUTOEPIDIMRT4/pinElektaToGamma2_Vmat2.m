@@ -1,4 +1,4 @@
-function [gamma_result_file_name,numpass3b,avg3b,numpass2b,avg2b]=pinElektaToGamma2_Vmat(pin_tps_file, epid_his_file,DTA,tol,PSF,pixel_dose_factor)
+function [gamma_result_file_name,numpass3b,avg3b,numpass2b,avg2b]=pinElektaToGamma2_Vmat2(pin_tps_file, epid_his_file,DTA,tol,PSF,pixel_dose_factor)
 
 % function: Calculate the gamma map for dose from EPID and TPS for one
 % beam.
@@ -9,6 +9,8 @@ function [gamma_result_file_name,numpass3b,avg3b,numpass2b,avg2b]=pinElektaToGam
 % pixel_dose_factor-EPID calibration factors.
          
 % output:
+
+% !!! this is not the version used clinically.
 
 
 % read raw data from Elekta HIS file and convert it into epid dose.
@@ -27,6 +29,10 @@ function [gamma_result_file_name,numpass3b,avg3b,numpass2b,avg2b]=pinElektaToGam
 % Automatically registrar two images
 
   epid_inter=interp2(Ex,Ey,epiddose,xgrid,ygrid','linear');% interpolate the EPID image over the TPS grid.
+  
+  epid_inter_opt=epid_inter;
+  
+  
   
   if any(isnan(epid_inter))
       
@@ -80,6 +86,32 @@ function [gamma_result_file_name,numpass3b,avg3b,numpass2b,avg2b]=pinElektaToGam
     
  end     
    
+ 
+  %% Optimization option.
+ 
+ 
+shift_optimization=getappdata(0,'shift_opt');
+
+if  shift_optimization
+ 
+ 
+     
+     ref_image=tpsdose;
+     
+     tar_image=epid_inter_opt;
+     
+     
+     [shifted_tar_image,opt_x_shift,opt_y_shift] = optimizeImageRegistration(ref_image,tar_image );
+     
+     image2=shifted_tar_image;
+ 
+ end 
+ 
+%%
+ 
+ 
+ 
+ 
    
 %    image1=image1*0.95;
     xp=xgrid;

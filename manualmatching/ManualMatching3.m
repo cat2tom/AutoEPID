@@ -22,7 +22,7 @@ function varargout = ManualMatching3(varargin)
 
 % Edit the above text to modify the response to help ManualMatching3
 
-% Last Modified by GUIDE v2.5 08-May-2017 09:39:43
+% Last Modified by GUIDE v2.5 17-Feb-2021 16:15:27
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -978,3 +978,20 @@ function pushbutton14_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton14 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in shift_optimization.
+function shift_optimization_Callback(hObject, eventdata, handles)
+% hObject    handle to shift_optimization (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of shift_optimization
+
+handles.shift_optimization=get(hObject,'Value'); 
+
+shift_opt=get(hObject,'Value') 
+
+setappdata(0,'shift_opt',shift_opt);
+
+guidata(hObject,handles);

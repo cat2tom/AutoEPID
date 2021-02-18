@@ -88,6 +88,10 @@ function profile_image_file_name=pinElektaToProfile2(pin_tps_file, epid_his_file
   
   epid_inter=interp2(Ex,Ey,epiddose,xgrid,ygrid','linear');
   
+  epid_inter_opt=epid_inter;
+  
+
+  
   epid_inter2=epid_inter;
   
   if any(isnan(epid_inter))
@@ -122,35 +126,36 @@ else
     
 end     
 
-%% optimize the EPID shift.
+
+
+
+%% shift optimization option.
+
+% shift_optimization=getappdata(0,'shift_opt');
+
+
+optimization_obj=findobj('tag','shift_optimization');
+
+value=get(optimization_obj,'value');
+
+shift_optimization=value;
+
+if  shift_optimization
+
+     
+     ref_image=tpsdose;
+     
+     tar_image=epid_inter_opt;
+     
+     
+     [shifted_tar_image,opt_x_shift,opt_y_shift] = optimizeImageRegistration(ref_image,tar_image );
+     
+     image2=shifted_tar_image;
  
-%  ref_image=image1;
-%  tar_image=image2;
-%  
-%  
-%  [shifted_tar_image,opt_x_shift,opt_y_shift] = optimizeImageRegistration(ref_image,tar_image )
-%  
-%  
-%  image2=shifted_tar_image;
-%  
-
-
+end 
+ 
 %%
-%  [tpsrow2, tpscol2]=find(image1==max(image1(:)));
-%   
-%  [epidrow2,epidcol2]=find(image2==max(image2(:)));
-% 
-%  shift=[-(tpsrow2(1)-epidrow2(1))/2,(tpscol2(1)-epidcol2(1))*2]
-% %  shift=[0,160];
-% %  
-% %  shift=[8.5,14];
-% 
-% image2_shifted=imageTranslate(image2,shift);
-% 
-% image2=image2_shifted;
 
-
-%%
 
   
  hh=ImageCompare(image1,'TPS',image2,'EPID',xgrid',ygrid');

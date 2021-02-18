@@ -16,7 +16,7 @@ m=length(shift_vect);
 
 for k= 1:length(shift_vect)
     
-    progressbar(k/m);, 
+    progressbar(k/m);
     
     shift=shift_vect(k);
     trans=[shift,0];

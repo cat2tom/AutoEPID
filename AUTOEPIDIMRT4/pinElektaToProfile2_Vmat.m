@@ -27,6 +27,10 @@ function profile_image_file_name=pinElektaToProfile2_Vmat(pin_tps_file, epid_his
   
   epid_inter=interp2(Ex,Ey,epiddose,xgrid,ygrid','linear');
   
+  
+  epid_inter_opt=epid_inter;
+  
+  
   epid_inter2=epid_inter;
   
   if any(isnan(epid_inter))
@@ -60,6 +64,31 @@ else
     
 end     
 
+
+%% shift optimization option.
+
+% shift_optimization=getappdata(0,'shift_opt');
+
+
+optimization_obj=findobj('tag','shift_optimization');
+
+value=get(optimization_obj,'value');
+
+shift_optimization=value;
+
+if  shift_optimization
+
+     
+     ref_image=tpsdose;
+     
+     tar_image=epid_inter_opt;
+     
+     
+     [shifted_tar_image,opt_x_shift,opt_y_shift] = optimizeImageRegistration(ref_image,tar_image );
+     
+     image2=shifted_tar_image;
+ 
+end 
   
  hh=ImageCompare(image1,'TPS',image2,'EPID',xgrid',ygrid');
  

@@ -81,7 +81,9 @@ handles.reference_epid='No';
 
 % epidConfigFile='C:\temp\temp51\autoEPIDDirConfigBeta.ini';
 
-epidConfigFile='C:\autoEPIDConfigfile\autoEPIDDirConfig.ini';
+% epidConfigFile='C:\autoEPIDConfigfile\autoEPIDDirConfig.ini';
+
+epidConfigFile='C:\autoEPIDConfigfile\autoEPIDDirConfig_beta.ini';
 
 handles.config_dir='C:\autoEPIDConfigfile\';
 
