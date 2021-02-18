@@ -5,7 +5,9 @@ function optimal_shift =optimizeProfileShift(x_cor,y_cor,reference_pixel_vect,ta
 
 asize=length(reference_pixel_vect); 
 
-shift_vect=[-wrev(1:asize) 0 1:asize];
+% shift_vect=[-wrev(1:asize) 0 1:asize];
+
+shift_vect=[-wrev(1:0.1:asize) 0 1:0.1:asize];
 
 %loop through to get gamma array. 
 gamma_array=[];
@@ -21,7 +23,7 @@ for k= 1:length(shift_vect)
     shift=shift_vect(k);
     trans=[shift,0];
     
-    shifted_pixel=imageTranslate(target_pixel_vect,trans);
+    shifted_pixel=imageTranslate(target_pixel_vect,trans,0,'nearest');
     
     gamma= get1DGammaRate(x_cor,y_cor,reference_pixel_vect,shifted_pixel );
     
