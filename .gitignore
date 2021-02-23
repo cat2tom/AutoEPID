@@ -20,3 +20,5 @@ CompiledExe/
 manualmatching/AUTOEPIDPLUS_V2/
 manualmatching/AUTOEPIDPLUS2/
 *.asv
+*.txt
+*.HIS
