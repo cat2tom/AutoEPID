@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 CompiledExe/for_redistribution_file_only/readme.txt
 CompiledExe/for_redistribution_file_only/default_icon.ico
 CompiledExe/PackagingLog.txt
@@ -14,9 +14,14 @@ CompiledExe/for_testing/splash.png
 manualmatching/AUTOEPIDPLUS_V2.prj
 manualmatching/AUTOEPIDPLUS_V2/PackagingLog.txt
 manualmatching/AUTOEPIDPLUS_V2/for_redistribution/MyAppInstaller_mcr.exe
-=======
+
 CompiledExe/
->>>>>>> Offset
+
 manualmatching/AUTOEPIDPLUS_V2/
-manualmatching/AUTOEPIDPLUS2/
+
+
 *.asv
+
+*.txt
+*.HIS
+

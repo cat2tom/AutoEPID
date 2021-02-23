@@ -128,7 +128,6 @@ else
 end 
 
 
-
 handles.patient_list_dir=patientInputDir; 
 handles.dicom_template_dir=dicomTemplateDir; 
 
@@ -179,7 +178,9 @@ guidata(hObject, handles);
 
 % set the patient list and out directory box
 
-set(handles.all_input_dir,'string',patient_list_dir);
+% set(handles.all_input_dir,'string',patient_list_dir);
+
+set(handles.all_input_dir,'string',patientInputDir);
 
 set(handles.all_output_dir,'string',output_dir);
 
@@ -194,7 +195,7 @@ setappdata(0,'dicom_template_dir',handles.dicom_template_dir);
 setappdata(0,'cal_file',epidCalFile);
 
 
-disp(handles.all_input_dir);
+% disp(handles.all_input_dir);
 % UIWAIT makes AutoEPIDIMRTQA2 wait for user response (see UIRESUME)
 % uiwait(handles.auto_epid_main);
 
@@ -220,6 +221,7 @@ set(handles.progress,'Visible','off');
 else
     
     set(handles.all_input_dir,'string','Please Check if your V drive was mapped.');
+    
 end 
 
 % update output dir from output box
