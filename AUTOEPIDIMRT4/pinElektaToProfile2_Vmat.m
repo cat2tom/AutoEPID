@@ -64,10 +64,37 @@ else
     
 end     
 
+ %%
+% %% missing pixel.
+%  
+optimization_obj=findobj('tag','missing_pixel');
+
+value=get(optimization_obj,'value');
+
+shift_optimization=value;
+ 
+
+if  shift_optimization
+ 
+ 
+     ref_image=tpsdose;
+     
+     tar_image=epid_inter_opt;
+     
+      
+     [shifted_tar_image,opt_x_shift,opt_y_shift] = optimizeImageRegistrationMissing(ref_image,tar_image );
+     
+     extended_epiddose= extendEPID(ref_image,shifted_tar_image ); 
+     
+
+     image2= extended_epiddose;
+ 
+end 
+
+
+
 
 %% shift optimization option.
-
-% shift_optimization=getappdata(0,'shift_opt');
 
 
 optimization_obj=findobj('tag','shift_optimization');
@@ -79,16 +106,27 @@ shift_optimization=value;
 if  shift_optimization
 
      
-     ref_image=tpsdose;
+    ref_image=tpsdose;
+    
+    tar_image=epid_inter_opt;
+    
+    
+    [shifted_tar_image,opt_x_shift,opt_y_shift] = optimizeImageRegistration(ref_image,tar_image );
+    
+    
+    
+    image2=shifted_tar_image;
      
-     tar_image=epid_inter_opt;
-     
-     
-     [shifted_tar_image,opt_x_shift,opt_y_shift] = optimizeImageRegistration(ref_image,tar_image );
-     
-     image2=shifted_tar_image;
+%      
+%      extended_epiddose= extendEPID(ref_image,shifted_tar_image ); 
+%      
+% 
+%      image2= extended_epiddose;
+%  
  
 end 
+%%
+
   
  hh=ImageCompare(image1,'TPS',image2,'EPID',xgrid',ygrid');
  

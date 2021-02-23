@@ -22,6 +22,10 @@ manualmatching/AUTOEPIDPLUS_V2/
 
 *.asv
 
+
+*.txt
+*.HIS
+
 *.txt
 *.HIS
 
