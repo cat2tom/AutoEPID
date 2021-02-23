@@ -506,6 +506,7 @@ end
           
           if strcmp(treatment_type,'IMRT')
               
+                          
             [gang_angle,coll_angle]=findGangtryandCollimatorAngleFromPinTPSFile(tps_file);
             
           end

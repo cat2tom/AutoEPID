@@ -5,6 +5,11 @@ function  [gang_angle,coll_angle]=findGangtryandCollimatorAngleFromPinTPSFile(ne
 
 % comment out this as there always 
 
+% get file name only.
+[path, filename,ext]=fileparts(new_tps_file_name);
+
+new_tps_file_name=filename;
+
 %tmp1_index=findstr('-',new_tps_file_name) 
 
 tmp1_index=strsplit(new_tps_file_name,'-');
