@@ -122,30 +122,15 @@ else
 end 
 
 % to see if U driver exist on server. 
-if exist(patientInputDir,'dir')
-    
-    handles.patient_list_dir=patientInputDir;
-    
-else
-    
-    if ~exist(backupPatientInputDir,'dir')
-        
-        % make dir 
-        
-        mkdir(backupPatientInputDir);
-        
-        handles.patient_list_dir=backupPatientInputDir;
-        
-    else
-    
-    handles.patient_list_dir=backupPatientInputDir;
-    
-    end 
-    
-    msgbox(['Udriver is not accessible on server. Please copy the patient folder to ' {} backupPatientInputDir ])
-    
-    
-end
+% if exsit(patientInputDir,'dir')
+%     
+% handles.patient_list_dir=patientInputDir; 
+% 
+% else
+%     
+% handles.patient_list_dir=backupPatientInputDir;     
+%     
+% end 
 
 
 handles.dicom_template_dir=dicomTemplateDir; 

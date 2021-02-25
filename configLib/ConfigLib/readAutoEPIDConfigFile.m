@@ -1,4 +1,4 @@
-function [deleteNetWork,mapNetWork,patientInputDir,dicomTemplateDir,imrtOutputDir,vmatOutputDir,epidCalFile,version_info,escan_dir] = readAutoEPIDConfigFile(conFigFileName )
+function [deleteNetWork,mapNetWork,patientInputDir,dicomTemplateDir,imrtOutputDir,vmatOutputDir,epidCalFile,version_info,escan_dir,backupPatientInputDir] = readAutoEPIDConfigFile(conFigFileName )
 %{
 
 Read configuration from configure file for the program. 
@@ -38,6 +38,8 @@ mapNetWork=values{2};
 values= ini.GetValues(sections{2}, keys);
 
 patientInputDir=values{1};
+
+backupPatientInputDir=values{2};
 
 % DICOMTemplateFolder section
 [keys, ~] = ini.GetKeys(sections{3});
