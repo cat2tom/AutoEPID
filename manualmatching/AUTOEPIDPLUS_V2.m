@@ -68,16 +68,11 @@ handles.output = hObject;
 
 handles.reference_epid='No';
 
-% set the window title 
-
-
-
 
 % read configration file from N driver. It is a configure file.
 
-%epidConfigFile='H:\IMRT\PatientQA\AUTOEPIDRESOURCE\autoEPIDDirConfigBetaRS.ini';
 
-%epidConfigFile='V:\CTC-LiverpoolOncology-Physics\IMRT\PatientQA\AUTOEPIDRESOURCE\autoEPIDDirConfig.ini';
+epidRootConfigFile='C:\autoEPIDConfigfile\autoEPIDRootConfig.ini';
 
 % epidConfigFile='C:\temp\temp51\autoEPIDDirConfigBeta.ini';
 
@@ -85,8 +80,13 @@ handles.reference_epid='No';
 
 epidConfigFile='C:\autoEPIDConfigfile\autoEPIDDirConfig_beta.ini';
 
-handles.config_dir='C:\autoEPIDConfigfile\';
 
+
+ [clinical_configFile,beta_configFile] = readAutoEPIDRootConfigFile(epidRootConfigFile);
+ 
+ % Clinical version or beta version.
+ 
+ epidConfigFile=clinical_configFile; 
 
 if exist(epidConfigFile,'file')
     
@@ -101,7 +101,7 @@ else
 end 
     
 
-[deleteNetWork,mapNetWork,patientInputDir,dicomTemplateDir,imrtOutputDir,vmatOutputDir,epidCalFile,version_info,escan_dir] = readAutoEPIDConfigFile(epidConfigFile );
+[deleteNetWork,mapNetWork,patientInputDir,dicomTemplateDir,imrtOutputDir,vmatOutputDir,epidCalFile,version_info,escan_dir,backupPatientInputDir] = readAutoEPIDConfigFile(epidConfigFile );
 
 % set program vesion 
 
@@ -127,8 +127,33 @@ else
         
 end 
 
+% to see if U driver exist on server. 
+if exist(patientInputDir,'dir')
+    
+    handles.patient_list_dir=patientInputDir;
+    
+else
+    
+    if ~exist(backupPatientInputDir,'dir')
+        
+        % make dir 
+        
+        mkdir(backupPatientInputDir);
+        
+        handles.patient_list_dir=backupPatientInputDir;
+        
+    else
+    
+    handles.patient_list_dir=backupPatientInputDir;
+    
+    end 
+    
+    msgbox(['Udriver is not accessible on server. Please copy the patient folder to ' {} backupPatientInputDir ])
+    
+    
+end
 
-handles.patient_list_dir=patientInputDir; 
+
 handles.dicom_template_dir=dicomTemplateDir; 
 
 setappdata(0,'dicom_template',handles.dicom_template_dir);
@@ -178,9 +203,9 @@ guidata(hObject, handles);
 
 % set the patient list and out directory box
 
-% set(handles.all_input_dir,'string',patient_list_dir);
+set(handles.all_input_dir,'string',patient_list_dir);
 
-set(handles.all_input_dir,'string',patientInputDir);
+% set(handles.all_input_dir,'string',patientInputDir);
 
 set(handles.all_output_dir,'string',output_dir);
 
