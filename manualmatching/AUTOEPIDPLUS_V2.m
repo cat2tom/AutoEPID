@@ -78,7 +78,7 @@ epidRootConfigFile='C:\autoEPIDConfigfile\autoEPIDRootConfig.ini';
 
 % epidConfigFile='C:\autoEPIDConfigfile\autoEPIDDirConfig.ini';
 
-epidConfigFile='C:\autoEPIDConfigfile\autoEPIDDirConfig_beta.ini';
+%epidConfigFile='C:\autoEPIDConfigfile\autoEPIDDirConfig_beta.ini';
 
 
 
@@ -86,7 +86,7 @@ epidConfigFile='C:\autoEPIDConfigfile\autoEPIDDirConfig_beta.ini';
  
  % Clinical version or beta version.
  
- epidConfigFile=clinical_configFile; 
+ epidConfigFile=beta_configFile; 
 
 if exist(epidConfigFile,'file')
     
