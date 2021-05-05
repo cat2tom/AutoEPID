@@ -5,4 +5,4 @@ configFileName='C:\AitangResearch\inHouseSoftWare\AutoEPID\configLib\TestFile\au
 
 % test function.
 
-[deleteNetWork,mapNetWork,patientInputDir,dicomTemplateDir,imrtOutputDir,vmatOutputDir,epidCalFile,version_info,escan_dir,backupPatientInputFolder] = readAutoEPIDConfigFile(configFileName)
+[deleteNetWork,mapNetWork,patientInputDir,dicomTemplateDir,imrtOutputDir,vmatOutputDir,epidCalFile,version_info,escan_dir,backupPatientInputFolder,patient_mat_dir] = readAutoEPIDConfigFile(configFileName)
