@@ -211,7 +211,11 @@ if  shift_optimization
     yp=ygrid;
     %thresh=0.1; % 10%.
     
-    thresh=8;
+    %thresh=8;
+    
+    thresh=9;
+    
+    %thresh=10;
     %dosetol=tol+4;
     
     dosetol=tol;

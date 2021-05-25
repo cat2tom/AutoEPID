@@ -18,7 +18,11 @@ function [G, gammaAngle ] = gamma2dnewandgammaangle ( Reference, Evaluated ,DTA,
  
  % the maximum dose is 1 gy=100cm.
  
- tmp_max=100;%cGy to match the way how omimipro does.
+ 
+ 
+ %tmp_max=100;%cGy to match the way how omimipro does.
+ 
+ tmp_max=max(Reference(:));
  
 % minLim = minLim*max( Reference ( : ) ) ;
  

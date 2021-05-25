@@ -57,6 +57,8 @@ crit_val = FE_thresh*MaxVal;
 
 Mask(Image1>crit_val) = 1;
 
+Mask(Image1<=crit_val) = 0;
+
 
 
 % change Mask to logical values.
@@ -85,6 +87,8 @@ avg=sum(cutoff_gammamap(:))./numWithinField;
 
 
 GammaMap2=GammaMap.*Mask; 
+
+GammaMap2(~Mask)=0;
 
 % if max(GammaMap2(:))>=2
 %      

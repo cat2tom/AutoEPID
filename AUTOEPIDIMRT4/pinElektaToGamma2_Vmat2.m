@@ -151,7 +151,9 @@ if  shift_optimization
     res_x = xp(20) - xp(19);
     res_y = yp(20) - yp(19);
     radius_cm = dta/10*1.5;
-    %thresh = thresh/100;% comment out for lctc gamma.
+    thresh = thresh/100;% comment out for lctc gamma.
+    
+    
     dosetol = dosetol/100;
 %     dta = dta/10;       % Convert to cm only for ncs gamma.
     rad_pix = min(ceil(radius_cm/res_x),ceil(radius_cm/res_y));
