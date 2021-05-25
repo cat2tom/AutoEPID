@@ -84,8 +84,41 @@ function [gamma_result_file_name,numpass3b,avg3b,numpass2b,avg2b]=pinElektaToGam
 %    image1=image1*0.95;
     xp=xgrid;
     yp=ygrid;
-%     thresh=2; % optimized value.
+%     thresh=2; % optimized value for Pin
     thresh=2;
+    % thresh=10; RS 
+    
+    fileExt=fileType(pin_tps_file);
+
+%% threshould setting. 
+if strcmp(fileExt,'txt')
+    
+   %thresh=2;
+   thresh=5;
+       
+end 
+%% Process opg file exported from RS 
+if strcmp(fileExt,'opg')
+    
+    thresh=10; 
+ 
+    
+    
+end 
+%%
+% Process 3D dicom  file exported from RS 
+if strcmp(fileExt,'dcm')
+    
+    thresh=10;
+    
+      
+    
+end 
+    
+    
+    
+    
+    
     
 %     thresh=10;
     
