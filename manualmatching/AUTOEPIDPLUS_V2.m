@@ -78,9 +78,7 @@ epidRootConfigFile='C:\autoEPIDConfigfile\autoEPIDRootConfig.ini';
 
 % epidConfigFile='C:\autoEPIDConfigfile\autoEPIDDirConfig.ini';
 
-epidConfigFile='C:\autoEPIDConfigfile\autoEPIDDirConfig_beta.ini';
-
-
+%epidConfigFile='C:\autoEPIDConfigfile\autoEPIDDirConfig_beta.ini';
 
  [clinical_configFile,beta_configFile] = readAutoEPIDRootConfigFile(epidRootConfigFile);
  
