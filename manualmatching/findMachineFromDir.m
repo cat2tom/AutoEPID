@@ -68,6 +68,14 @@ if strcmp(file_type,'HIS')
                machine_name='M2';
 
            end   
+		   
+		   if strcmp(his_station_name,' M3VERSA-iview')
+    
+               machine_name='M3';
+
+           end   
+		   
+		   
          
 		   if strcmp(his_station_name,' M4')
     

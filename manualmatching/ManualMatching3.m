@@ -317,7 +317,7 @@ selected_file=contents{get(hObject,'Value')};
 full_file=fullfile(dir_path,selected_file);
 
 if strcmp(handles.which_machine,'M2')||strcmp(handles.which_machine,'M1')||strcmp(handles.which_machine,'M4')||strcmp(handles.which_machine,'M5') ...
-   || strcmp(handles.which_machine,'M7')  
+   || strcmp(handles.which_machine,'M7')|| strcmp(handles.which_machine,'M3')
 
 im = readHISfile(full_file);
 
@@ -331,7 +331,7 @@ colormap(gray)
 end 
 
 
-if strcmp(handles.which_machine,'M3')
+if strcmp(handles.which_machine,'M33')
 
 im = readSiemensEPID(full_file,1);
 

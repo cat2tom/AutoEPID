@@ -176,7 +176,7 @@ file_type=handles.which_machine;
 
 progress_bar_lable='EPID to Dose image conversion';
 
-if strcmp(file_type,'M3')
+if strcmp(file_type,'M33')
     
                    
           
@@ -371,7 +371,7 @@ end % end for Simens machine.
 
 
 if strcmp(file_type,'M1')||strcmp(file_type,'M2')||strcmp(file_type,'M5')||strcmp(file_type,'M4')...
-    ||strcmp(file_type,'M7')    
+    ||strcmp(file_type,'M7')||strcmp(file_type,'M3')  
     
       % copy template file from H driver to v patient directory. change the
      
