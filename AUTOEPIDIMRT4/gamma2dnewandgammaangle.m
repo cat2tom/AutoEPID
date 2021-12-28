@@ -18,9 +18,9 @@ function [G, gammaAngle ] = gamma2dnewandgammaangle ( Reference, Evaluated ,DTA,
  
  
  
- %tmp_max=100;%cGy to match the way how omimipro does.
+ tmp_max=100;%cGy to match the way how omimipro does.
  
- tmp_max=max(Reference(:));
+ %tmp_max=max(Reference(:));
  
 % minLim = minLim*max( Reference ( : ) ) ;
  

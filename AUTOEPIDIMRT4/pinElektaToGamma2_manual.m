@@ -200,7 +200,7 @@ epiddose=double(epiddose);
     
     %thresh=8;
     
-    thresh=9;
+    thresh=10;
     
     %thresh=10;
     %dosetol=tol+4;
