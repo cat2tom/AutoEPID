@@ -317,7 +317,7 @@ selected_file=contents{get(hObject,'Value')};
 full_file=fullfile(dir_path,selected_file);
 
 if strcmp(handles.which_machine,'M2')||strcmp(handles.which_machine,'M1')||strcmp(handles.which_machine,'M4')||strcmp(handles.which_machine,'M5') ...
-   || strcmp(handles.which_machine,'M7')  
+   || strcmp(handles.which_machine,'M7')|| strcmp(handles.which_machine,'M3')
 
 im = readHISfile(full_file);
 
@@ -331,18 +331,18 @@ colormap(gray)
 end 
 
 
-if strcmp(handles.which_machine,'M3')
-
-im = readSiemensEPID(full_file,1);
-
-% [xgrid,ygrid, dose_plane2]=readPinnacleDose4(full_file,1);
-colormap(gray)
-
-axes(handles.epid_image);
-imagesc(im)
-colormap(gray)
-
-end
+% if strcmp(handles.which_machine,'M33')
+% 
+% im = readSiemensEPID(full_file,1);
+% 
+% % [xgrid,ygrid, dose_plane2]=readPinnacleDose4(full_file,1);
+% colormap(gray)
+% 
+% axes(handles.epid_image);
+% imagesc(im)
+% colormap(gray)
+% 
+% end
 
 else
     

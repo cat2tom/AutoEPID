@@ -21,8 +21,7 @@ global beam_name2
 
 treatment_type=getappdata(0,'treatment_type');
 
-% treatment_type='VMAT'
-% load('H:\IMRT\PatientQA\AUTOEPIDRESOURCE\EPID_CALIBRATION.mat');
+
 
 % The global Gamma criteria
 
@@ -111,7 +110,8 @@ main_figure_cf_handle=findobj('Tag','default_cf');
 
 common_cf2=get(main_figure_cf_handle,'String');
 
-common_cf=str2double(common_cf2)
+common_cf=str2double(common_cf2);
+
 
 
 epid_dir=getappdata(0,'epid_dir');
@@ -176,202 +176,202 @@ file_type=handles.which_machine;
 
 progress_bar_lable='EPID to Dose image conversion';
 
-if strcmp(file_type,'M3')
-    
-                   
-          
-          disp('The pixel-to-dose factor measured at 145cm SID for M3');
-          disp('and measured at 150cm SID for M5 by Phil with ');
-          disp('Inverse square correction will be used');
-          
-          header=dicominfo(epid_file_list{1});
-          
-          machine=header.RadiationMachineName;
-          SID = double(char(header.RTImageSID)); 
-          
-           
-          M3_145cm_PixelCalFact=common_cf;
-          
-        
-         
-           PixelCalFact=M3_145cm_PixelCalFact*(SID/1460.0)*(SID/1460.0);
-           
-      
-           dose_factor=PixelCalFact;
-    
-    
-           pixel_to_dose_factor=dose_factor;
-  
-  % get patient information and machine information for report generation.    
-   [family_name,mrn,beam_name2,epid_gantry_angle,machine]=getPatientInformationFromDicom(epid_file_list{1}); 
-      
-  % report head start
-if strcmp( handles.output_option, 'EPID Dose Image+AutoReport')      
-     
-      % pdf report file name
-         
-     report_file_name=strcat( 'AutoEPID_',family_name, '_',mrn,'_', machine, '.pdf');
-     
-     auto_report_dir_file=fullfile(h_driver_patient_dir,'AutoReport',report_file_name);
-         
-     handles.pdf_report_file_name=auto_report_dir_file;
-     
-     guidata(hObject,handles);
-     
-         
-      
-end    
-         
-  for k=1:length(epid_file_list)
-               
-    
-         % turn off the warning message for Siemens EPID conversion.
-         warning off 
-        
-        % direclty call Siments EPID2dose function
-          progressbar();
-          progress_message1='Converting EPID Images to Dose Images';
-          
-          [dir_path_tmp,filename_tmp,ext_tmp]=fileparts(epid_file_list{k});
-          
-          ima_file_name=[filename_tmp ext_tmp];
-          
-          progess_message2=ima_file_name;
-          
-          whole_message=strvcat(progress_message1,progess_message2); 
-          
-%           disp(whole_message);
-          
-            whole_message_cell{k}=whole_message;
-          
-%           disp(whole_message);
-          
-           hfig=findobj('Tag','progess');
-           set(hfig,'String',whole_message_cell);
-          
-     
-          
-          % get the EPID dicom file.
-          
-          tps_file_dir=dir_path;
-          
-          epid_dicom_file=epid_file_list{k};
-          
-          [family_name,mrn,beam_name2,epid_gantry_angle,machine]=getPatientInformationFromDicom(epid_dicom_file);
-          
-                
-          % prepare patient infor for pdf generation 
-   
-          handles.patient_name=family_name;
-          
-          handles.machine=machine;
-          
-          handles.mrn=mrn;
-          
-          guidata(hObject,handles);
-          
-          
-          tps_file=tps_file_list{k};
-          
-          [gang_angle,coll_angle]=findGangtryandCollimatorAngleFromPinTPSFile(tps_file);
-          
-          
-          % choose right function for TPS system
-          
-          if strcmp(tps,'Xio')
-             if strcmp( handles.output_option, 'EPID Dose Image+AutoReport') 
-              [gamma_image_file_name,profile_image_file_name,beam_name2]=profileGammaAnalysisSiemensPin(tps_file,epid_dicom_file,DTA,tol, dose_factor,coll_angle);
-             end
-              epidSiemensToDoseXio9(epid_file_list{k},dose_factor);
-             
-          end 
-          
-          if strcmp(tps,'Pinnacle')
-              
-              if strcmp( handles.output_option, 'EPID Dose Image+AutoReport')
-                  
-                if strcmp(treatment_type,'IMRT')  
-                  
+% if strcmp(file_type,'MXX')
+%     
+%                    
+%           
+%           disp('The pixel-to-dose factor measured at 145cm SID for M3');
+%           disp('and measured at 150cm SID for M5 by Phil with ');
+%           disp('Inverse square correction will be used');
+%           
+%           header=dicominfo(epid_file_list{1});
+%           
+%           machine=header.RadiationMachineName;
+%           SID = double(char(header.RTImageSID)); 
+%           
+%            
+%           M3_145cm_PixelCalFact=common_cf;
+%           
+%         
+%          
+%            PixelCalFact=M3_145cm_PixelCalFact*(SID/1460.0)*(SID/1460.0);
+%            
+%       
+%            dose_factor=PixelCalFact;
+%     
+%     
+%            pixel_to_dose_factor=dose_factor;
+%   
+%   % get patient information and machine information for report generation.    
+%    [family_name,mrn,beam_name2,epid_gantry_angle,machine]=getPatientInformationFromDicom(epid_file_list{1}); 
+%       
+%   % report head start
+% if strcmp( handles.output_option, 'EPID Dose Image+AutoReport')      
+%      
+%       % pdf report file name
+%          
+%      report_file_name=strcat( 'AutoEPID_',family_name, '_',mrn,'_', machine, '.pdf');
+%      
+%      auto_report_dir_file=fullfile(h_driver_patient_dir,'AutoReport',report_file_name);
+%          
+%      handles.pdf_report_file_name=auto_report_dir_file;
+%      
+%      guidata(hObject,handles);
+%      
+%          
+%       
+% end    
+%          
+%   for k=1:length(epid_file_list)
+%                
+%     
+%          % turn off the warning message for Siemens EPID conversion.
+%          warning off 
+%         
+%         % direclty call Siments EPID2dose function
+%           progressbar();
+%           progress_message1='Converting EPID Images to Dose Images';
+%           
+%           [dir_path_tmp,filename_tmp,ext_tmp]=fileparts(epid_file_list{k});
+%           
+%           ima_file_name=[filename_tmp ext_tmp];
+%           
+%           progess_message2=ima_file_name;
+%           
+%           whole_message=strvcat(progress_message1,progess_message2); 
+%           
+% %           disp(whole_message);
+%           
+%             whole_message_cell{k}=whole_message;
+%           
+% %           disp(whole_message);
+%           
+%            hfig=findobj('Tag','progess');
+%            set(hfig,'String',whole_message_cell);
+%           
+%      
+%           
+%           % get the EPID dicom file.
+%           
+%           tps_file_dir=dir_path;
+%           
+%           epid_dicom_file=epid_file_list{k};
+%           
+%           [family_name,mrn,beam_name2,epid_gantry_angle,machine]=getPatientInformationFromDicom(epid_dicom_file);
+%           
+%                 
+%           % prepare patient infor for pdf generation 
+%    
+%           handles.patient_name=family_name;
+%           
+%           handles.machine=machine;
+%           
+%           handles.mrn=mrn;
+%           
+%           guidata(hObject,handles);
+%           
+%           
+%           tps_file=tps_file_list{k};
+%           
+%           [gang_angle,coll_angle]=findGangtryandCollimatorAngleFromPinTPSFile(tps_file);
+%           
+%           
+%           % choose right function for TPS system
+%           
+%           if strcmp(tps,'Xio')
+%              if strcmp( handles.output_option, 'EPID Dose Image+AutoReport') 
+%               [gamma_image_file_name,profile_image_file_name,beam_name2]=profileGammaAnalysisSiemensPin(tps_file,epid_dicom_file,DTA,tol, dose_factor,coll_angle);
+%              end
+%               epidSiemensToDoseXio9(epid_file_list{k},dose_factor);
+%              
+%           end 
+%           
+%           if strcmp(tps,'Pinnacle')
+%               
+%               if strcmp( handles.output_option, 'EPID Dose Image+AutoReport')
+%                   
+%                 if strcmp(treatment_type,'IMRT')  
+%                   
+% %                  [gamma_image_file_name,profile_image_file_name,npass,gmean,npass2,gmean2,beam_name2]=profileGammaAnalysisSiemensPin2(tps_file,epid_dicom_file,DTA,tol, dose_factor,coll_angle);
+%                
 %                  [gamma_image_file_name,profile_image_file_name,npass,gmean,npass2,gmean2,beam_name2]=profileGammaAnalysisSiemensPin2(tps_file,epid_dicom_file,DTA,tol, dose_factor,coll_angle);
-               
-                 [gamma_image_file_name,profile_image_file_name,npass,gmean,npass2,gmean2,beam_name2]=profileGammaAnalysisSiemensPin2(tps_file,epid_dicom_file,DTA,tol, dose_factor,coll_angle);
-                 
-                  epidSiemensToDosePinacle9(epid_file_list{k},dose_factor);
-                 
-                end 
-               
-                if strcmp(treatment_type,'VMAT')
-                    
-                    [gamma_image_file_name,profile_image_file_name,beam_name2]=profileGammaAnalysisSiemensPin2_Vmat(tps_file,epid_dicom_file,DTA,tol, dose_factor);
-                    
-                    epidSiemensToDosePinacle(epid_file_list{k},dose_factor);
-                    
-                end 
-              end
-              
-               if strcmp( handles.output_option, 'EPID Dose Image Only')
-                   
-                   epidSiemensToDosePinacle(epid_file_list{k},dose_factor);
-                
-               end 
-              
-			 
-          end 
-        
-        
-      % report body start 
-      if strcmp( handles.output_option, 'EPID Dose Image+AutoReport')
-       
-                  
-          % prepare patient infor for pdf generate
-          beam_name=strcat('Beam: ',beam_name2);
-          handles.gammaSummaryS(k).beam_name= beam_name;
-          handles.gammaSummaryS(k).m3p3_gamma=npass*100;  
-          handles.gammaSummaryS(k).m2p2_gamma=npass2*100;  
-          handles.gammaSummaryS(k).mean_gamma_m3p3=gmean;  
-          handles.gammaSummaryS(k).mean_gamma_m2p2=gmean2;  
-           
-          %get full file name
-           cur_dir=pwd;
-           fnam1=fullfile(cur_dir, gamma_image_file_name);
-           fnam2=fullfile(cur_dir, profile_image_file_name);
-           
-                   
-           % copy the file to local user tempfolder.
-           
-           copyfile(fnam1,tempdir);
-           
-           copyfile(fnam2,tempdir);
-           
-           profile_image_file=fullfile(tempdir, profile_image_file_name);
-           gamma_image_file=fullfile(tempdir, gamma_image_file_name);
-           
-           
-             % prepare gammaProfileS
-           
-           
-           handles.gammaProfileS(k).beam_name=beam_name;
-           handles.gammaProfileS(k).profile_image_file_name=profile_image_file;
-           handles.gammaProfileS(k).gamma_image_file_name=gamma_image_file;
-           
-           guidata(hObject,handles);
-      
-      % report body ends
-      
-      end
-            
-        
-  end 
-
-
-end % end for Simens machine.
+%                  
+%                   epidSiemensToDosePinacle9(epid_file_list{k},dose_factor);
+%                  
+%                 end 
+%                
+%                 if strcmp(treatment_type,'VMAT')
+%                     
+%                     [gamma_image_file_name,profile_image_file_name,beam_name2]=profileGammaAnalysisSiemensPin2_Vmat(tps_file,epid_dicom_file,DTA,tol, dose_factor);
+%                     
+%                     epidSiemensToDosePinacle(epid_file_list{k},dose_factor);
+%                     
+%                 end 
+%               end
+%               
+%                if strcmp( handles.output_option, 'EPID Dose Image Only')
+%                    
+%                    epidSiemensToDosePinacle(epid_file_list{k},dose_factor);
+%                 
+%                end 
+%               
+% 			 
+%           end 
+%         
+%         
+%       % report body start 
+%       if strcmp( handles.output_option, 'EPID Dose Image+AutoReport')
+%        
+%                   
+%           % prepare patient infor for pdf generate
+%           beam_name=strcat('Beam: ',beam_name2);
+%           handles.gammaSummaryS(k).beam_name= beam_name;
+%           handles.gammaSummaryS(k).m3p3_gamma=npass*100;  
+%           handles.gammaSummaryS(k).m2p2_gamma=npass2*100;  
+%           handles.gammaSummaryS(k).mean_gamma_m3p3=gmean;  
+%           handles.gammaSummaryS(k).mean_gamma_m2p2=gmean2;  
+%            
+%           %get full file name
+%            cur_dir=pwd;
+%            fnam1=fullfile(cur_dir, gamma_image_file_name);
+%            fnam2=fullfile(cur_dir, profile_image_file_name);
+%            
+%                    
+%            % copy the file to local user tempfolder.
+%            
+%            copyfile(fnam1,tempdir);
+%            
+%            copyfile(fnam2,tempdir);
+%            
+%            profile_image_file=fullfile(tempdir, profile_image_file_name);
+%            gamma_image_file=fullfile(tempdir, gamma_image_file_name);
+%            
+%            
+%              % prepare gammaProfileS
+%            
+%            
+%            handles.gammaProfileS(k).beam_name=beam_name;
+%            handles.gammaProfileS(k).profile_image_file_name=profile_image_file;
+%            handles.gammaProfileS(k).gamma_image_file_name=gamma_image_file;
+%            
+%            guidata(hObject,handles);
+%       
+%       % report body ends
+%       
+%       end
+%             
+%         
+%   end 
+% 
+% 
+% end % end for Simens machine.
 
 %--------------------------------------------------------------------------
 %---------------
 
 
 if strcmp(file_type,'M1')||strcmp(file_type,'M2')||strcmp(file_type,'M5')||strcmp(file_type,'M4')...
-    ||strcmp(file_type,'M7')    
+    ||strcmp(file_type,'M7')||strcmp(file_type,'M3')  
     
       % copy template file from H driver to v patient directory. change the
      
@@ -532,14 +532,14 @@ end
             
           pixel_dose_factor=dose_factor;
           
-          if strcmp(tps,'Xio')
-              if strcmp( handles.output_option, 'EPID Dose Image+AutoReport')
-                [gamma_image_file_name,profile_image_file_name]=profileGammaAnalysisElektaPin2(tps_file,epid_his_file,DTA,tol,PSF,pixel_dose_factor,coll_angle);              
-              end 
-                elektaHISToDoseXio5(header,tmp,dose_factor);
-                            
-          end 
-          
+%           if strcmp(tps,'Xio')
+%               if strcmp( handles.output_option, 'EPID Dose Image+AutoReport')
+%                 [gamma_image_file_name,profile_image_file_name]=profileGammaAnalysisElektaPin2(tps_file,epid_his_file,DTA,tol,PSF,pixel_dose_factor,coll_angle);              
+%               end 
+%                 elektaHISToDoseXio5(header,tmp,dose_factor);
+%                             
+%           end 
+%           
           if strcmp(tps,'Pinnacle')
               
               if strcmp( handles.output_option, 'EPID Dose Image+AutoReport')

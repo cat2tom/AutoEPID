@@ -21,14 +21,23 @@ resolution=info1.ImagePlanePixelSpacing;
 
 % x and y dimesion for scaled image
 
-x=row*resolution
-y=col*resolution
+x=row*resolution;
+y=col*resolution;
 
 % set the new origin for scaled images
 
-info1.RTImagePosition=-x/2.0;
+%info1.RTImagePosition=-x/2.0;
 
-dicomwrite(data,scaled_dicom_file_name,info1,'CreateMode','copy');
+info1.RTImagePosition=[-x/2.0; x/2.0];
+
+disp('x,y=');
+-x/2.0
+x/2.0
+
+dicomwrite(data,scaled_dicom_file_name,info1,'CreateMode','copy')
+
+
+
 
 end 
 

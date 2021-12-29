@@ -555,8 +555,6 @@ close(h_final)
 
 fclose('all');
 
-
-
 fclose('all');
 
 % % open the patient directory folder in H driver for inspection.

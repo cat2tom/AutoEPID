@@ -101,7 +101,7 @@ else
 end 
     
 
-[deleteNetWork,mapNetWork,patientInputDir,dicomTemplateDir,imrtOutputDir,vmatOutputDir,epidCalFile,version_info,escan_dir,backupPatientInputDir] = readAutoEPIDConfigFile(epidConfigFile );
+[deleteNetWork,mapNetWork,patientInputDir,dicomTemplateDir,imrtOutputDir,vmatOutputDir,epidCalFile,version_info,escan_dir,backupPatientInputDir,patient_mat_dir] = readAutoEPIDConfigFile(epidConfigFile );
 
 % set program vesion 
 
@@ -411,10 +411,11 @@ handles.gamma_sumary=struct();
 
 % add a handle variable to hold image data, GLCM into a struct
 
-
 handles.patient_database=struct();
 
-handles.patient_matfile_dir='N:\PROJECTS\IMRT implementation\EPID Dosimetry Commissioning\autoEPIDDataBaseMat';
+
+
+handles.patient_matfile_dir=patient_mat_dir;
 
 setappdata(0,'patient_mat_file_dir',handles.patient_matfile_dir);
 
@@ -542,6 +543,7 @@ else
   
   machine_name=findMachineFromDir(handles.patient_name);
   
+    
   handles.which_machine=machine_name;
   
   if machine_name==0

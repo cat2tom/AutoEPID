@@ -43,6 +43,17 @@ DI = double(ElektaEPIDimage);%convert 16bit data to double
 % end
 
 
+% if strcmp(his_station_name,' M3VERSA-iview')
+%      
+%     DI=DI;
+%     disp('test');
+% else
+%     
+% DI=-(DI-2^16);    
+%  
+% end
+
+
 DI=-(DI-2^16);
 
 
@@ -78,6 +89,8 @@ DoseImage=DISum*PixelCalFact; %final dose image to be used for analysis
 % convert from double into 16 bit integer
 
 DoseImage2=uint16(round(DoseImage));
+
+
 
 % final dose image name
 

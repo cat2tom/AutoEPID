@@ -1,5 +1,5 @@
 
-function  dicomMoveOrigin(scaled_dicom_file_name)
+function  dicomMoveOriginS(scaled_dicom_file_name)
 
 % This function is to move the orgin of the scaled dicom dose image as did in IMRT
 % OmniPro.

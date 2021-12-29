@@ -227,7 +227,7 @@ cal_file_name='';
 
 switch machine
     
-    case {'M1','M2','M4','M5','M7'}
+    case {'M1','M2','M3','M4','M5','M7'}
         
         [file,path]=uigetfile('.LOG','Please select log file',epid_dir);
         
@@ -253,7 +253,7 @@ switch machine
         
       
         
-    case {'M3'}
+    case {'M33'}
         
         cal_S = EPIDCalibration_Callback_Siemens(machine,ref_mu,dose,epid_image_file, output_dir,physicist);
         
