@@ -34,9 +34,8 @@ DI = double(pixel_data);%convert 16bit data to double
 
 DISum = DI/ref_PSF;
 
-imagesc(DISum);
+%imagesc(DISum);
 
-c
 
 
 [row,col]=size(DISum);

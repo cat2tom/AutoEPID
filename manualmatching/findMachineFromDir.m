@@ -29,10 +29,10 @@ else
 file_type=fileType(epid_file_list{1});
 
 
-if strcmp(file_type,'IMA')
-
-    machine_name='M3';
-end 
+% if strcmp(file_type,'IMA')
+% 
+%     machine_name='M3x';
+% end 
 
 if strcmp(file_type,'HIS')
 

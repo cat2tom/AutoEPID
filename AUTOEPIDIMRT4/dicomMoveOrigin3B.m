@@ -1,5 +1,5 @@
 
-function  dicomMoveOrigin(scaled_dicom_file_name)
+function  dicomMoveOrigin3B(scaled_dicom_file_name)
 
 % This function is to move the orgin of the scaled dicom dose image as did in IMRT
 % OmniPro.
@@ -26,7 +26,9 @@ y=col*resolution;
 
 % set the new origin for scaled images
 
-info1.RTImagePosition=-x/2;
+%info1.RTImagePosition=-x/2;
+
+info1.RTImagePosition=[-x/2.0; x/2.0];
 
 dicomwrite(data,scaled_dicom_file_name,info1,'CreateMode','copy');
 

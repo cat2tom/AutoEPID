@@ -537,6 +537,7 @@ else
   
   machine_name=findMachineFromDir(handles.patient_name);
   
+    
   handles.which_machine=machine_name;
   
   if machine_name==0

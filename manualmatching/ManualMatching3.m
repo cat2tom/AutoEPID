@@ -331,18 +331,18 @@ colormap(gray)
 end 
 
 
-if strcmp(handles.which_machine,'M33')
-
-im = readSiemensEPID(full_file,1);
-
-% [xgrid,ygrid, dose_plane2]=readPinnacleDose4(full_file,1);
-colormap(gray)
-
-axes(handles.epid_image);
-imagesc(im)
-colormap(gray)
-
-end
+% if strcmp(handles.which_machine,'M33')
+% 
+% im = readSiemensEPID(full_file,1);
+% 
+% % [xgrid,ygrid, dose_plane2]=readPinnacleDose4(full_file,1);
+% colormap(gray)
+% 
+% axes(handles.epid_image);
+% imagesc(im)
+% colormap(gray)
+% 
+% end
 
 else
     
