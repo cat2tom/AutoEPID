@@ -82,11 +82,13 @@ epidRootConfigFile='C:\autoEPIDConfigfile\autoEPIDRootConfig.ini';
 
 
 
- [clinical_configFile,beta_configFile] = readAutoEPIDRootConfigFile(epidRootConfigFile);
+ [clinical_configFile,beta_configFile] = readAutoEPIDRootConfigFile(epidRootConfigFile); 
  
  % Clinical version or beta version.
  
  epidConfigFile=beta_configFile; 
+ 
+% epidConfigFile=clinical_configFile; 
 
 if exist(epidConfigFile,'file')
     
