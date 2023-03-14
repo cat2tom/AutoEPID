@@ -83,11 +83,7 @@ epidRootConfigFile='V:\CTC-LiverpoolOncology-Physics\IMRT\PatientQA\autoEPIDConf
 % epidConfigFile='C:\autoEPIDConfigfile\autoEPIDDirConfig.ini';
 
 %epidConfigFile='C:\autoEPIDConfigfile\autoEPIDDirConfig_beta.ini';
-<<<<<<< HEAD
-=======
 
-
->>>>>>> develbeta
 
  [clinical_configFile,beta_configFile] = readAutoEPIDRootConfigFile(epidRootConfigFile); 
  
