@@ -61,6 +61,10 @@ function AutoEPIDIMRTQA2_OpeningFcn(hObject, eventdata, handles, varargin)
 % handles    structure with handles and user data (see GUIDATA)
 % varargin   command line arguments to AutoEPIDIMRTQA2 (see VARARGIN)
 
+% loadJarFiles 
+
+loadItextJarFiles;
+
 % Choose default command line output for AutoEPIDIMRTQA2
 handles.output = hObject;
 
@@ -72,7 +76,7 @@ handles.reference_epid='No';
 % read configration file from N driver. It is a configure file.
 
 
-epidRootConfigFile='C:\autoEPIDConfigfile\autoEPIDRootConfig.ini';
+epidRootConfigFile='V:\CTC-LiverpoolOncology-Physics\IMRT\PatientQA\autoEPIDConfigfile\autoEPIDRootConfig.ini';
 
 % epidConfigFile='C:\temp\temp51\autoEPIDDirConfigBeta.ini';
 
@@ -104,6 +108,7 @@ end
     
 
 [deleteNetWork,mapNetWork,patientInputDir,dicomTemplateDir,imrtOutputDir,vmatOutputDir,epidCalFile,version_info,escan_dir,backupPatientInputDir,patient_mat_dir] = readAutoEPIDConfigFile(epidConfigFile );
+
 
 % set program vesion 
 

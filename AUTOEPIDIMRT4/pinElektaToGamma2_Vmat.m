@@ -533,7 +533,9 @@ gamma_result_file_name=['Pin_gamma map_' gamma_image_name '.jpg'];
 % %title(get(handles.image1_panel,'Title'));
 %  saveas(test_h,gamma_result_file_name);
  
-saveas(h5,gamma_result_file_name);
+%saveas(h5,gamma_result_file_name);
+exportgraphics(h5,gamma_result_file_name);
+
 % % 
 %  close(test_h);
 
