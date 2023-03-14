@@ -170,7 +170,7 @@ epiddose=double(epiddose);
     xp=xgrid;
     yp=ygrid;
     %thresh=8; % equivalent to 10%.Optimized.
-    thresh=9;
+    thresh=10;
     
     %dosetol=tol+4;
     

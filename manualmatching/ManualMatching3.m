@@ -22,7 +22,7 @@ function varargout = ManualMatching3(varargin)
 
 % Edit the above text to modify the response to help ManualMatching3
 
-% Last Modified by GUIDE v2.5 17-Feb-2021 16:15:27
+% Last Modified by GUIDE v2.5 22-Feb-2021 10:19:59
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -317,7 +317,7 @@ selected_file=contents{get(hObject,'Value')};
 full_file=fullfile(dir_path,selected_file);
 
 if strcmp(handles.which_machine,'M2')||strcmp(handles.which_machine,'M1')||strcmp(handles.which_machine,'M4')||strcmp(handles.which_machine,'M5') ...
-   || strcmp(handles.which_machine,'M7')  
+   || strcmp(handles.which_machine,'M7')|| strcmp(handles.which_machine,'M3')
 
 im = readHISfile(full_file);
 
@@ -331,18 +331,18 @@ colormap(gray)
 end 
 
 
-if strcmp(handles.which_machine,'M3')
-
-im = readSiemensEPID(full_file,1);
-
-% [xgrid,ygrid, dose_plane2]=readPinnacleDose4(full_file,1);
-colormap(gray)
-
-axes(handles.epid_image);
-imagesc(im)
-colormap(gray)
-
-end
+% if strcmp(handles.which_machine,'M33')
+% 
+% im = readSiemensEPID(full_file,1);
+% 
+% % [xgrid,ygrid, dose_plane2]=readPinnacleDose4(full_file,1);
+% colormap(gray)
+% 
+% axes(handles.epid_image);
+% imagesc(im)
+% colormap(gray)
+% 
+% end
 
 else
     
@@ -995,3 +995,12 @@ shift_opt=get(hObject,'Value')
 setappdata(0,'shift_opt',shift_opt);
 
 guidata(hObject,handles);
+
+
+% --- Executes on button press in missing_pixel.
+function missing_pixel_Callback(hObject, eventdata, handles)
+% hObject    handle to missing_pixel (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of missing_pixel

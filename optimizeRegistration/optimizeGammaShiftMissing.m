@@ -15,6 +15,10 @@ function [max_gamma,max_gamma_map] =optimizeGammaShift(reference,target,opt_row_
 
 
 
+% row_shift_vect=(opt_row_shift-3):0.5:(opt_row_shift+3);
+% 
+% col_shift_vect=(opt_col_shift-3):0.5:(opt_col_shift+3);
+
 row_shift_vect=(opt_row_shift-3):0.5:(opt_row_shift+3);
 
 col_shift_vect=(opt_col_shift-3):0.5:(opt_col_shift+3);
@@ -27,7 +31,7 @@ col_length=length(col_shift_vect);
 total_loop=row_length*col_length;
 
 
-progressbar('Optimizing the shift for Gamma,Please wait.....');
+progressbar('Filling the missing EPID pixel value, Please wait.....');
 
 
 % gamma paramters 
@@ -37,6 +41,7 @@ DTA_tol=3;
 
 FE_thresh=8/100; % threshold.
 
+% FE_thresh=4/100;
 rad=3*DTA_tol;
 
 Xpoints=1:50;% not really used. 
@@ -59,7 +64,7 @@ for k= 1:col_length
        
        Image1=reference;
        trans=[k,m];
-       Image2=imageTranslate(target,trans);
+       Image2=imageTranslate(target,trans,1,'nearest');
     
       [GammaMap2,numpass, avg, numWithinField] = Gamma(Image1, Image2, Xpoints, Ypoints, Dose_tol, DTA_tol, FE_thresh, rad);
       

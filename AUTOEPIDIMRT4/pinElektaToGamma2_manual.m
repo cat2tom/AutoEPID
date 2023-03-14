@@ -124,6 +124,11 @@ epiddose=double(epiddose);
       
   end 
   
+  
+  
+ 
+  
+  
  
   [output,shiftedepid] = dftregistration(fft2(tpsdose),fft2(epid_inter),100);
   
@@ -171,7 +176,8 @@ epiddose=double(epiddose);
 
      
       
-  else
+ else
+      
     image2=shiftedepid;
     
  end     
@@ -179,28 +185,28 @@ epiddose=double(epiddose);
  %% Optimization option.
  
  
-% shift_optimization=getappdata(0,'shift_opt');
+% % shift_optimization=getappdata(0,'shift_opt');
 % 
-optimization_obj=findobj('tag','shift_optimization');
-
-value=get(optimization_obj,'value');
-
-shift_optimization=value;
-
-if  shift_optimization
- 
- 
-     
-     ref_image=tpsdose;
-     
-     tar_image=epid_inter_opt;
-     
-     
-     [shifted_tar_image,opt_x_shift,opt_y_shift] = optimizeImageRegistration(ref_image,tar_image );
-     
-     image2=shifted_tar_image;
- 
- end 
+% optimization_obj=findobj('tag','shift_optimization');
+% 
+% value=get(optimization_obj,'value');
+% 
+% shift_optimization=value;
+% 
+% if  shift_optimization
+%  
+%  
+%      
+%      ref_image=tpsdose;
+%      
+%      tar_image=epid_inter_opt;
+%      
+%      
+%      [shifted_tar_image,opt_x_shift,opt_y_shift] = optimizeImageRegistration(ref_image,tar_image );
+%      
+%      image2=shifted_tar_image;
+%  
+%  end 
  
 %%
  
@@ -213,7 +219,7 @@ if  shift_optimization
     
     %thresh=8;
     
-    thresh=9;
+    thresh=10;
     
     %thresh=10;
     %dosetol=tol+4;
@@ -273,43 +279,75 @@ if  shift_optimization
 % image2=100*image2./max(image2(:));
       
 
+
+ %%
+% %% missing pixel.
+%  
+optimization_obj=findobj('tag','missing_pixel');
+
+value=get(optimization_obj,'value');
+
+shift_optimization=value;
+ 
+
+if  shift_optimization
+ 
+ 
+     ref_image=tpsdose;
+     
+     tar_image=epid_inter_opt;
+     
+      
+     [shifted_tar_image,opt_x_shift,opt_y_shift] = optimizeImageRegistrationMissing(ref_image,tar_image );
+     
+     extended_epiddose= extendEPID(ref_image,shifted_tar_image ); 
+     
+
+     image2= extended_epiddose;
+ 
+end 
+%  
+
+
 % use the Gamma function to calculate gamma pass rate
+
 
 [gmap,npass,gmean,ncheck] = Gamma(image1,image2,xp,yp,dosetol,dta,thresh,rad_pix);
 
 
+%%
 %  %% Optimization option.
-%  
-%  
-% % shift_optimization=getappdata(0,'shift_opt');
-% 
-% optimization_obj=findobj('tag','shift_optimization');
-% 
-% value=get(optimization_obj,'value');
-% 
-% shift_optimization=value;
-% 
-% if  shift_optimization
-%  
-%  
-%      
-%      ref_image=tpsdose;
-%      
-%      tar_image=epid_inter_opt;
-%      
-%      
-%      [shifted_tar_image,opt_x_shift,opt_y_shift] = optimizeImageRegistration(ref_image,tar_image );
-%      
-%      image2=shifted_tar_image;
-%      
-%      
-%      opt_row_shift=opt_y_shift;
-%      
-%      opt_col_shift=opt_x_shift;
-%      
-%      [max_gamma,gmap] =optimizeGammaShift(ref_image,tar_image,opt_row_shift,opt_col_shift); 
-%  
-%  end 
+
+optimization_obj=findobj('tag','shift_optimization');
+
+value=get(optimization_obj,'value');
+
+shift_optimization=value;
+
+if  shift_optimization
+ 
+ 
+     
+     ref_image=tpsdose;
+     
+     tar_image=epid_inter_opt;
+     
+     
+     [shifted_tar_image,opt_x_shift,opt_y_shift] = optimizeImageRegistration(ref_image,tar_image );
+     
+     image2=shifted_tar_image;
+     
+     reference=tpsdose;
+     
+     target=shifted_tar_image;
+     
+     opt_row_shift=opt_y_shift;
+     
+     opt_col_shift=opt_x_shift;
+     
+     [max_gamma,gmap] =optimizeGammaShift(reference,target,opt_row_shift,opt_col_shift); 
+ 
+ end 
 %  
 %%
 

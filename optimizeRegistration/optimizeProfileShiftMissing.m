@@ -1,4 +1,4 @@
-function optimal_shift =optimizeProfileShift(x_cor,y_cor,reference_pixel_vect,target_pixel_vect )
+function optimal_shift =optimizeProfileShiftMissing(x_cor,y_cor,reference_pixel_vect,target_pixel_vect )
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -12,7 +12,7 @@ shift_vect=[-wrev(1:0.1:asize) 0 1:0.1:asize];
 %loop through to get gamma array. 
 gamma_array=[];
 
-progressbar('Optimizing the profile shift,Please wait.....');
+progressbar('Filling missing EPID pixel by interploation,Please wait.....');
 
 m=length(shift_vect);
 

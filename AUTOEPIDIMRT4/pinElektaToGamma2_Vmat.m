@@ -23,10 +23,23 @@ function [gamma_result_file_name,numpass3b,avg3b,numpass2b,avg2b]=pinElektaToGam
  [xgrid,ygrid,tpsdose]=readPinnacleDose3(pin_tps_file);
  
  tpsdose=tpsdose*100;
+ 
+ 
+ 
+ 
+ 
   
 % Automatically registrar two images
 
   epid_inter=interp2(Ex,Ey,epiddose,xgrid,ygrid','linear');% interpolate the EPID image over the TPS grid.
+  
+  
+%   tps_inter=interp2(xgrid,ygrid',tpsdose,Ex,Ey,'linear');
+  
+ 
+ 
+  
+  
   
   epid_inter_opt=epid_inter;
   
@@ -37,8 +50,12 @@ function [gamma_result_file_name,numpass3b,avg3b,numpass2b,avg2b]=pinElektaToGam
       
   end 
   
+  
+
  
   [output shiftedepid] = dftregistration(fft2(tpsdose),fft2(epid_inter),100);
+  
+
   
   
   %disp('This is the shifted rows and cols number:')
@@ -68,6 +85,8 @@ function [gamma_result_file_name,numpass3b,avg3b,numpass2b,avg2b]=pinElektaToGam
    image1=tpsdose;
    image2=shiftedepid;
    
+%    shiftedtps=abs(ifft2(shiftedtps));
+   
    % adding for gyne situation.
    
  tmp_nan=isnan(shiftedepid);
@@ -82,34 +101,69 @@ function [gamma_result_file_name,numpass3b,avg3b,numpass2b,avg2b]=pinElektaToGam
     image2=shiftedepid;
     
  end     
-   
-  %% Optimization option.
  
+ %%
+% %% missing pixel.
+%  
+optimization_obj=findobj('tag','missing_pixel');
+
+value=get(optimization_obj,'value');
+
+shift_optimization=value;
+ 
+
+if  shift_optimization
+ 
+ 
+     ref_image=tpsdose;
+     
+     tar_image=epid_inter_opt;
+     
+      
+     [shifted_tar_image,opt_x_shift,opt_y_shift] = optimizeImageRegistrationMissing(ref_image,tar_image );
+     
+     extended_epiddose= extendEPID(ref_image,shifted_tar_image ); 
+     
+
+     image2= extended_epiddose;
+ 
+end 
+%  
+
+
+ 
+ 
+ %%
+% %% Optimization option.
+%  
 optimization_obj=findobj('tag','shift_optimization');
 
 value=get(optimization_obj,'value');
 
 shift_optimization=value;
  
-%shift_optimization=getappdata(0,'shift_opt');
-
-
 
 if  shift_optimization
  
  
-     
      ref_image=tpsdose;
      
      tar_image=epid_inter_opt;
      
-     
+      
      [shifted_tar_image,opt_x_shift,opt_y_shift] = optimizeImageRegistration(ref_image,tar_image );
      
      image2=shifted_tar_image;
- 
- end 
- 
+     
+
+%      extended_epiddose= extendEPID(ref_image,shifted_tar_image ); 
+%      
+% 
+%      image2= extended_epiddose;
+%  
+end 
+%  
+
 %%  
 %    image1=image1*0.95;
     xp=xgrid;
@@ -204,6 +258,49 @@ end
 % use the Gamma function to calculate gamma pass rate
 
 [gmap,npass,gmean,ncheck] = Gamma(image1,image2,xp,yp,dosetol,dta,thresh,rad_pix);
+
+% %%
+% %  %% Optimization option.
+% 
+% optimization_obj=findobj('tag','shift_optimization');
+% 
+% value=get(optimization_obj,'value');
+% 
+% shift_optimization=value;
+% 
+% if  shift_optimization
+%  
+%  
+%      
+%      ref_image=tpsdose;
+%      
+%      tar_image=epid_inter_opt;
+%      
+%      
+%      [shifted_tar_image,opt_x_shift,opt_y_shift] = optimizeImageRegistration(ref_image,tar_image );
+%      
+%      image2=shifted_tar_image;
+%      
+%      reference=tpsdose;
+%      
+%      target=shifted_tar_image;
+%      
+%      opt_row_shift=opt_y_shift;
+%      
+%      opt_col_shift=opt_x_shift;
+%      
+%      extended_epiddose= extendEPID(ref_image,shifted_tar_image ); 
+%      
+%      target=extended_epiddose;
+%      
+%      [max_gamma,gmap] =optimizeGammaShift(reference,target,opt_row_shift,opt_col_shift); 
+%  
+%  end 
+%  
+%%
+
+
+
 
 
 % added 2mm/2% gamma calculation
@@ -436,7 +533,9 @@ gamma_result_file_name=['Pin_gamma map_' gamma_image_name '.jpg'];
 % %title(get(handles.image1_panel,'Title'));
 %  saveas(test_h,gamma_result_file_name);
  
-saveas(h5,gamma_result_file_name);
+%saveas(h5,gamma_result_file_name);
+exportgraphics(h5,gamma_result_file_name);
+
 % % 
 %  close(test_h);
 

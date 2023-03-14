@@ -129,6 +129,8 @@ dicomwrite(DoseImage2,epid_dose_image_name,header,'CreateMode','copy');
  
  % move dicom image origin
  
+ 
+ 
  dicomMoveOrigin3(epid_dose_image_name);
  
  % turn image to 90 degree for pinalce

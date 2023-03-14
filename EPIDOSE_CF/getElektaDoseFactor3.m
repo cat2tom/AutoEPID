@@ -19,9 +19,23 @@ DI = double(pixel_data);%convert 16bit data to double
  
 %end
 
+% if strcmp(his_station_name,' M3VERSA-iview')
+%      
+%     DI=DI;
+%     disp('test');
+% else
+%     
+% DI=-(DI-2^16);    
+%  
+% end
+
+
  DI=-(DI-2^16);
 
 DISum = DI/ref_PSF;
+
+%imagesc(DISum);
+
 
 
 [row,col]=size(DISum);
