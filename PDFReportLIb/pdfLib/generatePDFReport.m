@@ -16,23 +16,14 @@ function pdf_path_file_name=generatePDFReport(pdf_path_file_name,patient_name,mr
 %}
 
 
+
+
+
 % loading the java package. 
 import java.io.FileOutputStream
 
 import java.io.IOException
 
-% In order to make compiled version work, the dynamic path has to be added
-% here. 
-
-javaaddpath('C:/autoMRISimQAResource/javaJarFiles/sqlite-jdbc-3.8.11.2.jar')% for compiling.
-
-javaaddpath('C:/autoMRISimQAResource/javaJarFiles/itextpdf-5.5.7.jar')
-
-javaaddpath('C:/autoMRISimQAResource/javaJarFiles/itext-pdfa-5.5.7.jar')
-
-javaaddpath('C:/autoMRISimQAResource/javaJarFiles/itext-xtra-5.5.7.jar')
-
-javaaddpath('C:/autoMRISimQAResource/javaJarFiles/itext-xtra-5.5.7.jar')
 
 import com.itextpdf.text.*
 

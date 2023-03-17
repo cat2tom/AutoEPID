@@ -73,16 +73,12 @@ handles.output = hObject;
 handles.reference_epid='No';
 
 
+
 % read configration file from N driver. It is a configure file.
 
 
 epidRootConfigFile='V:\CTC-LiverpoolOncology-Physics\IMRT\PatientQA\autoEPIDConfigfile\autoEPIDRootConfig.ini';
 
-% epidConfigFile='C:\temp\temp51\autoEPIDDirConfigBeta.ini';
-
-% epidConfigFile='C:\autoEPIDConfigfile\autoEPIDDirConfig.ini';
-
-%epidConfigFile='C:\autoEPIDConfigfile\autoEPIDDirConfig_beta.ini';
 
 
  [clinical_configFile,beta_configFile] = readAutoEPIDRootConfigFile(epidRootConfigFile); 
@@ -106,7 +102,27 @@ else
 end 
     
 
-[deleteNetWork,mapNetWork,patientInputDir,dicomTemplateDir,imrtOutputDir,vmatOutputDir,epidCalFile,version_info,escan_dir,backupPatientInputDir,patient_mat_dir] = readAutoEPIDConfigFile(epidConfigFile );
+[deleteNetWork,mapNetWork,patientInputDir,dicomTemplateDir,imrtOutputDir,vmatOutputDir,epidCalFile,version_info,escan_dir,backupPatientInputDir,patient_mat_dir,jar_dir] = readAutoEPIDConfigFile(epidConfigFile );
+
+eventLogger('Started to map V driver','INFO','AutoEPID');
+
+delete_status=system(deleteNetWork);
+
+map_status=system(mapNetWork);
+
+
+if map_status==0
+    
+    
+    eventLogger('V driver was sucessfully mapped','INFO','AutoEPID');
+    
+    
+else
+    
+    eventLogger('V driver is already in use or Could not be mapped.','INFO','AutoEPID');
+  
+        
+end 
 
 
 % set program vesion 
@@ -114,7 +130,7 @@ end
 set(handles.auto_epid_main,'name',version_info);
 
 
-eventLogger('Started to map U driver','INFO','AutoEPID');
+eventLogger('Started to map V driver','INFO','AutoEPID');
 
 delete_status=system(deleteNetWork);
 map_status=system(mapNetWork);
@@ -123,17 +139,33 @@ map_status=system(mapNetWork);
 if map_status==0
     
     
-    eventLogger('Udriver was sucessfully mapped','INFO','AutoEPID');
+    eventLogger(' V driver was sucessfully mapped','INFO','AutoEPID');
     
     
 else
     
-    eventLogger('U driver is already in use or Could not be mapped.','INFO','AutoEPID');
+    eventLogger(' V driver is already in use or Could not be mapped.','INFO','AutoEPID');
   
         
 end 
 
-% to see if U driver exist on server. 
+
+% jar_dir='V:\CTC-LiverpoolOncology-Physics\IMRT\PatientQA\autoEPIDConfigfile\itextJarFiles';
+
+
+javaaddpath(fullfile(jar_dir,'itextpdf-5.5.7.jar'));
+
+javaaddpath(fullfile(jar_dir,'itext-pdfa-5.5.7.jar'));
+
+javaaddpath(fullfile(jar_dir,'itext-xtra-5.5.7.jar'));
+
+javaaddpath(fullfile(jar_dir,'itext-xtra-5.5.7.jar'));
+
+addpath(jar_dir);
+
+
+
+% to see if V driver exist on server. 
 if exist(patientInputDir,'dir')
     
     handles.patient_list_dir=patientInputDir;
@@ -154,7 +186,7 @@ else
     
     end 
     
-    msgbox(['Udriver is not accessible on server. Please copy the patient folder to ' {} backupPatientInputDir ])
+    msgbox(['V driver is not accessible on server. Please copy the patient folder to ' {} backupPatientInputDir ])
     
     
 end
