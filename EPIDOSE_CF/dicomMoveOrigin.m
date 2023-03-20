@@ -26,7 +26,6 @@ y=col*resolution;
 
 % set the new origin for scaled images
 
-%info1.RTImagePosition=-x/2.0;
 
 info1.RTImagePosition=[-x/2.0; x/2.0];
 
