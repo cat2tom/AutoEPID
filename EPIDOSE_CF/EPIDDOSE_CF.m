@@ -14,9 +14,6 @@ function EPIDDOSE_CF(handles)
 
 
 
-% v_driver_dir='V:\IMRT_Patient_QA';
-% h_driver_dir='H:\IMRT\PatientQA\2015\IMRT';
-
 v_driver_dir=handles.patient_list_dir;
 
 

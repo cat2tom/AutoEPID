@@ -22,16 +22,16 @@ function varargout = epidcal3(varargin)
 
 % Edit the above text to modify the response to help epidcal3
 
-% Last Modified by GUIDE v2.5 22-Mar-2018 14:01:54
+% Last Modified by GUIDE v2.5 18-Jul-2024 11:50:08
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
-                   'gui_Singleton',  gui_Singleton, ...
-                   'gui_OpeningFcn', @epidcal3_OpeningFcn, ...
-                   'gui_OutputFcn',  @epidcal3_OutputFcn, ...
-                   'gui_LayoutFcn',  [] , ...
-                   'gui_Callback',   []);
+    'gui_Singleton',  gui_Singleton, ...
+    'gui_OpeningFcn', @epidcal3_OpeningFcn, ...
+    'gui_OutputFcn',  @epidcal3_OutputFcn, ...
+    'gui_LayoutFcn',  [] , ...
+    'gui_Callback',   []);
 if nargin && ischar(varargin{1})
     gui_State.gui_Callback = str2func(varargin{1});
 end
@@ -78,11 +78,11 @@ set(handles.machine_list,'selectedObject','');
 set(handles.fff,'value',0);
 
 % if strcmp(handles.machine_list,'M5')
-%     
+%
 %     set(handles.dose,'String','93.9');
-%     
+%
 % else
-%     
+%
 %     set(handles.dose,'String','100')
 % end
 
@@ -94,7 +94,7 @@ guidata(hObject, handles);
 
 
 % --- Outputs from this function are returned to the command line.
-function varargout = epidcal3_OutputFcn(hObject, eventdata, handles) 
+function varargout = epidcal3_OutputFcn(hObject, eventdata, handles)
 % varargout  cell array for returning output args (see VARARGOUT);
 % hObject    handle to figure
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -202,7 +202,7 @@ beam_type_tmp=handles.beam_type;
 
 
 % get machine name
-machine=handles.machine;
+machine=handles.machine
 
 ref_mu=str2double(get(handles.MU,'String'));
 
@@ -214,10 +214,10 @@ output_dir=get(handles.output_dir,'string');
 % get message box pop up if no physicist selectecd.
 
 if ~isfield(handles,'physicist')
-    
+
     msgbox('Please select a physicist');
-    
-end 
+
+end
 
 physicist=handles.physicist;
 
@@ -226,51 +226,75 @@ epid_dir=handles.epid_dir;
 cal_file_name='';
 
 switch machine
-    
-    case {'M1','M2','M3','M4','M5','M7'}
-        
-        [file,path]=uigetfile('.LOG','Please select log file',epid_dir);
-        
-        dir_log_file_name=fullfile(path,file);
-        
-    
-        
-        cal_S = EPIDCalibration_Callback_Elekta(machine,ref_mu,dose,epid_image_file, dir_log_file_name, output_dir,physicist);
-        
-        if strcmp(beam_type_tmp,'fff')
-            
-           cal_file_name  = writeEPIDCalFactorFFF(output_dir,machine,beam_type_tmp,cal_S);
-            
-        end 
-        
-        if strcmp(beam_type_tmp,'none_fff')
-            
-           cal_file_name  = writeEPIDCalFactor(output_dir,machine,cal_S);
-            
-        end 
-        
-%         cal_file_name  = writeEPIDCalFactor(output_dir,machine,cal_S)
-        
-      
-        
-    case {'M33'}
-        
-        cal_S = EPIDCalibration_Callback_Siemens(machine,ref_mu,dose,epid_image_file, output_dir,physicist);
-        
-        cal_file_name  = writeEPIDCalFactor(output_dir,machine,cal_S);
-        
-          
-end 
 
- tmp10=strcat('Done! saved CF at:   ','     ',cal_file_name);
-        
- set(handles.status_bar,'String',tmp10);
- 
- %load cal_file and write it to an txt file for QATrack.
- 
- load(cal_file_name);
- 
-      
+    case {'M1','M2','M3','M4','M5','M7'}
+
+        [file,path]=uigetfile('.LOG','Please select log file',epid_dir);
+
+        dir_log_file_name=fullfile(path,file);
+
+
+
+        cal_S = EPIDCalibration_Callback_Elekta(machine,ref_mu,dose,epid_image_file, dir_log_file_name, output_dir,physicist);
+
+        if strcmp(beam_type_tmp,'fff')
+
+            cal_file_name  = writeEPIDCalFactorFFF(output_dir,machine,beam_type_tmp,cal_S);
+
+        end
+
+        if strcmp(beam_type_tmp,'none_fff')
+
+            cal_file_name  = writeEPIDCalFactor(output_dir,machine,cal_S);
+
+        end
+
+        %         cal_file_name  = writeEPIDCalFactor(output_dir,machine,cal_S)
+
+
+
+    case {'L1','L2','L3'}
+
+
+
+        [file,path]=uigetfile('.LOG','Please select log file',epid_dir);
+
+        dir_log_file_name=fullfile(path,file);
+
+
+
+        cal_S = EPIDCalibration_Callback_Elekta(machine,ref_mu,dose,epid_image_file, dir_log_file_name, output_dir,physicist)
+
+        if strcmp(beam_type_tmp,'fff')
+
+            cal_file_name  = writeEPIDCalFactorFFF(output_dir,machine,beam_type_tmp,cal_S);
+
+        end
+
+        if strcmp(beam_type_tmp,'none_fff')
+
+            cal_file_name  = writeEPIDCalFactor(output_dir,machine,cal_S);
+
+        end
+
+
+
+        %         cal_S = EPIDCalibration_Callback_Siemens(machine,ref_mu,dose,epid_image_file, output_dir,physicist);
+        %
+        %         cal_file_name  = writeEPIDCalFactor(output_dir,machine,cal_S);
+        %
+
+end
+
+tmp10=strcat('Done! saved CF at:   ','     ',cal_file_name);
+
+set(handles.status_bar,'String',tmp10);
+
+%load cal_file and write it to an txt file for QATrack.
+
+load(cal_file_name);
+
+
 
 
 function MU_Callback(hObject, eventdata, handles)
@@ -320,7 +344,7 @@ end
 
 % --- Executes when selected object is changed in machine_list.
 function machine_list_SelectionChangeFcn(hObject, eventdata, handles)
-% hObject    handle to the selected object in machine_list 
+% hObject    handle to the selected object in machine_list
 % eventdata  structure with the following fields (see UIBUTTONGROUP)
 %	EventName: string 'SelectionChanged' (read only)
 %	OldValue: handle of the previously selected object or empty if none was selected
@@ -337,6 +361,8 @@ guidata(hObject,handles);
 
 tmp2=handles.machine;
 
+tmp2
+
 % When machine changes, modify the handle variables.
 switch tmp2
     case 'M1'
@@ -345,24 +371,40 @@ switch tmp2
     case 'M2'
         set(handles.MU,'String',20')
         set(handles.dose,'String','93.9')
-        
+
     case 'M3'
         set(handles.MU,'String',20')
         set(handles.dose,'string','93.4')
     case 'M4'
         set(handles.MU,'String',20')
         set(handles.dose,'String','93.9')
-        
+
     case 'M5'
         set(handles.MU,'String',20')
         set(handles.dose,'String','93.9')
-        
+
     case 'M7'
-        
+
         set(handles.MU,'String',20);
         set(handles.dose,'String','93.9')
-        
-end        
+
+    case 'L1'
+
+        set(handles.MU,'String',20);
+        set(handles.dose,'String','93.9')
+
+    case 'L2'
+
+        set(handles.MU,'String',20);
+        set(handles.dose,'String','93.9')
+
+    case 'L3'
+
+        set(handles.MU,'String',20);
+        set(handles.dose,'String','93.9')
+
+
+end
 
 
 % --- Executes on selection change in selected_date_list.
@@ -374,225 +416,324 @@ function selected_date_list_Callback(hObject, eventdata, handles)
 % Hints: contents = cellstr(get(hObject,'String')) returns selected_date_list contents as cell array
 %        contents{get(hObject,'Value')} returns selected item from selected_date_list
 
-     % clear status bar.
-     set(handles.status_bar,'string','');
+% clear status bar.
+set(handles.status_bar,'string','');
 
 
-     contents = cellstr(get(hObject,'String'));
-     
-     selected= contents{get(hObject,'Value')};
-     
-     handles.selected_delete_index=get(hObject,'Value');
-     
-     guidata(hObject,handles);
-     
-    
-     
-     
-     % find the index and other parts of contents
-     
+contents = cellstr(get(hObject,'String'));
+
+selected= contents{get(hObject,'Value')};
+
+handles.selected_delete_index=get(hObject,'Value');
+
+guidata(hObject,handles);
+
+
+
+
+% find the index and other parts of contents
+
 %      index=length(contents);
-     
-     tmp2=handles.machine;
 
-    switch tmp2
-       
+tmp2=handles.machine;
+
+switch tmp2
+
     case 'M1'
-        
-         % get CF list to cell 
-        
-         
-         tmp=handles.M1_CAL;
-       
-         index=length(tmp);
-          
-         
-          
-          for k=1:length(contents)
-         
-           tmp1=tmp(k).date;
-           
-         
+
+        % get CF list to cell
+
+
+        tmp=handles.M1_CAL;
+
+        index=length(tmp);
+
+
+
+        for k=1:length(contents)
+
+            tmp1=tmp(k).date;
+
+
             if strcmp(selected,tmp1)
-                
+
                 index=k;
-            end 
-            
-          end 
-        
-         handles.selected_index=index;
-         
-         handles.selected_cf_item=tmp(index);
-         
-              
-         
-                  
-         tmp5=handles.selected_cf_item;
-         
-         set(handles.selected_cf,'string',num2str(tmp5.cal_factor));
-         set(handles.selected_physicist,'string',tmp5.physicist);
-         
-         guidata(hObject,handles);
-    %        
+            end
+
+        end
+
+        handles.selected_index=index;
+
+        handles.selected_cf_item=tmp(index);
+
+
+
+
+        tmp5=handles.selected_cf_item;
+
+        set(handles.selected_cf,'string',num2str(tmp5.cal_factor));
+        set(handles.selected_physicist,'string',tmp5.physicist);
+
+        guidata(hObject,handles);
+        %
     case 'M2'
-       
-          tmp=handles.M2_CAL;
-       
-          index=length(tmp);
-          
-          for k=1:length(contents)
-         
-           tmp1=tmp(k).date;
-           
-         
+
+        tmp=handles.M2_CAL;
+
+        index=length(tmp);
+
+        for k=1:length(contents)
+
+            tmp1=tmp(k).date;
+
+
             if strcmp(selected,tmp1)
-                
+
                 index=k;
-            end 
-            
-          end 
-        
-         handles.selected_index=index;
-         
-         handles.selected_cf_item=tmp(index);
-         
-         guidata(hObject,handles);
-         tmp5=handles.selected_cf_item;
-         
-         set(handles.selected_cf,'string',num2str(tmp5.cal_factor));
-         set(handles.selected_physicist,'string',tmp5.physicist);
-         
-            
-        
-        
+            end
+
+        end
+
+        handles.selected_index=index;
+
+        handles.selected_cf_item=tmp(index);
+
+        guidata(hObject,handles);
+        tmp5=handles.selected_cf_item;
+
+        set(handles.selected_cf,'string',num2str(tmp5.cal_factor));
+        set(handles.selected_physicist,'string',tmp5.physicist);
+
+
+
+
     case 'M3'
-        
-          tmp=handles.M3_CAL;
-       
-          index=length(tmp);
-          
-          for k=1:length(contents)
-         
-           tmp1=tmp(k).date;
-           
-         
+
+        tmp=handles.M3_CAL;
+
+        index=length(tmp);
+
+        for k=1:length(contents)
+
+            tmp1=tmp(k).date;
+
+
             if strcmp(selected,tmp1)
-                
+
                 index=k;
-            end 
-            
-          end 
-        
-         handles.selected_index=index;
-         
-         handles.selected_cf_item=tmp(index);
-         
-         guidata(hObject,handles);
-         
-         tmp5=handles.selected_cf_item;
-         
-         set(handles.selected_cf,'string',num2str(tmp5.cal_factor));
-         set(handles.selected_physicist,'string',tmp5.physicist);
-         
-         
-         
+            end
+
+        end
+
+        handles.selected_index=index;
+
+        handles.selected_cf_item=tmp(index);
+
+        guidata(hObject,handles);
+
+        tmp5=handles.selected_cf_item;
+
+        set(handles.selected_cf,'string',num2str(tmp5.cal_factor));
+        set(handles.selected_physicist,'string',tmp5.physicist);
+
+
+
     case 'M4'
-        
-          tmp=handles.M4_CAL;
-       
-          index=length(tmp);
-          
-          for k=1:length(tmp)
-         
-           tmp1=tmp(k).date;
-           
-         
+
+        tmp=handles.M4_CAL;
+
+        index=length(tmp);
+
+        for k=1:length(tmp)
+
+            tmp1=tmp(k).date;
+
+
             if strcmp(selected,tmp1)
-                
+
                 index=k;
-            end 
-            
-          end 
-        
-         handles.selected_index=index;
-         
-         handles.selected_cf_item=tmp(index);
-         
-         guidata(hObject,handles);
-         
-         tmp5=handles.selected_cf_item;
-         
-         set(handles.selected_cf,'string',num2str(tmp5.cal_factor));
-         set(handles.selected_physicist,'string',tmp5.physicist);
-         
-         
-         
-      case 'M5'
-         
-          tmp=handles.M5_CAL;
-       
-          index=length(tmp);
-          
-          for k=1:length(tmp)
-         
-           tmp1=tmp(k).date;
-           
-         
+            end
+
+        end
+
+        handles.selected_index=index;
+
+        handles.selected_cf_item=tmp(index);
+
+        guidata(hObject,handles);
+
+        tmp5=handles.selected_cf_item;
+
+        set(handles.selected_cf,'string',num2str(tmp5.cal_factor));
+        set(handles.selected_physicist,'string',tmp5.physicist);
+
+
+
+    case 'M5'
+
+        tmp=handles.M5_CAL;
+
+        index=length(tmp);
+
+        for k=1:length(tmp)
+
+            tmp1=tmp(k).date;
+
+
             if strcmp(selected,tmp1)
-                
+
                 index=k;
-            end 
-            
-          end 
-        
-         handles.selected_index=index;
-         
-         handles.selected_cf_item=tmp(index);
-         
-         guidata(hObject,handles);
-         
-         tmp5=handles.selected_cf_item;
-         
-         set(handles.selected_cf,'string',num2str(tmp5.cal_factor));
-         set(handles.selected_physicist,'string',tmp5.physicist);
-          
-     case 'M7'
-         
-          tmp=handles.M7_CAL;
-       
-          index=length(tmp);
-          
-          for k=1:length(tmp)
-         
-           tmp1=tmp(k).date;
-           
-         
+            end
+
+        end
+
+        handles.selected_index=index;
+
+        handles.selected_cf_item=tmp(index);
+
+        guidata(hObject,handles);
+
+        tmp5=handles.selected_cf_item;
+
+        set(handles.selected_cf,'string',num2str(tmp5.cal_factor));
+        set(handles.selected_physicist,'string',tmp5.physicist);
+
+    case 'M7'
+
+        tmp=handles.M7_CAL;
+
+        index=length(tmp);
+
+        for k=1:length(tmp)
+
+            tmp1=tmp(k).date;
+
+
             if strcmp(selected,tmp1)
-                
+
                 index=k;
-            end 
-            
-          end 
-        
-         handles.selected_index=index;
-         
-         handles.selected_cf_item=tmp(index);
-         
-         guidata(hObject,handles);
-         
-         tmp7=handles.selected_cf_item;
-         
-         set(handles.selected_cf,'string',num2str(tmp7.cal_factor));
-         set(handles.selected_physicist,'string',tmp7.physicist);       
-         
-        
-          
-   end        
-   
-   
-    
+            end
+
+        end
+
+        handles.selected_index=index;
+
+        handles.selected_cf_item=tmp(index);
+
+        guidata(hObject,handles);
+
+        tmp7=handles.selected_cf_item;
+
+        set(handles.selected_cf,'string',num2str(tmp7.cal_factor));
+        set(handles.selected_physicist,'string',tmp7.physicist);
+
+
+
+        % L1
+
+    case 'L1'
+
+        tmp=handles.L1_CAL;
+
      
-    
+        index=length(tmp);
+
+        for k=1:length(tmp)
+
+            tmp1=tmp(k).date;
+
+
+            if strcmp(selected,tmp1)
+
+                index=k;
+            end
+
+        end
+
+        handles.selected_index=index;
+
+        handles.selected_cf_item=tmp(index);
+
+        guidata(hObject,handles);
+
+        tmp7=handles.selected_cf_item;
+
+        set(handles.selected_cf,'string',num2str(tmp7.cal_factor));
+        set(handles.selected_physicist,'string',tmp7.physicist);
+
+
+        % L2
+
+    case 'L2'
+
+        tmp=handles.L2_CAL;
+
+        index=length(tmp);
+
+        for k=1:length(tmp)
+
+            tmp1=tmp(k).date;
+
+
+            if strcmp(selected,tmp1)
+
+                index=k;
+            end
+
+        end
+
+        handles.selected_index=index;
+
+        handles.selected_cf_item=tmp(index);
+
+        guidata(hObject,handles);
+
+        tmp7=handles.selected_cf_item;
+
+        set(handles.selected_cf,'string',num2str(tmp7.cal_factor));
+        set(handles.selected_physicist,'string',tmp7.physicist);
+
+
+        % L3
+
+
+    case 'L3'
+
+        tmp=handles.L3_CAL;
+
+        index=length(tmp);
+
+        for k=1:length(tmp)
+
+            tmp1=tmp(k).date;
+
+
+            if strcmp(selected,tmp1)
+
+                index=k;
+            end
+
+        end
+
+        handles.selected_index=index;
+
+        handles.selected_cf_item=tmp(index);
+
+        guidata(hObject,handles);
+
+        tmp7=handles.selected_cf_item;
+
+        set(handles.selected_cf,'string',num2str(tmp7.cal_factor));
+        set(handles.selected_physicist,'string',tmp7.physicist);
+
+
+
+end
+
+
+
+
+
 
 % --- Executes during object creation, after setting all properties.
 function selected_date_list_CreateFcn(hObject, eventdata, handles)
@@ -666,61 +807,102 @@ output_dir=get(handles.output_dir,'string');
 
 
 switch tmp_machine
-    
+
     case 'M1'
-        
-           
+
+
         last_calS=handles.selected_cf_item;
-                    
+
         cal_file_name  = writeEPIDCalFactor(output_dir,tmp_machine,last_calS);
-        
+
         set(handles.status_bar,'string','The CF you selected was set default CF');
-        
+
     case 'M2'
-        
-       
-        
+
+
+
         last_calS=handles.selected_cf_item;
-                    
+
         cal_file_name  = writeEPIDCalFactor(output_dir,tmp_machine,last_calS);
-        
-               
+
+
         set(handles.status_bar,'string','The CF you selected was set default CF');
-              
-        
+
+
     case 'M3'
-        
-               
+
+
         last_calS=handles.selected_cf_item;
-                    
+
         cal_file_name  = writeEPIDCalFactor(output_dir,tmp_machine,last_calS);
-        
-        
+
+
         set(handles.status_bar,'string','The CF you selected was set default CF');
-              
+
     case 'M4'
-        
-        
-       last_calS=handles.selected_cf_item;
-                    
-       cal_file_name  = writeEPIDCalFactor(output_dir,tmp_machine,last_calS);
-        
-       set(handles.status_bar,'string','The CF you selected was set default CF');
-       
+
+
+        last_calS=handles.selected_cf_item;
+
+        cal_file_name  = writeEPIDCalFactor(output_dir,tmp_machine,last_calS);
+
+        set(handles.status_bar,'string','The CF you selected was set default CF');
+
     case 'M5'
-        
-        
-       last_calS=handles.selected_cf_item;
-                    
-       cal_file_name  = writeEPIDCalFactor(output_dir,tmp_machine,last_calS);
-        
-       set(handles.status_bar,'string','The CF you selected was set default CF');
-              
-             
-        
-end 
-    
-    
+
+
+        last_calS=handles.selected_cf_item;
+
+        cal_file_name  = writeEPIDCalFactor(output_dir,tmp_machine,last_calS);
+
+        set(handles.status_bar,'string','The CF you selected was set default CF');
+
+
+    case 'M7'
+
+
+        last_calS=handles.selected_cf_item;
+
+        cal_file_name  = writeEPIDCalFactor(output_dir,tmp_machine,last_calS);
+
+        set(handles.status_bar,'string','The CF you selected was set default CF');
+
+
+    case 'L1'
+
+
+        last_calS=handles.selected_cf_item;
+
+        cal_file_name  = writeEPIDCalFactor(output_dir,tmp_machine,last_calS);
+
+        set(handles.status_bar,'string','The CF you selected was set default CF');
+
+
+    case 'L2'
+
+
+        last_calS=handles.selected_cf_item;
+
+        cal_file_name  = writeEPIDCalFactor(output_dir,tmp_machine,last_calS);
+
+        set(handles.status_bar,'string','The CF you selected was set default CF');
+
+
+    case 'L3'
+
+
+        last_calS=handles.selected_cf_item;
+
+        cal_file_name  = writeEPIDCalFactor(output_dir,tmp_machine,last_calS);
+
+        set(handles.status_bar,'string','The CF you selected was set default CF');
+
+
+
+
+end
+
+
 
 
 % --- Executes on button press in pushbutton5.
@@ -737,13 +919,6 @@ function pushbutton6_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 
-%[file,path]=uigetfile('H:\IMRT\PatientQA\AUTOEPIDRESOURCE','Please select the file you want to inspect');
-
-% [file,path]=uigetfile('C:\aitangResearch\AutoEPID_developement\EPIDCalibration','Please select the file you want to inspect');
-
-
-%cal_file=fullfile(path,file);
-
 cal_file=getappdata(0,'cal_file');
 
 handles.selected_cal_file=cal_file;
@@ -752,267 +927,365 @@ guidata(hObject,handles);
 
 
 if ~(cal_file==0)
-    
-   handles.selected_cal_file=cal_file;
-   
-   guidata(hObject,handles);
-   
-   
-   load(cal_file);
-   
-   
-   handles.M1_CAL=M1_CAL;
-   
-   handles.M2_CAL=M2_CAL;
-   
-   handles.M3_CAL=M3_CAL;
-   
-   handles.M4_CAL=M4_CAL;
-   
-   handles.M5_CAL=M5_CAL;
-   
-   handles.M7_CAL=M7_CAL;
-   
-   guidata(hObject,handles);
-   % get 
-   tmp2=handles.machine;
 
-   switch tmp2
-    case 'M1'
-        
-         % get CF list to cell 
-        
-         
-        tmp=M1_CAL;
-        cf_list={};
-        for k=1:length(tmp)
-            
-           cf_list{k}=tmp(k).date ;
-            
-        end 
-        
-        % convert struct to 2d cell array
-        table_data={};
-         for k=1:length(tmp)
-            
-           table_data{k,1}=tmp(k).machine_name ;
-           
-           table_data{k,2}=tmp(k).cal_factor;
-           
-           table_data{k,3}=tmp(k).date ;
-            
-           table_data{k,4}=tmp(k).cal_file ;
-           
-           table_data{k,5}=tmp(k).physicist ;
-           
-        end 
-        
-        
-        % set the table value 
-        
-        
-        
-        set(handles.cal_factor_table,'data',table_data);
-        
-        
-        % 
-         set(handles.selected_date_list,'String',cf_list);
-%         
-%         index=get(handles.selected_date_list,'value');
-%         
-%         contents=get(handles.selected_date_list,'string')
-%         
-%         selected=_
-        
-        
-%         set(handles.selected_cf,'String',num2str(tmp.cal_factor));
-%         
-%         set(handles.selected_physicist,'String',tmp.physicist);
-%        
-    case 'M2'
-        tmp=M2_CAL;
-        cf_list={};
-        for k=1:length(tmp)
-            
-           cf_list{k}=tmp(k).date ;
-            
-        end 
-        
-        
-        set(handles.selected_date_list,'String',cf_list);
-        
-        
-         % convert struct to 2d cell array
-        table_data={};
-         for k=1:length(tmp)
-            
-           table_data{k,1}=tmp(k).machine_name ;
-           
-           table_data{k,2}=tmp(k).cal_factor;
-           
-           table_data{k,3}=tmp(k).date ;
-            
-           table_data{k,4}=tmp(k).cal_file ;
-           
-           table_data{k,5}=tmp(k).physicist ;
-           
-        end 
-        
-         set(handles.cal_factor_table,'data',table_data);
-        
-        
-        
-%         set(handles.selected_cf,'String',num2str(tmp.cal_factor));
-%         
-%         set(handles.selected_physicist,'String',tmp.physicist);
-    case 'M3'
-        tmp=M3_CAL;
-        cf_list={};
-        for k=1:length(tmp)
-            
-           cf_list{k}=tmp(k).date ;
-            
-        end 
-        
-        
-        set(handles.selected_date_list,'String',cf_list);
-        
-        
-        
-         % convert struct to 2d cell array
-        table_data={};
-         for k=1:length(tmp)
-            
-           table_data{k,1}=tmp(k).machine_name ;
-           
-           table_data{k,2}=tmp(k).cal_factor;
-           
-           table_data{k,3}=tmp(k).date ;
-            
-           table_data{k,4}=tmp(k).cal_file ;
-           
-           table_data{k,5}=tmp(k).physicist ;
-           
-        end 
-        
-        
-         set(handles.cal_factor_table,'data',table_data);
-        
-        
-        
-        
-%         set(handles.selected_cf,'String',num2str(tmp.cal_factor));
-%         
-%         set(handles.selected_physicist,'String',tmp.physicist);    case 'M4'
-    case 'M4'
-        tmp=M4_CAL;
-        cf_list={};
-        for k=1:length(tmp)
-            
-           cf_list{k}=tmp(k).date ;
-            
-        end 
-        
-        
-        set(handles.selected_date_list,'String',cf_list);
-        
-         % convert struct to 2d cell array
-        table_data={};
-         for k=1:length(tmp)
-            
-           table_data{k,1}=tmp(k).machine_name ;
-           
-           table_data{k,2}=tmp(k).cal_factor;
-           
-           table_data{k,3}=tmp(k).date ;
-            
-           table_data{k,4}=tmp(k).cal_file ;
-           
-           table_data{k,5}=tmp(k).physicist ;
-           
-        end 
-        
-        
-         set(handles.cal_factor_table,'data',table_data);
-        
-        
-%         set(handles.selected_cf,'String',num2str(tmp.cal_factor));
-%         
-%         set(handles.selected_physicist,'String',tmp.physicist);    case 'M4'
+    handles.selected_cal_file=cal_file;
 
-%         
-     case 'M5'
-         
-        tmp=M5_CAL;
-        cf_list={};
-        for k=1:length(tmp)
+    guidata(hObject,handles);
+
+
+    load(cal_file);
+
+
+    handles.M1_CAL=M1_CAL;
+
+    handles.M2_CAL=M2_CAL;
+
+    handles.M3_CAL=M3_CAL;
+
+    handles.M4_CAL=M4_CAL;
+
+    handles.M5_CAL=M5_CAL;
+
+    handles.M7_CAL=M7_CAL;
+
+    handles.L1_CAL=L1_CAL;
+
+    handles.L2_CAL=L2_CAL;
+
+    handles.L3_CAL=L3_CAL;
+
+    guidata(hObject,handles);
+    % get machine.
+
+    tmp2=handles.machine;
+
+    switch tmp2
+        case 'M1'
+
+            % get CF list to cell
+
+
+            tmp=M1_CAL;
+            cf_list={};
+            for k=1:length(tmp)
+
+                cf_list{k}=tmp(k).date ;
+
+            end
+
+            % convert struct to 2d cell array
+            table_data={};
+            for k=1:length(tmp)
+
+                table_data{k,1}=tmp(k).machine_name ;
+
+                table_data{k,2}=tmp(k).cal_factor;
+
+                table_data{k,3}=tmp(k).date ;
+
+                table_data{k,4}=tmp(k).cal_file ;
+
+                table_data{k,5}=tmp(k).physicist ;
+
+            end
+
+
+            % set the table value
+
+
+
+            set(handles.cal_factor_table,'data',table_data);
+
+
+            %
+            set(handles.selected_date_list,'String',cf_list);
+
+        case 'M2'
+            tmp=M2_CAL;
+            cf_list={};
+            for k=1:length(tmp)
+
+                cf_list{k}=tmp(k).date ;
+
+            end
+
+
+            set(handles.selected_date_list,'String',cf_list);
+
+
+            % convert struct to 2d cell array
+            table_data={};
+            for k=1:length(tmp)
+
+                table_data{k,1}=tmp(k).machine_name ;
+
+                table_data{k,2}=tmp(k).cal_factor;
+
+                table_data{k,3}=tmp(k).date ;
+
+                table_data{k,4}=tmp(k).cal_file ;
+
+                table_data{k,5}=tmp(k).physicist ;
+
+            end
+
+            set(handles.cal_factor_table,'data',table_data);
+
+
+
+          
+        case 'M3'
+            tmp=M3_CAL;
+            cf_list={};
+            for k=1:length(tmp)
+
+                cf_list{k}=tmp(k).date ;
+
+            end
+
+
+            set(handles.selected_date_list,'String',cf_list);
+
+
+
+            % convert struct to 2d cell array
+            table_data={};
+            for k=1:length(tmp)
+
+                table_data{k,1}=tmp(k).machine_name ;
+
+                table_data{k,2}=tmp(k).cal_factor;
+
+                table_data{k,3}=tmp(k).date ;
+
+                table_data{k,4}=tmp(k).cal_file ;
+
+                table_data{k,5}=tmp(k).physicist ;
+
+            end
+
+
+            set(handles.cal_factor_table,'data',table_data);
+
+
+
+        case 'M4'
+            tmp=M4_CAL;
+            cf_list={};
+            for k=1:length(tmp)
+
+                cf_list{k}=tmp(k).date ;
+
+            end
+
+
+            set(handles.selected_date_list,'String',cf_list);
+
+            % convert struct to 2d cell array
+            table_data={};
+            for k=1:length(tmp)
+
+                table_data{k,1}=tmp(k).machine_name ;
+
+                table_data{k,2}=tmp(k).cal_factor;
+
+                table_data{k,3}=tmp(k).date ;
+
+                table_data{k,4}=tmp(k).cal_file ;
+
+                table_data{k,5}=tmp(k).physicist ;
+
+            end
+
+
+            set(handles.cal_factor_table,'data',table_data);
+
+
+
+            %
+        case 'M5'
+
+            tmp=M5_CAL;
+            cf_list={};
+            for k=1:length(tmp)
+
+                cf_list{k}=tmp(k).date ;
+
+            end
+
+
+            set(handles.selected_date_list,'String',cf_list);
+
+
+            % convert struct to 2d cell array
+            table_data={};
+            for k=1:length(tmp)
+
+                table_data{k,1}=tmp(k).machine_name ;
+
+                table_data{k,2}=tmp(k).cal_factor;
+
+                table_data{k,3}=tmp(k).date ;
+
+                table_data{k,4}=tmp(k).cal_file ;
+
+                table_data{k,5}=tmp(k).physicist ;
+
+            end
+
+            set(handles.cal_factor_table,'data',table_data);
+
+        case 'M7'
+
+            tmp=M7_CAL;
+            cf_list={};
+            for k=1:length(tmp)
+
+                cf_list{k}=tmp(k).date ;
+
+            end
+
+
+            set(handles.selected_date_list,'String',cf_list);
+
+
+            % convert struct to 2d cell array
+
+            table_data={};
+            for k=1:length(tmp)
+
+                table_data{k,1}=tmp(k).machine_name ;
+
+                table_data{k,2}=tmp(k).cal_factor;
+
+                table_data{k,3}=tmp(k).date ;
+
+                table_data{k,4}=tmp(k).cal_file ;
+
+                table_data{k,5}=tmp(k).physicist ;
+
+            end
+
+            set(handles.cal_factor_table,'data',table_data);
+
+
+            % L1
+
+            case 'L1'
+
+            tmp=L1_CAL;
+            cf_list={};
+            for k=1:length(tmp)
+
+                cf_list{k}=tmp(k).date ;
+
+            end
+
+
+            set(handles.selected_date_list,'String',cf_list);
+
+
+            % convert struct to 2d cell array
             
-           cf_list{k}=tmp(k).date ;
+            table_data={};
+            for k=1:length(tmp)
+
+                table_data{k,1}=tmp(k).machine_name ;
+
+                table_data{k,2}=tmp(k).cal_factor;
+
+                table_data{k,3}=tmp(k).date ;
+
+                table_data{k,4}=tmp(k).cal_file ;
+
+                table_data{k,5}=tmp(k).physicist ;
+
+            end
+
+            set(handles.cal_factor_table,'data',table_data);
+
+
+             % L2
+
+            case 'L2'
+
+            tmp=L1_CAL;
+            cf_list={};
+            for k=1:length(tmp)
+
+                cf_list{k}=tmp(k).date ;
+
+            end
+
+
+            set(handles.selected_date_list,'String',cf_list);
+
+
+            % convert struct to 2d cell array
             
-        end 
-        
-        
-        set(handles.selected_date_list,'String',cf_list);
-        
-        
-         % convert struct to 2d cell array
-        table_data={};
-         for k=1:length(tmp)
+            table_data={};
+            for k=1:length(tmp)
+
+                table_data{k,1}=tmp(k).machine_name ;
+
+                table_data{k,2}=tmp(k).cal_factor;
+
+                table_data{k,3}=tmp(k).date ;
+
+                table_data{k,4}=tmp(k).cal_file ;
+
+                table_data{k,5}=tmp(k).physicist ;
+
+            end
+
+            set(handles.cal_factor_table,'data',table_data);
+
+
+
+             % L3
+
+            case 'L3'
+
+            tmp=L1_CAL;
+            cf_list={};
+            for k=1:length(tmp)
+
+                cf_list{k}=tmp(k).date ;
+
+            end
+
+
+            set(handles.selected_date_list,'String',cf_list);
+
+
+            % convert struct to 2d cell array
             
-           table_data{k,1}=tmp(k).machine_name ;
-           
-           table_data{k,2}=tmp(k).cal_factor;
-           
-           table_data{k,3}=tmp(k).date ;
-            
-           table_data{k,4}=tmp(k).cal_file ;
-           
-           table_data{k,5}=tmp(k).physicist ;
-           
-         end 
-        
-          set(handles.cal_factor_table,'data',table_data);
-        
-    case 'M7'
-         
-        tmp=M7_CAL;
-        cf_list={};
-        for k=1:length(tmp)
-            
-           cf_list{k}=tmp(k).date ;
-            
-        end 
-        
-        
-        set(handles.selected_date_list,'String',cf_list);
-        
-        
-         % convert struct to 2d cell array
-        table_data={};
-         for k=1:length(tmp)
-            
-           table_data{k,1}=tmp(k).machine_name ;
-           
-           table_data{k,2}=tmp(k).cal_factor;
-           
-           table_data{k,3}=tmp(k).date ;
-            
-           table_data{k,4}=tmp(k).cal_file ;
-           
-           table_data{k,5}=tmp(k).physicist ;
-           
-         end  
-        
-          set(handles.cal_factor_table,'data',table_data);
-         
-        
-   end        
-   
-   
-   
-end 
- 
- 
+            table_data={};
+            for k=1:length(tmp)
+
+                table_data{k,1}=tmp(k).machine_name ;
+
+                table_data{k,2}=tmp(k).cal_factor;
+
+                table_data{k,3}=tmp(k).date ;
+
+                table_data{k,4}=tmp(k).cal_file ;
+
+                table_data{k,5}=tmp(k).physicist ;
+
+            end
+
+            set(handles.cal_factor_table,'data',table_data);
+
+
+
+    end
+
+
+
+end
+
+
 % --- Executes on button press in pushbutton8.
 function pushbutton8_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton8 (see GCBO)
@@ -1021,58 +1294,116 @@ function pushbutton8_Callback(hObject, eventdata, handles)
 
 tmp_machine=handles.machine;
 index=handles.selected_index;
-output_dir=get(handles.output_dir,'string');         
+output_dir=get(handles.output_dir,'string');
 
 switch tmp_machine
-    
+
     case 'M1'
-        
-                   
+
+
         M1_CAL=handles.M1_CAL;
-        
+
         M1_CAL(index)=[];
-        
-%         M1_CAL=tmp;
-        
-        cal_file_name  = writeEPIDCalFactor(output_dir,tmp_machine,M1_CAL);      
+
+        %         M1_CAL=tmp;
+
+        cal_file_name  = writeEPIDCalFactor(output_dir,tmp_machine,M1_CAL);
         set(handles.status_bar,'string','The CF you selected was deleted');
-        
+
     case 'M2'
-        
+
         tmp=handles.M2_CAL;
-        
+
         tmp(index)=[];
-        
+
         M2_CAL=tmp;
-        
-        cal_file_name  = writeEPIDCalFactor(output_dir,tmp_machine,M2_CAL);     
+
+        cal_file_name  = writeEPIDCalFactor(output_dir,tmp_machine,M2_CAL);
         set(handles.status_bar,'string','The CF you selected was deleted');
-              
-        
+
+
     case 'M3'
-        
+
         tmp=handles.M3_CAL;
-        
+
         tmp(index)=[];
-        
+
         M3_CAL=tmp;
-        
-        cal_file_name  = writeEPIDCalFactor(output_dir,tmp_machine,M3_CAL);      
+
+        cal_file_name  = writeEPIDCalFactor(output_dir,tmp_machine,M3_CAL);
         set(handles.status_bar,'string','The CF you selected was deleted.');
-              
+
     case 'M4'
-        
+
         tmp=handles.M4_CAL;
-        
+
         tmp(index)=[];
-        
+
         M4_CAL=tmp;
-        
+
         cal_file_name  = writeEPIDCalFactor(output_dir,tmp_machine,M4_CAL);
         set(handles.status_bar,'string','The CF you selected was deleted.');
-              
-        
-end 
+
+
+     case 'M5'
+
+        tmp=handles.M5_CAL;
+
+        tmp(index)=[];
+
+        M5_CAL=tmp;
+
+        cal_file_name  = writeEPIDCalFactor(output_dir,tmp_machine,M5_CAL);
+        set(handles.status_bar,'string','The CF you selected was deleted.');
+
+
+      case 'M7'
+
+        tmp=handles.M7_CAL;
+
+        tmp(index)=[];
+
+        M7_CAL=tmp;
+
+        cal_file_name  = writeEPIDCalFactor(output_dir,tmp_machine,M7_CAL);
+        set(handles.status_bar,'string','The CF you selected was deleted.');
+
+
+      case 'L1'
+
+        tmp=handles.L1_CAL;
+
+        tmp(index)=[];
+
+        L1_CAL=tmp;
+
+        cal_file_name  = writeEPIDCalFactor(output_dir,tmp_machine,L1_CAL);
+        set(handles.status_bar,'string','The CF you selected was deleted.');
+
+      case 'L2'
+
+        tmp=handles.L2_CAL;
+
+        tmp(index)=[];
+
+        L2_CAL=tmp;
+
+        cal_file_name  = writeEPIDCalFactor(output_dir,tmp_machine,L2_CAL);
+        set(handles.status_bar,'string','The CF you selected was deleted.');
+
+
+      case 'L3'
+
+        tmp=handles.L3_CAL;
+
+        tmp(index)=[];
+
+        L3_CAL=tmp;
+
+        cal_file_name  = writeEPIDCalFactor(output_dir,tmp_machine,L3_CAL);
+        set(handles.status_bar,'string','The CF you selected was deleted.');
+
+end
 
 
 % --- Executes on button press in FFF.
@@ -1095,7 +1426,7 @@ function None_FFF_Callback(hObject, eventdata, handles)
 
 % --- Executes when selected object is changed in uipanel10.
 function uipanel10_SelectionChangeFcn(hObject, eventdata, handles)
-% hObject    handle to the selected object in uipanel10 
+% hObject    handle to the selected object in uipanel10
 % eventdata  structure with the following fields (see UIBUTTONGROUP)
 %	EventName: string 'SelectionChanged' (read only)
 %	OldValue: handle of the previously selected object or empty if none was selected
@@ -1107,16 +1438,16 @@ function uipanel10_SelectionChangeFcn(hObject, eventdata, handles)
 tmp3=get(eventdata.NewValue,'Tag');
 
 switch tmp3
-    
+
     case 'fff'
-        
+
         handles.beam_type='fff';
-        
+
     case 'none_fff'
-        
-         handles.beam_type='none_fff';
-        
-end 
+
+        handles.beam_type='none_fff';
+
+end
 
 guidata(hObject,handles);
 
@@ -1127,7 +1458,7 @@ function delete_button_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 % delete button
-% get machine 
+% get machine
 
 
 machine=handles.machine;
@@ -1135,10 +1466,10 @@ output_dir=get(handles.output_dir,'string');
 
 index_array=handles.selected_delete_index;
 
-cal_file_name  = deleteEPIDCalFactor(output_dir,machine,index_array);
+deleteEPIDCalFactor(output_dir,machine,index_array);
 
 set(handles.status_bar,'string','The CF you selected was deleted.');
- 
+
 
 
 
@@ -1172,8 +1503,6 @@ function pushbutton10_Callback(hObject, eventdata, handles)
 
 [file,path]=uigetfile('H:\IMRT\PatientQA\AUTOEPIDRESOURCE','Please select the file you want to inspect');
 
-% [file,path]=uigetfile('C:\aitangResearch\AutoEPID_developement\EPIDCalibration','Please select the file you want to inspect');
-
 
 cal_file=fullfile(path,file);
 
@@ -1182,205 +1511,329 @@ handles.selected_cal_file=cal_file;
 guidata(hObject,handles);
 
 
- tmp10=strcat('Done! sent new Cal factor to QATrack sucessfully.'  );
-        
- set(handles.status_bar,'String',tmp10);
- 
+tmp10=strcat('Done! sent new Cal factor to QATrack sucessfully.'  );
+
+set(handles.status_bar,'String',tmp10);
+
 
 if ~(cal_file==0)
-    
-   handles.selected_cal_file=cal_file;
-   
-   guidata(hObject,handles);
-   
-   
-   load(cal_file);
-   
-   
-   handles.M1_CAL=M1_CAL;
-   
-   handles.M2_CAL=M2_CAL;
-   
-   handles.M3_CAL=M3_CAL;
-   
-   handles.M4_CAL=M4_CAL;
-   
-   handles.M5_CAL=M5_CAL;
-   
-   handles.M7_CAL=M7_CAL;
-   
-   guidata(hObject,handles);
-   % get 
-   tmp2=handles.machine;
 
-   switch tmp2
-    case 'M1'
-        
-         % get CF list to cell 
-        
-         
-        tmp=M1_CAL;
-             
-        % convert struct to 2d cell array
-        table_data={};
-         for k=1:length(tmp)
-            
-           table_data{k,1}=tmp(k).machine_name ;
-           
-           table_data{k,2}=tmp(k).cal_factor;
-           
-           table_data{k,3}=tmp(k).date ;
-            
-           table_data{k,4}=tmp(k).cal_file ;
-           
-           table_data{k,5}=tmp(k).physicist ;
-           
-        end 
-        
-        
-       % write to QATrackfile
-       
-       writeCalFactorTxt( 'M1_Cal.txt',table_data)
-        
-       set(handles.status_bar,'String',tmp10);
-              
-        
-  
-    case 'M2'
-        tmp=M2_CAL;
-       
-        
-         % convert struct to 2d cell array
-        table_data={};
-         for k=1:length(tmp)
-            
-           table_data{k,1}=tmp(k).machine_name ;
-           
-           table_data{k,2}=tmp(k).cal_factor;
-           
-           table_data{k,3}=tmp(k).date ;
-            
-           table_data{k,4}=tmp(k).cal_file ;
-           
-           table_data{k,5}=tmp(k).physicist ;
-           
-        end 
-        
-           writeCalFactorTxt( 'M2_Cal.txt',table_data)
-           set(handles.status_bar,'String',tmp10);
-           
-    case 'M3'
-        tmp=M3_CAL;
-       
-        
-         % convert struct to 2d cell array
-        table_data={};
-         for k=1:length(tmp)
-            
-           table_data{k,1}=tmp(k).machine_name ;
-           
-           table_data{k,2}=tmp(k).cal_factor;
-           
-           table_data{k,3}=tmp(k).date ;
-            
-           table_data{k,4}=tmp(k).cal_file ;
-           
-           table_data{k,5}=tmp(k).physicist ;
-           
-        end 
-        
-         % write to QATrackfile
-       
-       writeCalFactorTxt( 'M3_Cal.txt',table_data)
-       set(handles.status_bar,'String',tmp10);
-         
-    case 'M4'
-        tmp=M4_CAL;
-       
-        
-              
-         % convert struct to 2d cell array
-        table_data={};
-         for k=1:length(tmp)
-            
-           table_data{k,1}=tmp(k).machine_name ;
-           
-           table_data{k,2}=tmp(k).cal_factor;
-           
-           table_data{k,3}=tmp(k).date ;
-            
-           table_data{k,4}=tmp(k).cal_file ;
-           
-           table_data{k,5}=tmp(k).physicist ;
-           
-         end 
-        
-        
-     % write to QATrackfile
-       
-       writeCalFactorTxt( 'M4_Cal.txt',table_data)
-       
-       set(handles.status_bar,'String',tmp10);
+    handles.selected_cal_file=cal_file;
 
-%         
-     case 'M5'
-         
-        tmp=M5_CAL;
-       
-     
-         % convert struct to 2d cell array
-        table_data={};
-         for k=1:length(tmp)
-            
-           table_data{k,1}=tmp(k).machine_name ;
-           
-           table_data{k,2}=tmp(k).cal_factor;
-           
-           table_data{k,3}=tmp(k).date ;
-            
-           table_data{k,4}=tmp(k).cal_file ;
-           
-           table_data{k,5}=tmp(k).physicist ;
-           
-         end 
-        
-          % write to QATrackfile
-       
-       writeCalFactorTxt( 'M5_Cal.txt',table_data)
-       
-       set(handles.status_bar,'String',tmp10);
-        
-    case 'M7'
-         
-        tmp=M7_CAL;
-      
-        
-             
-        % convert struct to 2d cell array
-        table_data={};
-         for k=1:length(tmp)
-            
-           table_data{k,1}=tmp(k).machine_name ;
-           
-           table_data{k,2}=tmp(k).cal_factor;
-           
-           table_data{k,3}=tmp(k).date ;
-            
-           table_data{k,4}=tmp(k).cal_file ;
-           
-           table_data{k,5}=tmp(k).physicist ;
-           
-         end  
-        
-           % write to QATrackfile
-       
-       writeCalFactorTxt( 'M7_Cal.txt',table_data)
-       
-       set(handles.status_bar,'String',tmp10);
-        
-   end
-   
+    guidata(hObject,handles);
+
+
+    load(cal_file);
+
+
+    handles.M1_CAL=M1_CAL;
+
+    handles.M2_CAL=M2_CAL;
+
+    handles.M3_CAL=M3_CAL;
+
+    handles.M4_CAL=M4_CAL;
+
+    handles.M5_CAL=M5_CAL;
+
+    handles.M7_CAL=M7_CAL;
+
+    handles.L1_CAL=L1_CAL;
+
+    handles.L2_CAL=L2_CAL;
+
+    handles.L3_CAL=L3_CAL;
+
+    guidata(hObject,handles);
+    % get
+    tmp2=handles.machine;
+
+    switch tmp2
+
+        case 'M1'
+
+            % get CF list to cell
+
+
+            tmp=M1_CAL;
+
+            % convert struct to 2d cell array
+            table_data={};
+            for k=1:length(tmp)
+
+                table_data{k,1}=tmp(k).machine_name ;
+
+                table_data{k,2}=tmp(k).cal_factor;
+
+                table_data{k,3}=tmp(k).date ;
+
+                table_data{k,4}=tmp(k).cal_file ;
+
+                table_data{k,5}=tmp(k).physicist ;
+
+            end
+
+
+            % write to QATrackfile
+
+            writeCalFactorTxt( 'M1_Cal.txt',table_data)
+
+            set(handles.status_bar,'String',tmp10);
+
+
+
+        case 'M2'
+            tmp=M2_CAL;
+
+
+            % convert struct to 2d cell array
+            table_data={};
+            for k=1:length(tmp)
+
+                table_data{k,1}=tmp(k).machine_name ;
+
+                table_data{k,2}=tmp(k).cal_factor;
+
+                table_data{k,3}=tmp(k).date ;
+
+                table_data{k,4}=tmp(k).cal_file ;
+
+                table_data{k,5}=tmp(k).physicist ;
+
+            end
+
+            writeCalFactorTxt( 'M2_Cal.txt',table_data)
+            set(handles.status_bar,'String',tmp10);
+
+        case 'M3'
+            tmp=M3_CAL;
+
+
+            % convert struct to 2d cell array
+            table_data={};
+            for k=1:length(tmp)
+
+                table_data{k,1}=tmp(k).machine_name ;
+
+                table_data{k,2}=tmp(k).cal_factor;
+
+                table_data{k,3}=tmp(k).date ;
+
+                table_data{k,4}=tmp(k).cal_file ;
+
+                table_data{k,5}=tmp(k).physicist ;
+
+            end
+
+            % write to QATrackfile
+
+            writeCalFactorTxt( 'M3_Cal.txt',table_data)
+            set(handles.status_bar,'String',tmp10);
+
+        case 'M4'
+            tmp=M4_CAL;
+
+
+
+            % convert struct to 2d cell array
+            table_data={};
+            for k=1:length(tmp)
+
+                table_data{k,1}=tmp(k).machine_name ;
+
+                table_data{k,2}=tmp(k).cal_factor;
+
+                table_data{k,3}=tmp(k).date ;
+
+                table_data{k,4}=tmp(k).cal_file ;
+
+                table_data{k,5}=tmp(k).physicist ;
+
+            end
+
+
+            % write to QATrackfile
+
+            writeCalFactorTxt( 'M4_Cal.txt',table_data)
+
+            set(handles.status_bar,'String',tmp10);
+
+            %
+        case 'M5'
+
+            tmp=M5_CAL;
+
+
+            % convert struct to 2d cell array
+            table_data={};
+            for k=1:length(tmp)
+
+                table_data{k,1}=tmp(k).machine_name ;
+
+                table_data{k,2}=tmp(k).cal_factor;
+
+                table_data{k,3}=tmp(k).date ;
+
+                table_data{k,4}=tmp(k).cal_file ;
+
+                table_data{k,5}=tmp(k).physicist ;
+
+            end
+
+            % write to QATrackfile
+
+            writeCalFactorTxt( 'M5_Cal.txt',table_data)
+
+            set(handles.status_bar,'String',tmp10);
+
+        case 'M7'
+
+            tmp=M7_CAL;
+
+
+
+            % convert struct to 2d cell array
+            table_data={};
+            for k=1:length(tmp)
+
+                table_data{k,1}=tmp(k).machine_name ;
+
+                table_data{k,2}=tmp(k).cal_factor;
+
+                table_data{k,3}=tmp(k).date ;
+
+                table_data{k,4}=tmp(k).cal_file ;
+
+                table_data{k,5}=tmp(k).physicist ;
+
+            end
+
+
+            % write to QATrackfile
+
+            writeCalFactorTxt( 'M7_Cal.txt',table_data)
+
+            set(handles.status_bar,'String',tmp10);
+
+
+        case 'L1'
+
+
+            tmp=L1_CAL;
+
+
+            % convert struct to 2d cell array
+            table_data={};
+            for k=1:length(tmp)
+
+                table_data{k,1}=tmp(k).machine_name ;
+
+                table_data{k,2}=tmp(k).cal_factor;
+
+                table_data{k,3}=tmp(k).date ;
+
+                table_data{k,4}=tmp(k).cal_file ;
+
+                table_data{k,5}=tmp(k).physicist ;
+
+            end
+
+
+            % write to QATrackfile
+
+            writeCalFactorTxt( 'L1_Cal.txt',table_data)
+
+            set(handles.status_bar,'String',tmp10);
+
+
+
+        case 'L2'
+
+
+            tmp=L2_CAL;
+
+
+            % convert struct to 2d cell array
+            table_data={};
+            for k=1:length(tmp)
+
+                table_data{k,1}=tmp(k).machine_name ;
+
+                table_data{k,2}=tmp(k).cal_factor;
+
+                table_data{k,3}=tmp(k).date ;
+
+                table_data{k,4}=tmp(k).cal_file ;
+
+                table_data{k,5}=tmp(k).physicist ;
+
+            end
+
+
+            % write to QATrackfile
+
+            writeCalFactorTxt( 'L2_Cal.txt',table_data)
+
+            set(handles.status_bar,'String',tmp10);
+
+
+
+
+
+        case 'L3'
+
+
+            tmp=L3_CAL;
+
+
+            % convert struct to 2d cell array
+            table_data={};
+            for k=1:length(tmp)
+
+                table_data{k,1}=tmp(k).machine_name ;
+
+                table_data{k,2}=tmp(k).cal_factor;
+
+                table_data{k,3}=tmp(k).date ;
+
+                table_data{k,4}=tmp(k).cal_file ;
+
+                table_data{k,5}=tmp(k).physicist ;
+
+            end
+
+
+            % write to QATrackfile
+
+            writeCalFactorTxt( 'L2_Cal.txt',table_data)
+
+            set(handles.status_bar,'String',tmp10);
+
+
+
+    end
+
+
+
 end
 
 
-   
+
+
+
+% --- Executes on button press in L1.
+function L1_Callback(hObject, eventdata, handles)
+% hObject    handle to L1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of L1
+
+
+% --- Executes on button press in M1.
+function M1_Callback(hObject, eventdata, handles)
+% hObject    handle to M1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of M1

@@ -1,4 +1,4 @@
-function [ cal_file_name ] = deleteEPIDCalFactor(output_dir,machine,index_array)
+function  deleteEPIDCalFactor(output_dir,machine,index_array)
 %Write EPID calibration factor to a file called EPID_CALIBRATION.mat.
 %   Arguments: Input:  output_dir--the output directory for calibration files.
 %                      machine-the name of the machine.
@@ -7,7 +7,7 @@ function [ cal_file_name ] = deleteEPIDCalFactor(output_dir,machine,index_array)
 %              Output: cal_file_name--the name of calibration.
 %              
 
-tmp1=fullfile(output_dir,'EPID_CALIBRATION.mat')
+tmp1=fullfile(output_dir,'EPID_CALIBRATION.mat');
 
 if exist(tmp1,'file')
 
@@ -113,6 +113,53 @@ if strcmp(machine,'M7')
            M7_CAL(index_array)=[];
      
            save(tmp1,'M7_CAL','-append');
+           
+           cal_file_name=tmp1;
+           
+            
+end
+
+% L1 Block
+
+if strcmp(machine,'L1')
+        
+             
+               
+           L1_CAL(index_array)=[];
+     
+           save(tmp1,'L1_CAL','-append');
+           
+           cal_file_name=tmp1;
+           
+            
+end
+
+
+% L2 Block
+
+if strcmp(machine,'L2')
+        
+             
+               
+           L2_CAL(index_array)=[];
+     
+           save(tmp1,'L2_CAL','-append');
+           
+           cal_file_name=tmp1;
+           
+            
+end
+
+
+% L3 Block
+
+if strcmp(machine,'L3')
+        
+             
+               
+           L3_CAL(index_array)=[];
+     
+           save(tmp1,'L3_CAL','-append');
            
            cal_file_name=tmp1;
            

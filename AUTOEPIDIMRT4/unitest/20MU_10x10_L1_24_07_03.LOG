@@ -1,0 +1,40 @@
+iView images exported 2024-07-03 09:02:47
+
+File: V:\CTC-LiverpoolOncology-PatientQA\L1_EPIDCal\L1_Cal\20MU_10x10_L1_24_07_03.HIS
+Patient: 0_QA:   Monthly
+Treatment: 0_EPIDCAL
+Field: 20MU_10x10
+Image: 2024-07-03 (YYYY-MM-DD) 09:00:52 Port
+Image UID: 1.3.46.423632.304231.1719961252.7
+Image Origin: L1
+Station: L1
+Creation Date (YYYY-MM-DD): 2024-07-03
+Creation Time: 09:00:52
+Last Modified Date (YYYY-MM-DD): 2024-07-03
+Last Modified Time: 09:00:52
+Acquired Date (YYYY-MM-DD): 2024-07-03
+Acquired Time: 09:00:52
+Brightness (percent):37
+Contrast (percent) : 37
+Image width (in pixels): 1024
+Image height (in pixels): 1024
+Image bit depth: 16
+Horizontal scale: 0.0251 cm/pixel
+Image center x (pixel): 0.00
+Image center y (pixel): 0.00
+Image aspect ratio: 1.00
+TmpMatchSourceImageCenter x (pixel): 0.00
+TmpMatchSourceImageCenter y (pixel): 0.00
+Image file format: Lossless JPEG (.JPG)
+TmpMatchHorz(cm): 0.00
+TmpMatchVert(cm): 0.00
+TmpMatchOriginPatientID:
+TmpMatchOriginTreatmentID:
+TmpMatchOriginFieldID:
+TmpMatchOriginImageID:
+TmpMatchUser:
+TmpMatchDate (YYYY-MM-DD):
+TmpMatchTime:
+TmpMatchRotation(degrees): 0.00
+FramePixelFactor (Frame1): 0.189609
+

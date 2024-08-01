@@ -105,6 +105,7 @@ if strcmp(machine,'M5')
     
 end 
 
+% M1 
 
 if strcmp(machine,'M1')
     
@@ -158,7 +159,182 @@ if strcmp(machine,'M1')
      
        tmp.cal_file=fullfile(output_dir,'M1.mat');
     
-end 
+end
+
+% L1 
+
+if strcmp(machine,'L1')
+    
+     log_structure_list=hisLogToStructure(dir_log_file_name);
+      
+      % use log_structure_list to get PSF for reference field only if the
+      % user say yes.
+      
+    
+       ref_PSF=1;
+      
+       machine_name=' ';
+       
+       [path, filename,ext]=fileparts(epid_image_file);
+       
+       ref_field_file_name=strcat(filename,ext);
+       
+       for j=1:length(log_structure_list)
+          
+          tmp11=log_structure_list(j);
+          
+          tmp_fname=tmp11.file_name;
+          
+          if strcmp(tmp_fname,ref_field_file_name)
+              
+                       
+              ref_PSF=tmp11.pixel_factor;
+              
+              machine_name=tmp11.station_name
+          end 
+          
+       end 
+      
+       if ref_mu==100
+             dose_at_54mm_depth=dose;% cGy
+       else
+             dose_at_54mm_depth=dose/100*ref_mu;
+          
+       end
+       
+       
+       dose_factor=getElektaDoseFactor3(dose_at_54mm_depth,ref_field_file_name,ref_PSF,machine_name);
+    
+       tmp.machine_name='L1';
+     
+       tmp.cal_factor=dose_factor;
+     
+       tmp.physicist=physicist;
+     
+       tmp.date=date;
+     
+       tmp.cal_file=fullfile(output_dir,'L1.mat');
+    
+end
+
+
+% L2
+
+
+if strcmp(machine,'L2')
+    
+     log_structure_list=hisLogToStructure(dir_log_file_name);
+      
+      % use log_structure_list to get PSF for reference field only if the
+      % user say yes.
+      
+    
+       ref_PSF=1;
+      
+       machine_name=' ';
+       
+       [path, filename,ext]=fileparts(epid_image_file);
+       
+       ref_field_file_name=strcat(filename,ext);
+       
+       for j=1:length(log_structure_list)
+          
+          tmp11=log_structure_list(j);
+          
+          tmp_fname=tmp11.file_name;
+          
+          if strcmp(tmp_fname,ref_field_file_name)
+              
+                       
+              ref_PSF=tmp11.pixel_factor;
+              
+              machine_name=tmp11.station_name;
+          end 
+          
+       end 
+      
+       if ref_mu==100
+             dose_at_54mm_depth=dose;% cGy
+       else
+             dose_at_54mm_depth=dose/100*ref_mu;
+          
+       end
+       
+       
+       dose_factor=getElektaDoseFactor3(dose_at_54mm_depth,ref_field_file_name,ref_PSF,machine_name);
+    
+       tmp.machine_name='L2';
+     
+       tmp.cal_factor=dose_factor;
+     
+       tmp.physicist=physicist;
+     
+       tmp.date=date;
+     
+       tmp.cal_file=fullfile(output_dir,'L2.mat');
+    
+end
+
+
+% L3
+
+if strcmp(machine,'L3')
+    
+     log_structure_list=hisLogToStructure(dir_log_file_name);
+      
+      % use log_structure_list to get PSF for reference field only if the
+      % user say yes.
+      
+    
+       ref_PSF=1;
+      
+       machine_name=' ';
+       
+       [path, filename,ext]=fileparts(epid_image_file);
+       
+       ref_field_file_name=strcat(filename,ext);
+       
+       for j=1:length(log_structure_list)
+          
+          tmp11=log_structure_list(j);
+          
+          tmp_fname=tmp11.file_name;
+          
+          if strcmp(tmp_fname,ref_field_file_name)
+              
+                       
+              ref_PSF=tmp11.pixel_factor;
+              
+              machine_name=tmp11.station_name;
+          end 
+          
+       end 
+      
+       if ref_mu==100
+             dose_at_54mm_depth=dose;% cGy
+       else
+             dose_at_54mm_depth=dose/100*ref_mu;
+          
+       end
+       
+       
+       dose_factor=getElektaDoseFactor3(dose_at_54mm_depth,ref_field_file_name,ref_PSF,machine_name);
+    
+       tmp.machine_name='L3';
+     
+       tmp.cal_factor=dose_factor;
+     
+       tmp.physicist=physicist;
+     
+       tmp.date=date;
+     
+       tmp.cal_file=fullfile(output_dir,'L3.mat');
+    
+end
+
+
+
+
 
 
 end

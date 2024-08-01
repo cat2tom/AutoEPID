@@ -94,7 +94,25 @@ if strcmp(file_type,'HIS')
     
                machine_name='M7';
 
-           end	   
+            end	 
+
+            if strcmp(his_station_name,' L1')
+
+                machine_name='L1';
+
+            end
+
+            if strcmp(his_station_name,' L2')
+
+                machine_name='L2';
+
+            end
+
+            if strcmp(his_station_name,' L3')
+
+                machine_name='L3';
+
+            end
            
         end 
       

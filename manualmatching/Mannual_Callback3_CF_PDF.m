@@ -43,9 +43,6 @@ guidata(hObject,handles);
 
 physcist_name =handles.selected_physicist;
 
-% physcist_name=getappdata(0,'physicist');
-
-% physcist_name = input('Enter the name of Physicist doing analysis: ', 's');
 
 
 % The directory on V and H driver.
@@ -72,18 +69,6 @@ end
 v_driver_dir=handles.patient_list_dir;
 
 
-% h_driver_dir=handles.output_dir;
-
-% h_driver_dir=getappdata(0,'output_dir');
-
-
-
-% h_driver_dir=handles.vmat_output_dir;
-
-
-
-% v_driver_dir='V:\';
-% h_driver_dir='H:\IMRT\PatientQA\2013';
 
 cd(v_driver_dir);
 
@@ -226,7 +211,7 @@ progress_bar_lable='EPID to Dose image conversion';
 %                
 %     
 %          % turn off the warning message for Siemens EPID conversion.
-%          warning off 
+%          warning off which_machine
 %         
 %         % direclty call Siments EPID2dose function
 %           progressbar();
@@ -371,7 +356,7 @@ progress_bar_lable='EPID to Dose image conversion';
 
 
 if strcmp(file_type,'M1')||strcmp(file_type,'M2')||strcmp(file_type,'M5')||strcmp(file_type,'M4')...
-    ||strcmp(file_type,'M7')||strcmp(file_type,'M3')  
+    ||strcmp(file_type,'M7')||strcmp(file_type,'M3')||strcmp(file_type,'L1')||strcmp(file_type,'L2')||strcmp(file_type,'L3')
     
       % copy template file from H driver to v patient directory. change the
      

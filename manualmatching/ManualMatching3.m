@@ -22,7 +22,7 @@ function varargout = ManualMatching3(varargin)
 
 % Edit the above text to modify the response to help ManualMatching3
 
-% Last Modified by GUIDE v2.5 22-Feb-2021 10:19:59
+% Last Modified by GUIDE v2.5 18-Jul-2024 13:51:42
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -127,11 +127,6 @@ else
 end     
 
 
-
-
-
-
-% set(handles.tps_default_dir,'String','C:\aitangResearch\AutoEPID_developement\manualmatching\tps');
 
 % set default EPID folder
 
@@ -307,7 +302,7 @@ if length(ext_cell)<1
     
 end 
 
-handles.which_machine
+
 
 set(hObject,'string',ext_cell);
 
@@ -317,7 +312,9 @@ selected_file=contents{get(hObject,'Value')};
 full_file=fullfile(dir_path,selected_file);
 
 if strcmp(handles.which_machine,'M2')||strcmp(handles.which_machine,'M1')||strcmp(handles.which_machine,'M4')||strcmp(handles.which_machine,'M5') ...
-   || strcmp(handles.which_machine,'M7')|| strcmp(handles.which_machine,'M3')
+   || strcmp(handles.which_machine,'M7')|| strcmp(handles.which_machine,'M3')||strcmp(handles.which_machine,'L1')||strcmp(handles.which_machine,'L2')...
+   ||strcmp(handles.which_machine,'L3')
+
 
 im = readHISfile(full_file);
 
@@ -394,10 +391,10 @@ function move_in_epid_Callback(hObject, eventdata, handles)
 
 tps_file_list=cellstr(get(handles.epid_list_box,'String'));
 
-selected_epid_file=tps_file_list{get(handles.epid_list_box,'Value')}
+selected_epid_file=tps_file_list{get(handles.epid_list_box,'Value')};
 
 
-matched_epid_list=cellstr(get(handles.matched_epid_list,'String'))
+matched_epid_list=cellstr(get(handles.matched_epid_list,'String'));
 
 
 if isempty(matched_epid_list)
@@ -1004,3 +1001,21 @@ function missing_pixel_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 % Hint: get(hObject,'Value') returns toggle state of missing_pixel
+
+
+% --- Executes on key press with focus on epid_list_box and none of its controls.
+function epid_list_box_KeyPressFcn(hObject, eventdata, handles)
+% hObject    handle to epid_list_box (see GCBO)
+% eventdata  structure with the following fields (see MATLAB.UI.CONTROL.UICONTROL)
+%	Key: name of the key that was pressed, in lower case
+%	Character: character interpretation of the key(s) that was pressed
+%	Modifier: name(s) of the modifier key(s) (i.e., control, shift) pressed
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- If Enable == 'on', executes on mouse press in 5 pixel border.
+% --- Otherwise, executes on mouse press in 5 pixel border or over epid_list_box.
+function epid_list_box_ButtonDownFcn(hObject, eventdata, handles)
+% hObject    handle to epid_list_box (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)

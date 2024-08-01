@@ -1,4 +1,4 @@
-  function varargout = AUTOEPIDPLUS_V2(varargin)
+function varargout = AUTOEPIDPLUS_V2(varargin)
 % AUTOEPIDIMRTQA2 MATLAB code for AutoEPIDIMRTQA2.fig
 %      AUTOEPIDIMRTQA2, by itself, creates a new AUTOEPIDIMRTQA2 or raises the existing
 %      singleton*.
@@ -11,7 +11,7 @@
 %
 %      AUTOEPIDIMRTQA2('Property','Value',...) creates a new AUTOEPIDIMRTQA2 or r
 %
-  
+
 %      existing singleton*.  Starting from the left, property value pairs are
 %      applied to the GUI before AutoEPIDIMRTQA2_OpeningFcn gets called.  An
 %      unrecognized property name or invalid value makes property application
@@ -36,11 +36,11 @@ global beam_name2
 
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
-                   'gui_Singleton',  gui_Singleton, ...
-                   'gui_OpeningFcn', @AutoEPIDIMRTQA2_OpeningFcn, ...
-                   'gui_OutputFcn',  @AutoEPIDIMRTQA2_OutputFcn, ...
-                   'gui_LayoutFcn',  [] , ...
-                   'gui_Callback',   []);
+    'gui_Singleton',  gui_Singleton, ...
+    'gui_OpeningFcn', @AutoEPIDIMRTQA2_OpeningFcn, ...
+    'gui_OutputFcn',  @AutoEPIDIMRTQA2_OutputFcn, ...
+    'gui_LayoutFcn',  [] , ...
+    'gui_Callback',   []);
 if nargin && ischar(varargin{1})
     gui_State.gui_Callback = str2func(varargin{1});
 end
@@ -61,7 +61,7 @@ function AutoEPIDIMRTQA2_OpeningFcn(hObject, eventdata, handles, varargin)
 % handles    structure with handles and user data (see GUIDATA)
 % varargin   command line arguments to AutoEPIDIMRTQA2 (see VARARGIN)
 
-% loadJarFiles 
+% loadJarFiles
 
 loadItextJarFiles;
 
@@ -81,26 +81,26 @@ epidRootConfigFile='V:\CTC-LiverpoolOncology-Physics\IMRT\PatientQA\autoEPIDConf
 
 
 
- [clinical_configFile,beta_configFile] = readAutoEPIDRootConfigFile(epidRootConfigFile); 
- 
- % Clinical version or beta version.
- 
- epidConfigFile=beta_configFile; 
- 
-% epidConfigFile=clinical_configFile; 
+[clinical_configFile,beta_configFile] = readAutoEPIDRootConfigFile(epidRootConfigFile);
+
+% Clinical version or beta version.
+
+epidConfigFile=beta_configFile;
+
+% epidConfigFile=clinical_configFile;
 
 if exist(epidConfigFile,'file')
-    
+
     % logging event
-    
+
     eventLogger('The dir configure file exists','INFO','AutoEPID');
-    
+
 else
-    
+
     eventLogger('The dir configure file does exists or could not be found.','INFO','AutoEPID');
-    
-end 
-    
+
+end
+
 
 [deleteNetWork,mapNetWork,patientInputDir,dicomTemplateDir,imrtOutputDir,vmatOutputDir,epidCalFile,version_info,escan_dir,backupPatientInputDir,patient_mat_dir,jar_dir] = readAutoEPIDConfigFile(epidConfigFile );
 
@@ -112,20 +112,20 @@ map_status=system(mapNetWork);
 
 
 if map_status==0
-    
-    
+
+
     eventLogger('V driver was sucessfully mapped','INFO','AutoEPID');
-    
-    
+
+
 else
-    
+
     eventLogger('V driver is already in use or Could not be mapped.','INFO','AutoEPID');
-  
-        
-end 
 
 
-% set program vesion 
+end
+
+
+% set program vesion
 
 set(handles.auto_epid_main,'name',version_info);
 
@@ -137,21 +137,21 @@ map_status=system(mapNetWork);
 
 
 if map_status==0
-    
-    
+
+
     eventLogger(' V driver was sucessfully mapped','INFO','AutoEPID');
-    
-    
+
+
 else
-    
+
     eventLogger(' V driver is already in use or Could not be mapped.','INFO','AutoEPID');
-  
-        
-end 
 
 
-% jar_dir='V:\CTC-LiverpoolOncology-Physics\IMRT\PatientQA\autoEPIDConfigfile\itextJarFiles';
+end
 
+
+
+if ~(ismcc || isdeployed)
 
 javaaddpath(fullfile(jar_dir,'itextpdf-5.5.7.jar'));
 
@@ -163,61 +163,63 @@ javaaddpath(fullfile(jar_dir,'itext-xtra-5.5.7.jar'));
 
 addpath(jar_dir);
 
+end 
 
 
-% to see if V driver exist on server. 
+
+% to see if V driver exist on server.
 if exist(patientInputDir,'dir')
-    
+
     handles.patient_list_dir=patientInputDir;
-    
+
 else
-    
+
     if ~exist(backupPatientInputDir,'dir')
-        
-        % make dir 
-        
+
+        % make dir
+
         mkdir(backupPatientInputDir);
-        
+
         handles.patient_list_dir=backupPatientInputDir;
-        
+
     else
-    
-    handles.patient_list_dir=backupPatientInputDir;
-    
-    end 
-    
+
+        handles.patient_list_dir=backupPatientInputDir;
+
+    end
+
     msgbox(['V driver is not accessible on server. Please copy the patient folder to ' {} backupPatientInputDir ])
-    
-    
+
+
 end
 
 
-handles.dicom_template_dir=dicomTemplateDir; 
+handles.dicom_template_dir=dicomTemplateDir;
 
 setappdata(0,'dicom_template',handles.dicom_template_dir);
 
 
-handles.output_dir=imrtOutputDir; 
-handles.output_dir_vmat=vmatOutputDir; 
+handles.output_dir=imrtOutputDir;
+handles.output_dir_vmat=vmatOutputDir;
 
 handles.escan_dir=escan_dir;
 
 setappdata(0,'escan_dir',handles.escan_dir);
 
 
-guidata(hObject, handles); 
+guidata(hObject, handles);
 
 patient_list_dir=handles.patient_list_dir;
 output_dir=handles.output_dir;
 dicom_template_dir=handles.dicom_template_dir;
 
-   
+
 save(epidCalFile, 'patient_list_dir','-append');
 save(epidCalFile, 'output_dir','-append');
 save(epidCalFile, 'dicom_template_dir','-append');
 
 % set default patient director and dicom template directory
-   
+
 
 
 eventLogger('Just before loading resource file','INFO','AutoEPID');
@@ -267,25 +269,25 @@ patient_root_dir=get(handles.all_input_dir,'string');
 
 % if isdir(patient_root_dir)
 if exist(patient_root_dir,'dir')==7
-    
- handles.patient_list_dir=patient_root_dir;
- 
- guidata(hObject,handles);
-    
-% use MRN to list patient.
 
-pat_list=listPatientByDate( handles.patient_list_dir);
+    handles.patient_list_dir=patient_root_dir;
 
-  
-set(handles.listbox1,'String',pat_list);
+    guidata(hObject,handles);
 
-set(handles.progress,'Visible','off');
+    % use MRN to list patient.
+
+    pat_list=listPatientByDate( handles.patient_list_dir);
+
+
+    set(handles.listbox1,'String',pat_list);
+
+    set(handles.progress,'Visible','off');
 
 else
-    
+
     set(handles.all_input_dir,'string','Please Check if your V drive was mapped.');
-    
-end 
+
+end
 
 % update output dir from output box
 
@@ -294,11 +296,11 @@ handles.output_dir=get(handles.all_output_dir,'string');
 
 
 if ~isdir(handles.output_dir)
-    
+
     set(handles.all_output_dir,'string','Please selected a root directory for EPID resutls report');
-    
-end 
-    
+
+end
+
 
 guidata(hObject,handles);
 
@@ -344,7 +346,7 @@ physicist_list={'Radiation therapist';'Richard Short';'Alison Gray';'Pradush Pee
     'Philip Vial';'Sankar Arumugam';'Satya Rajapakse';'Shrikant Deshpande';...
     'Tania Erven';'Aitang Xing';'Tony Young';'Vinod Nelson';'Virendra Patel';...
     'Gary Goozee';'Michael Jameson';'Martin Butson';'Bradley Beeksma';...
-	'Daniel Truant';'James Hellyer';'Guest'};
+    'Daniel Truant';'James Hellyer';'Guest'};
 
 set(handles.physicist,'String',physicist_list);
 
@@ -372,14 +374,22 @@ handles.M5_CAL=M5_CAL;
 
 handles.M7_CAL=M7_CAL;
 
+handles.L1_CAL=L1_CAL;
+
+handles.L2_CAL=L2_CAL;
+
+handles.L3_CAL=L3_CAL;
+
+
+
 guidata(hObject, handles);
 
 
-% set the defaut selected 
+% set the defaut selected
 
 % set(handles.treatment_type,'selectedobject',handles.IMRT);
-% 
- set(handles.tps_pannel,'selectedobject',handles.Pinnacle);
+%
+set(handles.tps_pannel,'selectedobject',handles.Pinnacle);
 % set(handles.epid_pannel,'selectedobject',handles.autoreport);
 
 set(handles.treatment_type,'selectedobject','');
@@ -389,29 +399,29 @@ set(handles.treatment_type,'selectedobject','');
 set(handles.epid_pannel,'selectedobject','');
 
 % outputTypeObj=get(handles.epid_pannel,'selectedobject');
-% 
+%
 % outputType=get(outputTypeObj,'Tag');
-% 
+%
 % handles.output_option=outputType;
 
-% set reg_pannel type to 
+% set reg_pannel type to
 
 
 
- set(handles.reg_pannel,'selectedobject',handles.Reg);
- 
- regTypeObj=get(handles.reg_pannel,'selectedobject');
- 
- regType2=get(regTypeObj,'Tag');
- 
- handles.registrationType=regType2;
- 
- setappdata(0,'registrationType',regType2); % set appdata for manual matching.
- 
- % set appdata for manual matching 
- 
- 
- 
+set(handles.reg_pannel,'selectedobject',handles.Reg);
+
+regTypeObj=get(handles.reg_pannel,'selectedobject');
+
+regType2=get(regTypeObj,'Tag');
+
+handles.registrationType=regType2;
+
+setappdata(0,'registrationType',regType2); % set appdata for manual matching.
+
+% set appdata for manual matching
+
+
+
 
 handles.which_tps='Pinnacle'; % preset the TPS as Pinnalce to remove the tps pannel.
 
@@ -482,10 +492,10 @@ setappdata(0,'version_info',version_info); % for manual Figure.
 
 mfilename('fullpath')
 
- 
+
 
 % --- Outputs from this function are returned to the command line.
-function varargout = AutoEPIDIMRTQA2_OutputFcn(hObject, eventdata, handles) 
+function varargout = AutoEPIDIMRTQA2_OutputFcn(hObject, eventdata, handles)
 % varargout  cell array for returning output args (see VARARGOUT);
 % hObject    handle to figure
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -503,7 +513,7 @@ function template_file_dir_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
- 
+
 % --------------------------------------------------------------------
 function open_report_Callback(hObject, eventdata, handles)
 % hObject    handle to open_report (see GCBO)
@@ -530,504 +540,686 @@ function listbox1_Callback(hObject, eventdata, handles)
 % clear the previous patient resutls.
 
 
- handles.gammaProfileS=struct();
- 
- handles.gamma_sumary=struct(); 
- 
-  
- guidata(hObject,handles);
+handles.gammaProfileS=struct();
 
-handles.which_tps='Pinnacle'; % present tps type 
+handles.gamma_sumary=struct();
+
+
+guidata(hObject,handles);
+
+handles.which_tps='Pinnacle'; % present tps type
 tmp_dir=get(handles.all_input_dir,'string');
 
-% commented out to solove sort issues.
-
-% pat_list1=listPatient2(tmp_dir);
-% 
-% set(handles.listbox1,'String',pat_list1);
 
 pat_list = cellstr(get(hObject,'String'));
 
 if ~isempty(pat_list)
 
-pat_name=pat_list{get(hObject','Value')};
+    pat_name=pat_list{get(hObject','Value')};
 
-% logging event
+    % logging event
 
-eventLogger(['The selected patient name is:'  pat_name],'INFO','AutoEPID');
-
-
-handles.output_pat_name=pat_name;
-
-guidata(hObject,handles);
-
-% return patient subdirectory
-
-% handles.patient_name=[handles.all_input_dir '\' pat_name];
-
-handles.patient_name=fullfile(tmp_dir,pat_name);
- 
-all_file_list2=getFileList(handles.patient_name);
-    
-if isempty(all_file_list2)
-
-   set(handles.patient_folder,'string','No TPS or EPID files exist. Please check.');
-else
-    
-    
-  set(handles.patient_folder,'string',handles.patient_name);
-  
-  % find the machine and selected which machine 
-  
-  machine_name=findMachineFromDir(handles.patient_name);
-  
-    
-  handles.which_machine=machine_name;
-  
-  if machine_name==0
-      
-       set(handles.machine_name,'string','');
-      
-      % set calibration factor to none
-       set(handles.default_cf,'string','');
-        
-       set(handles.cf_date,'string','');
-        
-       set(handles.cf_physicist,'string','');
-%        
-         tmp10{1}='';
-% %        set(handles.cf_list,'Value',1);
-          set(handles.cf_list,'String',tmp10);      
-% %        set(handles.cf_list,'Value',1);
-           
-       
-           
-      
-  else
-            
-       handles.which_machine=machine_name;
-       
-       setappdata(0,'which_machine',machine_name);
-       
-       set(handles.machine_name,'string',machine_name);
-       guidata(hObject,handles);
-       
-       % set the calibration factors if epid file exist.
-       
-     switch machine_name % Get Tag of selected object.
-    
-       case 'M1'
-        
-        handles.which_machine='M1';
-        guidata(hObject,handles);
-       
-        % udpate the CF
-        
-        
-        tmp2=handles.M1_CAL;
-        
-        tmp=tmp2(length(tmp2));
-        
-            
-        cal_factor=tmp.cal_factor;
-        
-        date=tmp.date;
-        
-        physicist=tmp.physicist;
-        
-        
-        set(handles.default_cf,'string',num2str(cal_factor));
-        
-        set(handles.cf_date,'string',date);
-        
-        set(handles.cf_physicist,'string',physicist);
-        
-        % get CF list to cell 
-        
-        cf_list={};
-        for k=1:length(tmp2)
-            
-           cf_list{k}=tmp2(k).date ;
-            
-        end 
-        
-        set(handles.cf_list,'String',cf_list,'Value',length(cf_list));
-        
-      % set calibraion factor for pdf 
-      
-        handles.pdf_cal=get(handles.default_cf,'string');
-        
-        handles.pdf_cal_date=get(handles.cf_date,'string');
-        
-        
-        guidata(hObject,handles);
-        
-        setappdata(0,'pdf_cal',handles.pdf_cal); % For manual windows.
-        
-        setappdata(0,'pdf_cal_date',handles.pdf_cal_date);
-        
-        
-        
-    case 'M2'
-        % Code for when Xio is selected.
-        handles.which_machine='M2';
-        guidata(hObject,handles);
-        
-        
-        % update CF list
-        
-        
-        tmp2=handles.M2_CAL;
-                 
-        tmp=tmp2(end);
-            
-        cal_factor=tmp.cal_factor;
-        
-        date=tmp.date;
-        
-        physicist=tmp.physicist;
-        
-        
-        set(handles.default_cf,'string',num2str(cal_factor));
-        
-        set(handles.cf_date,'string',date);
-        
-        set(handles.cf_physicist,'string',physicist);
-        
-        % get CF list to cell 
-        
-        cf_list={};
-        for k=1:length(tmp2)
-            
-           cf_list{k}=tmp2(k).date ;
-            
-        end 
-        
-        set(handles.cf_list,'String',cf_list,'Value',length(cf_list));
-        
-         
-        % set calibraion factor for pdf 
-      
-        handles.pdf_cal=get(handles.default_cf,'string');
-        
-        handles.pdf_cal_date=get(handles.cf_date,'string');
-        guidata(hObject,handles);
-        
-        setappdata(0,'pdf_cal',handles.pdf_cal); % For manual windows.
-        
-        setappdata(0,'pdf_cal_date',handles.pdf_cal_date);
-        
-               
-        
-    case 'M3'
-        % Code for when Xio is selected.
-        handles.which_machine='M3';
-        guidata(hObject,handles);
-        
-         % update CF list
-        tmp2=handles.M3_CAL;
-        
-        tmp=tmp2(end);
-        
-            
-        cal_factor=tmp.cal_factor;
-        
-        date=tmp.date;
-        
-        physicist=tmp.physicist;
-        
-        
-        set(handles.default_cf,'string',num2str(cal_factor));
-        
-        set(handles.cf_date,'string',date);
-        
-        set(handles.cf_physicist,'string',physicist);
-        
-        % get CF list to cell 
-        
-        cf_list={};
-        for k=1:length(tmp)
-            
-           cf_list{k}=tmp(k).date ;
-            
-        end 
-        
-        set(handles.cf_list,'String',cf_list,'Value',length(cf_list));
-        
-        % set calibraion factor for pdf 
-      
-        handles.pdf_cal=get(handles.default_cf,'string');
-        
-        handles.pdf_cal_date=get(handles.cf_date,'string');
-        guidata(hObject,handles);
-        
-        setappdata(0,'pdf_cal',handles.pdf_cal); % For manual windows.
-        
-        setappdata(0,'pdf_cal_date',handles.pdf_cal_date);
-        
-            
-        
-    case 'M4'
-        % Code for when Xio is selected.
-        handles.which_machine='M4';
-        guidata(hObject,handles);
-        
-         % update CF list
-        tmp2=handles.M4_CAL;
-        
-        tmp=tmp2(end);    
-        cal_factor=tmp.cal_factor;
-        
-        date=tmp.date;
-        
-        physicist=tmp.physicist;
-        
-        
-        set(handles.default_cf,'string',num2str(cal_factor));
-        
-        set(handles.cf_date,'string',date);
-        
-        set(handles.cf_physicist,'string',physicist);
-        
-        % get CF list to cell 
-        
-        cf_list={};
-        for k=1:length(tmp2)
-            
-           cf_list{k}=tmp2(k).date ;
-            
-        end 
-        
-        set(handles.cf_list,'String',cf_list,'Value',length(cf_list));
-        
-         % set calibraion factor for pdf 
-      
-        handles.pdf_cal=get(handles.default_cf,'string');
-        
-        handles.pdf_cal_date=get(handles.cf_date,'string');
-        guidata(hObject,handles);
-        
-        setappdata(0,'pdf_cal',handles.pdf_cal); % For manual windows.
-        
-        setappdata(0,'pdf_cal_date',handles.pdf_cal_date);
-        
-        
-               
-    case 'M5'
-        % Code for when Xio is selected.
-        handles.which_machine='M5';
-        guidata(hObject,handles);
-        
-        %update CF list
-        tmp2=handles.M5_CAL;
-        
-        tmp=tmp2(end);
-            
-        cal_factor=tmp.cal_factor;
-        
-        date=tmp.date;
-        
-        physicist=tmp.physicist;
-        
-        
-        set(handles.default_cf,'string',num2str(cal_factor));
-        
-        set(handles.cf_date,'string',date);
-        
-        set(handles.cf_physicist,'string',physicist);
-        
-        % get CF list to cell 
-        
-        cf_list={};
-        for k=1:length(tmp2)
-            
-           cf_list{k}=tmp2(k).date ;
-            
-        end 
-        
-        set(handles.cf_list,'String',cf_list,'Value',length(cf_list));
-        
-       % set calibraion factor for pdf 
-      
-        handles.pdf_cal=get(handles.default_cf,'string');
-        
-        handles.pdf_cal_date=get(handles.cf_date,'string');
-        guidata(hObject,handles);
-        
-        setappdata(0,'pdf_cal',handles.pdf_cal); % For manual windows.
-        
-        setappdata(0,'pdf_cal_date',handles.pdf_cal_date);
-        
-               
-        
-    case 'M7'
-        % Code for when Xio is selected.
-        handles.which_machine='M7';
-        guidata(hObject,handles);
-        
-         % update CF list
-        tmp2=handles.M7_CAL;
-        
-        tmp=tmp2(end);
-            
-        cal_factor=tmp.cal_factor;
-        
-        date=tmp.date;
-        
-        physicist=tmp.physicist;
-        
-        
-        set(handles.default_cf,'string',num2str(cal_factor));
-        
-        set(handles.cf_date,'string',date);
-        
-        set(handles.cf_physicist,'string',physicist);
-        
-        % get CF list to cell 
-        
-        cf_list={};
-        for k=1:length(tmp2)
-            
-           cf_list{k}=tmp2(k).date ;
-            
-        end 
-        
-        set(handles.cf_list,'String',cf_list,'Value',length(cf_list));
-        
-        
-         otherwise
-     
-         eventLogger('No EPID images were found','INFO','AutoEPID');
-         
-         cf_list1{1}='No EPID Image found';
-         
-         eventLogger('No calibration factor was displayed','INFO','AutoEPID');
-         
-         cf_list1{2}='No calibration factor displayed';
-         
-              
-         
-         set(handles.cf_list,'String',cf_list1,'Value',1);
-         
-      % set calibraion factor for pdf 
-      
-        handles.pdf_cal=get(handles.default_cf,'string');
-        
-        handles.pdf_cal_date=get(handles.cf_date,'string');
-        
-        guidata(hObject,handles);
-        
-        setappdata(0,'pdf_cal',handles.pdf_cal); % For manual windows.
-        
-        setappdata(0,'pdf_cal_date',handles.pdf_cal_date);
-        
-            
-              
-         
-     end
-     
-     
-    
-              
-       
-         
-         
-            
-       
-  end 
-  
-  
-end 
+    eventLogger(['The selected patient name is:'  pat_name],'INFO','AutoEPID');
 
 
-tps_folder=fullfile(handles.patient_name,'TPS');
+    handles.output_pat_name=pat_name;
 
-if exist(tps_folder,'dir')
-    
-    set(handles.tps_folder,'string',tps_folder);
-    
-    all_file_list=getFileList(tps_folder);
-    
-    if isempty(all_file_list)
-        
-      set(handles.tps_folder,'string','No TPS files exist');
-        
-    end 
-    
-        
-else
-     set(handles.tps_folder,'string','TPS subfolder does not exist.Please check.');
-        
-end     
-    
-epid_folder=fullfile(handles.patient_name,'EPID');
+    guidata(hObject,handles);
 
-if exist(epid_folder,'dir')
-    
-    set(handles.epid_folder,'string',epid_folder);
-    
-    all_file_list=getFileList(epid_folder);
-    
-    
-    if isempty(all_file_list)
-        
-      set(handles.epid_folder,'string','No EPID files exist');
-      
-      % set the CF list an empty cell string
-      
-      cf_list1={};
-      
-      cf_list1{1}='No EPID Image found';
-      
-      cf_list1{2}='No calibration factor list';
-         
-         
-      set(handles.cf_list,'String',cf_list1,'Value',1);
-      
-      
+    % return patient subdirectory
+
+    % handles.patient_name=[handles.all_input_dir '\' pat_name];
+
+    handles.patient_name=fullfile(tmp_dir,pat_name);
+
+    all_file_list2=getFileList(handles.patient_name);
+
+    if isempty(all_file_list2)
+
+        set(handles.patient_folder,'string','No TPS or EPID files exist. Please check.');
     else
-        
-     common_cf2=get(handles.default_cf,'string');
-
-     common_cf=str2double(common_cf2);
-     
-     % set default_cf for manual matching windows.  
-     
-     setappdata(0,'default_cf', common_cf);  
-        
-              
-    end 
-    
-       
-else
-     set(handles.epid_folder,'string','EPID subfolder does not exist.Please check.');
-     
-   % dealint with CF list dispear issues.
-     cf_list1={};
-      
-     cf_list1{1}='No subEPID folder found';
-      
-     cf_list1{2}='No calibration factor list';
-         
-         
-     set(handles.cf_list,'String',cf_list1,'Value',1);
-      
-        
-end     
 
 
+        set(handles.patient_folder,'string',handles.patient_name);
 
-guidata(hObject,handles);
+        % find the machine and selected which machine
 
-setappdata(0,'patient_dir',handles.patient_name)
+        machine_name=findMachineFromDir(handles.patient_name);
 
-setappdata(0,'epid_dir',handles.epid_folder);
 
-% clear all comments
+        handles.which_machine=machine_name;
 
-setappdata(0,'report_comments','');
+        if machine_name==0
 
-end 
+            set(handles.machine_name,'string','');
+
+            % set calibration factor to none
+            set(handles.default_cf,'string','');
+
+            set(handles.cf_date,'string','');
+
+            set(handles.cf_physicist,'string','');
+            %
+            tmp10{1}='';
+            % %        set(handles.cf_list,'Value',1);
+            set(handles.cf_list,'String',tmp10);
+            % %        set(handles.cf_list,'Value',1);
+
+
+        else
+
+            handles.which_machine=machine_name;
+
+            setappdata(0,'which_machine',machine_name);
+
+            set(handles.machine_name,'string',machine_name);
+            guidata(hObject,handles);
+
+            % set the calibration factors if epid file exist.
+
+            switch machine_name % Get Tag of selected object.
+
+                case 'M1'
+
+                    handles.which_machine='M1';
+                    guidata(hObject,handles);
+
+                    % udpate the CF
+
+
+                    tmp2=handles.M1_CAL;
+
+                    tmp=tmp2(length(tmp2));
+
+
+                    cal_factor=tmp.cal_factor;
+
+                    date=tmp.date;
+
+                    physicist=tmp.physicist;
+
+
+                    set(handles.default_cf,'string',num2str(cal_factor));
+
+                    set(handles.cf_date,'string',date);
+
+                    set(handles.cf_physicist,'string',physicist);
+
+                    % get CF list to cell
+
+                    cf_list={};
+                    for k=1:length(tmp2)
+
+                        cf_list{k}=tmp2(k).date ;
+
+                    end
+
+                    set(handles.cf_list,'String',cf_list,'Value',length(cf_list));
+
+                    % set calibraion factor for pdf
+
+                    handles.pdf_cal=get(handles.default_cf,'string');
+
+                    handles.pdf_cal_date=get(handles.cf_date,'string');
+
+
+                    guidata(hObject,handles);
+
+                    setappdata(0,'pdf_cal',handles.pdf_cal); % For manual windows.
+
+                    setappdata(0,'pdf_cal_date',handles.pdf_cal_date);
+
+
+
+                case 'M2'
+                    % Code for when Xio is selected.
+                    handles.which_machine='M2';
+                    guidata(hObject,handles);
+
+
+                    % update CF list
+
+
+                    tmp2=handles.M2_CAL;
+
+                    tmp=tmp2(end);
+
+                    cal_factor=tmp.cal_factor;
+
+                    date=tmp.date;
+
+                    physicist=tmp.physicist;
+
+
+                    set(handles.default_cf,'string',num2str(cal_factor));
+
+                    set(handles.cf_date,'string',date);
+
+                    set(handles.cf_physicist,'string',physicist);
+
+                    % get CF list to cell
+
+                    cf_list={};
+                    for k=1:length(tmp2)
+
+                        cf_list{k}=tmp2(k).date ;
+
+                    end
+
+                    set(handles.cf_list,'String',cf_list,'Value',length(cf_list));
+
+
+                    % set calibraion factor for pdf
+
+                    handles.pdf_cal=get(handles.default_cf,'string');
+
+                    handles.pdf_cal_date=get(handles.cf_date,'string');
+                    guidata(hObject,handles);
+
+                    setappdata(0,'pdf_cal',handles.pdf_cal); % For manual windows.
+
+                    setappdata(0,'pdf_cal_date',handles.pdf_cal_date);
+
+
+
+                case 'M3'
+                    % Code for when Xio is selected.
+                    handles.which_machine='M3';
+                    guidata(hObject,handles);
+
+                    % update CF list
+                    tmp2=handles.M3_CAL;
+
+                    tmp=tmp2(end);
+
+
+                    cal_factor=tmp.cal_factor;
+
+                    date=tmp.date;
+
+                    physicist=tmp.physicist;
+
+
+                    set(handles.default_cf,'string',num2str(cal_factor));
+
+                    set(handles.cf_date,'string',date);
+
+                    set(handles.cf_physicist,'string',physicist);
+
+                    % get CF list to cell
+
+                    cf_list={};
+                    for k=1:length(tmp)
+
+                        cf_list{k}=tmp(k).date ;
+
+                    end
+
+                    set(handles.cf_list,'String',cf_list,'Value',length(cf_list));
+
+                    % set calibraion factor for pdf
+
+                    handles.pdf_cal=get(handles.default_cf,'string');
+
+                    handles.pdf_cal_date=get(handles.cf_date,'string');
+                    guidata(hObject,handles);
+
+                    setappdata(0,'pdf_cal',handles.pdf_cal); % For manual windows.
+
+                    setappdata(0,'pdf_cal_date',handles.pdf_cal_date);
+
+
+
+                case 'M4'
+                    % Code for when Xio is selected.
+                    handles.which_machine='M4';
+                    guidata(hObject,handles);
+
+                    % update CF list
+                    tmp2=handles.M4_CAL;
+
+                    tmp=tmp2(end);
+                    cal_factor=tmp.cal_factor;
+
+                    date=tmp.date;
+
+                    physicist=tmp.physicist;
+
+
+                    set(handles.default_cf,'string',num2str(cal_factor));
+
+                    set(handles.cf_date,'string',date);
+
+                    set(handles.cf_physicist,'string',physicist);
+
+                    % get CF list to cell
+
+                    cf_list={};
+                    for k=1:length(tmp2)
+
+                        cf_list{k}=tmp2(k).date ;
+
+                    end
+
+                    set(handles.cf_list,'String',cf_list,'Value',length(cf_list));
+
+                    % set calibraion factor for pdf
+
+                    handles.pdf_cal=get(handles.default_cf,'string');
+
+                    handles.pdf_cal_date=get(handles.cf_date,'string');
+                    guidata(hObject,handles);
+
+                    setappdata(0,'pdf_cal',handles.pdf_cal); % For manual windows.
+
+                    setappdata(0,'pdf_cal_date',handles.pdf_cal_date);
+
+
+
+                case 'M5'
+                    % Code for when Xio is selected.
+                    handles.which_machine='M5';
+                    guidata(hObject,handles);
+
+                    %update CF list
+                    tmp2=handles.M5_CAL;
+
+                    tmp=tmp2(end);
+
+                    cal_factor=tmp.cal_factor;
+
+                    date=tmp.date;
+
+                    physicist=tmp.physicist;
+
+
+                    set(handles.default_cf,'string',num2str(cal_factor));
+
+                    set(handles.cf_date,'string',date);
+
+                    set(handles.cf_physicist,'string',physicist);
+
+                    % get CF list to cell
+
+                    cf_list={};
+                    for k=1:length(tmp2)
+
+                        cf_list{k}=tmp2(k).date ;
+
+                    end
+
+                    set(handles.cf_list,'String',cf_list,'Value',length(cf_list));
+
+                    % set calibraion factor for pdf
+
+                    handles.pdf_cal=get(handles.default_cf,'string');
+
+                    handles.pdf_cal_date=get(handles.cf_date,'string');
+                    guidata(hObject,handles);
+
+                    setappdata(0,'pdf_cal',handles.pdf_cal); % For manual windows.
+
+                    setappdata(0,'pdf_cal_date',handles.pdf_cal_date);
+
+
+
+                case 'M7'
+
+                    % Code for when Xio is selected.
+                    handles.which_machine='M7';
+                    guidata(hObject,handles);
+
+                    % update CF list
+                    tmp2=handles.M7_CAL;
+
+                    tmp=tmp2(end);
+
+                    cal_factor=tmp.cal_factor;
+
+                    date=tmp.date;
+
+                    physicist=tmp.physicist;
+
+
+                    set(handles.default_cf,'string',num2str(cal_factor));
+
+                    set(handles.cf_date,'string',date);
+
+                    set(handles.cf_physicist,'string',physicist);
+
+                    % get CF list to cell
+
+                    cf_list={};
+                    for k=1:length(tmp2)
+
+                        cf_list{k}=tmp2(k).date ;
+
+                    end
+
+                    set(handles.cf_list,'String',cf_list,'Value',length(cf_list));
+
+
+
+                    eventLogger('No EPID images were found','INFO','AutoEPID');
+
+                    cf_list1{1}='No EPID Image found';
+
+                    eventLogger('No calibration factor was displayed','INFO','AutoEPID');
+
+                    cf_list1{2}='No calibration factor displayed';
+
+
+
+                    set(handles.cf_list,'String',cf_list1,'Value',1);
+
+                    % set calibraion factor for pdf
+
+                    handles.pdf_cal=get(handles.default_cf,'string');
+
+                    handles.pdf_cal_date=get(handles.cf_date,'string');
+
+                    guidata(hObject,handles);
+
+                    setappdata(0,'pdf_cal',handles.pdf_cal); % For manual windows.
+
+                    setappdata(0,'pdf_cal_date',handles.pdf_cal_date);
+
+
+                % L1
+
+                case 'L1'
+
+                    % Code for when Xio is selected.
+                    handles.which_machine='L1';
+                    guidata(hObject,handles);
+
+                    % update CF list
+                    tmp2=handles.L1_CAL;
+
+                    tmp=tmp2(end);
+
+                    cal_factor=tmp.cal_factor;
+
+                    date=tmp.date;
+
+                    physicist=tmp.physicist;
+
+
+                    set(handles.default_cf,'string',num2str(cal_factor));
+
+                    set(handles.cf_date,'string',date);
+
+                    set(handles.cf_physicist,'string',physicist);
+
+                    % get CF list to cell
+
+                    cf_list={};
+                    for k=1:length(tmp2)
+
+                        cf_list{k}=tmp2(k).date ;
+
+                    end
+
+                    set(handles.cf_list,'String',cf_list,'Value',length(cf_list));
+
+
+
+                    eventLogger('No EPID images were found','INFO','AutoEPID');
+
+                    cf_list1{1}='No EPID Image found';
+
+                    eventLogger('No calibration factor was displayed','INFO','AutoEPID');
+
+                    cf_list1{2}='No calibration factor displayed';
+
+
+
+                    set(handles.cf_list,'String',cf_list1,'Value',1);
+
+                    % set calibraion factor for pdf
+
+                    handles.pdf_cal=get(handles.default_cf,'string');
+
+                    handles.pdf_cal_date=get(handles.cf_date,'string');
+
+                    guidata(hObject,handles);
+
+                    setappdata(0,'pdf_cal',handles.pdf_cal); % For manual windows.
+
+                    setappdata(0,'pdf_cal_date',handles.pdf_cal_date);
+
+
+                   % L2
+
+                case 'L2'
+
+                    % Code for when Xio is selected.
+                    handles.which_machine='L2';
+                    guidata(hObject,handles);
+
+                    % update CF list
+                    tmp2=handles.L2_CAL;
+
+                    tmp=tmp2(end);
+
+                    cal_factor=tmp.cal_factor;
+
+                    date=tmp.date;
+
+                    physicist=tmp.physicist;
+
+
+                    set(handles.default_cf,'string',num2str(cal_factor));
+
+                    set(handles.cf_date,'string',date);
+
+                    set(handles.cf_physicist,'string',physicist);
+
+                    % get CF list to cell
+
+                    cf_list={};
+                    for k=1:length(tmp2)
+
+                        cf_list{k}=tmp2(k).date ;
+
+                    end
+
+                    set(handles.cf_list,'String',cf_list,'Value',length(cf_list));
+
+
+
+                    eventLogger('No EPID images were found','INFO','AutoEPID');
+
+                    cf_list1{1}='No EPID Image found';
+
+                    eventLogger('No calibration factor was displayed','INFO','AutoEPID');
+
+                    cf_list1{2}='No calibration factor displayed';
+
+
+
+                    set(handles.cf_list,'String',cf_list1,'Value',1);
+
+                    % set calibraion factor for pdf
+
+                    handles.pdf_cal=get(handles.default_cf,'string');
+
+                    handles.pdf_cal_date=get(handles.cf_date,'string');
+
+                    guidata(hObject,handles);
+
+                    setappdata(0,'pdf_cal',handles.pdf_cal); % For manual windows.
+
+                    setappdata(0,'pdf_cal_date',handles.pdf_cal_date);
+
+
+
+
+                   % L3
+
+                case 'L3'
+
+                    % Code for when Xio is selected.
+                    handles.which_machine='L3';
+                    guidata(hObject,handles);
+
+                    % update CF list
+                    tmp2=handles.L3_CAL;
+
+                    tmp=tmp2(end);
+
+                    cal_factor=tmp.cal_factor;
+
+                    date=tmp.date;
+
+                    physicist=tmp.physicist;
+
+
+                    set(handles.default_cf,'string',num2str(cal_factor));
+
+                    set(handles.cf_date,'string',date);
+
+                    set(handles.cf_physicist,'string',physicist);
+
+                    % get CF list to cell
+
+                    cf_list={};
+                    for k=1:length(tmp2)
+
+                        cf_list{k}=tmp2(k).date ;
+
+                    end
+
+                    set(handles.cf_list,'String',cf_list,'Value',length(cf_list));
+
+
+
+                    eventLogger('No EPID images were found','INFO','AutoEPID');
+
+                    cf_list1{1}='No EPID Image found';
+
+                    eventLogger('No calibration factor was displayed','INFO','AutoEPID');
+
+                    cf_list1{2}='No calibration factor displayed';
+
+
+
+                    set(handles.cf_list,'String',cf_list1,'Value',1);
+
+                    % set calibraion factor for pdf
+
+                    handles.pdf_cal=get(handles.default_cf,'string');
+
+                    handles.pdf_cal_date=get(handles.cf_date,'string');
+
+                    guidata(hObject,handles);
+
+                    setappdata(0,'pdf_cal',handles.pdf_cal); % For manual windows.
+
+                    setappdata(0,'pdf_cal_date',handles.pdf_cal_date);
+
+
+            end
+
+
+        end
+
+
+    end
+
+
+    tps_folder=fullfile(handles.patient_name,'TPS');
+
+    if exist(tps_folder,'dir')
+
+        set(handles.tps_folder,'string',tps_folder);
+
+        all_file_list=getFileList(tps_folder);
+
+        if isempty(all_file_list)
+
+            set(handles.tps_folder,'string','No TPS files exist');
+
+        end
+
+
+    else
+        set(handles.tps_folder,'string','TPS subfolder does not exist.Please check.');
+
+    end
+
+    epid_folder=fullfile(handles.patient_name,'EPID');
+
+    if exist(epid_folder,'dir')
+
+        set(handles.epid_folder,'string',epid_folder);
+
+        all_file_list=getFileList(epid_folder);
+
+        epid_files=all_file_list
+
+        len=length(epid_files)
+
+
+        if isempty(all_file_list)
+
+            set(handles.epid_folder,'string','No EPID files exist');
+
+            % set the CF list an empty cell string
+
+            cf_list1={};
+
+            cf_list1{1}='No EPID Image found';
+
+            cf_list1{2}='No calibration factor list';
+
+
+            set(handles.cf_list,'String',cf_list1,'Value',1);
+
+
+        else
+
+            common_cf2=get(handles.default_cf,'string');
+
+            common_cf=str2double(common_cf2);
+
+            % set default_cf for manual matching windows.
+
+            setappdata(0,'default_cf', common_cf);
+
+
+        end
+
+
+    else
+        set(handles.epid_folder,'string','EPID subfolder does not exist.Please check.');
+
+        % dealint with CF list dispear issues.
+        cf_list1={};
+
+        cf_list1{1}='No subEPID folder found';
+
+        cf_list1{2}='No calibration factor list';
+
+
+        set(handles.cf_list,'String',cf_list1,'Value',1);
+
+
+    end
+
+
+
+    guidata(hObject,handles);
+
+    setappdata(0,'patient_dir',handles.patient_name)
+
+    setappdata(0,'epid_dir',handles.epid_folder);
+
+    % clear all comments
+
+    setappdata(0,'report_comments','');
+
+end
 
 
 
@@ -1127,20 +1319,20 @@ function dicom_template_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
- dicom_dir=uigetdir('.','Choose the default directory for dicom template file');
- if isempty(dicom_dir)
-      handles.dicom_template_dir='C:\';
- else
-     
-    handles.dicom_template_dir='C:\'; 
-      
+dicom_dir=uigetdir('.','Choose the default directory for dicom template file');
+if isempty(dicom_dir)
+    handles.dicom_template_dir='C:\';
+else
+
+    handles.dicom_template_dir='C:\';
+
     handles.dicom_template_dir=dicom_dir;
     guidata(hObject, handles);
- 
+
     dicom_template_dir=handles.dicom_template_dir;
     save('resource.mat', 'dicom_template_dir','-append');
     disp(handles.dicom_template_dir)
-    
+
 end
 
 
@@ -1152,12 +1344,12 @@ function all_input_dir_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 pat_dir=uigetdir('.','Choose the default directory for dicom template file');
- if pat_dir==0
-    
+if pat_dir==0
+
     handles.all_input_dir='C:\';
     guidata(hObject,handles);
-    
- else
+
+else
     handles.all_input_dir=pat_dir;
     guidata(hObject, handles);
     patient_list_dir=handles.all_input_dir;
@@ -1165,7 +1357,7 @@ pat_dir=uigetdir('.','Choose the default directory for dicom template file');
     disp(handles.all_input_dir);
     guidata(hObject,handles);
 
- end 
+end
 
 % list patient name
 pat_list=listPatient(handles.all_input_dir);
@@ -1240,7 +1432,7 @@ dirS= dir(dir_temp);
 dirT=struct2table(dirS);
 
 
-% sort the table by date/time 
+% sort the table by date/time
 
 dirT=sortrows(dirT,'datenum','descend');
 
@@ -1264,7 +1456,7 @@ pat_list=nameFolds;
 
 % --- Executes when selected object is changed in tps_pannel.
 function tps_pannel_SelectionChangeFcn(hObject, eventdata, handles)
-% hObject    handle to the selected object in tps_pannel 
+% hObject    handle to the selected object in tps_pannel
 % eventdata  structure with the following fields (see UIBUTTONGROUP)
 %	EventName: string 'SelectionChanged' (read only)
 %	OldValue: handle of the previously selected object or empty if none was selected
@@ -1272,55 +1464,55 @@ function tps_pannel_SelectionChangeFcn(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 
- % set to Pinnacle to remove the  tps pannel.
- handles.which_tps='Pinnacle';
- 
+% set to Pinnacle to remove the  tps pannel.
+handles.which_tps='Pinnacle';
 
- switch get(eventdata.NewValue,'Tag') % Get Tag of selected object.
+
+switch get(eventdata.NewValue,'Tag') % Get Tag of selected object.
     case 'Pinnacle'
-        
+
         handles.which_tps='Pinnacle';
         guidata(hObject,handles);
-        
+
     case 'Xio'
         % Code for when Xio is selected.
         handles.which_tps='Xio';
         guidata(hObject,handles);
-        
- end 
- 
- setappdata(0,'which_tps',handles.which_tps);
- disp(handles.which_tps)
+
+end
+
+setappdata(0,'which_tps',handles.which_tps);
+disp(handles.which_tps)
 
 
 % --- Executes when selected object is changed in epid_pannel.
 function epid_pannel_SelectionChangeFcn(hObject, eventdata, handles)
-% hObject    handle to the selected object in epid_pannel 
+% hObject    handle to the selected object in epid_pannel
 % eventdata  structure with the following fields (see UIBUTTONGROUP)
 %	EventName: string 'SelectionChanged' (read only)
 %	OldValue: handle of the previously selected object or empty if none was selected
 %	NewValue: handle of the currently selected object
 % handles    structure with handles and user data (see GUIDATA)
- handles.output_option='';
- 
- switch get(eventdata.NewValue,'Tag') % Get Tag of selected object.
-     
+handles.output_option='';
+
+switch get(eventdata.NewValue,'Tag') % Get Tag of selected object.
+
     case 'epidimage'
-        
+
         handles.output_option='EPID Dose Image Only';
         guidata(hObject,handles);
-        
+
     case 'autoreport'
-        
+
         % Code for when Xio is selected.
-        
+
         handles.output_option='EPID Dose Image+AutoReport';
         guidata(hObject,handles);
-        
- end 
- 
- setappdata(0,'output_option',handles.output_option);
- disp(handles.output_option)
+
+end
+
+setappdata(0,'output_option',handles.output_option);
+disp(handles.output_option)
 
 
 % --- Executes on button press in Exit.
@@ -1330,7 +1522,7 @@ function Exit_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 % delete(handles.auto_epid_main);
 
-% use matlab-built in function to turn off the program. 
+% use matlab-built in function to turn off the program.
 closereq
 
 
@@ -1340,12 +1532,12 @@ function all_output_dir_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 output_dir=uigetdir('.','Choose the default directory for dicom template file');
- if output_dir==0
-    
+if output_dir==0
+
     handles.all_input_dir='C:\';
     guidata(hObject,handles);
-    
- else
+
+else
     handles.all_output_dir=output_dir;
     guidata(hObject, handles);
     output_dir=handles.all_output_dir;
@@ -1353,7 +1545,7 @@ output_dir=uigetdir('.','Choose the default directory for dicom template file');
     disp(handles.all_output_dir);
     guidata(hObject,handles);
 
- end 
+end
 
 
 % --- Executes during object creation, after setting all properties.
@@ -1550,222 +1742,222 @@ function cf_list_Callback(hObject, eventdata, handles)
 % Hints: contents = cellstr(get(hObject,'String')) returns cf_list contents as cell array
 %        contents{get(hObject,'Value')} returns selected item from cf_list
 
-    contents = cellstr(get(hObject,'String'));
-    selected=contents{get(hObject,'Value')};
-    
-    switch handles.which_machine
-        
-        case 'M1'
-            
-            index=structfind(handles.M1_CAL,'date',selected);
-            
-            if length(index)>1
-               
-                index=length(index); % get last one.
-                
-            end
-            
-            M1_CAL=handles.M1_CAL;
-            
-            selected_CF=M1_CAL(index);
-            
-            % if the selected CF has more than 2 same calibration factor
-            % chose the last one.
-            if length(selected_CF)>1
-                
-            selected_CF= selected_CF(end);   
-                
-            end 
-            cf=num2str(selected_CF.cal_factor);
-              
-            % set the date and Cal factor
-            
-            set(handles.cf_date,'string',selected_CF.date);
-            set(handles.cf_physicist,'string',selected_CF.physicist);
-            set(handles.default_cf,'string',cf);
-            
-            % set calibraion factor for pdf 
-      
-            handles.pdf_cal=get(handles.default_cf,'string');
-        
-            handles.pdf_cal_date=get(handles.cf_date,'string');
-            guidata(hObject,handles);
-        
-            setappdata(0,'pdf_cal',handles.pdf_cal); % For manual windows.
-        
-            setappdata(0,'pdf_cal_date',handles.pdf_cal_date);
-            
-            
-        case 'M2'
-            
-            index=structfind(handles.M2_CAL,'date',selected);
-            
-            M2_CAL=handles.M2_CAL;
-            
-            selected_CF=M2_CAL(index);
-            
-             % if the selected CF has more than 2 same calibration factor
-            % chose the last one.
-            if length(selected_CF)>1
-                
-            selected_CF= selected_CF(end);   
-                
-            end 
-                        
-            cf=num2str(selected_CF.cal_factor);
-            
-             % set the date and Cal factor
-            
-            set(handles.cf_date,'string',selected_CF.date);
-            set(handles.cf_physicist,'string',selected_CF.physicist);
-            set(handles.default_cf,'string',cf);
-            
-             % set calibraion factor for pdf 
-      
-            handles.pdf_cal=get(handles.default_cf,'string');
-        
-            handles.pdf_cal_date=get(handles.cf_date,'string');
-            guidata(hObject,handles);
-        
-            setappdata(0,'pdf_cal',handles.pdf_cal); % For manual windows.
-        
-            setappdata(0,'pdf_cal_date',handles.pdf_cal_date);
-            
-                                   
-        case 'M3'
-            
-            index=structfind(handles.M3_CAL,'date',selected);
-            
-            
-            cf=num2str(M3_CAL(index).cal_factor);
-                               
-            set(handles.default_cf,'string',cf)
-            
-            % set calibraion factor for pdf 
-      
-            handles.pdf_cal=get(handles.default_cf,'string');
-        
-            handles.pdf_cal_date=get(handles.cf_date,'string');
-            guidata(hObject,handles);
-        
-            setappdata(0,'pdf_cal',handles.pdf_cal); % For manual windows.
-        
-            setappdata(0,'pdf_cal_date',handles.pdf_cal_date); 
-            
-            
-            
-        case 'M4'
-            
-            index=structfind(handles.M4_CAL,'date',selected);
-            
-            M4_CAL=handles.M4_CAL;
-            
-            selected_CF=M4_CAL(index);
-            
-             % if the selected CF has more than 2 same calibration factor
-            % chose the last one.
-            if length(selected_CF)>1
-                
-            selected_CF= selected_CF(end);   
-                
-            end 
-            
-            cf=num2str(selected_CF.cal_factor);
-                  
-           % set the date and Cal factor
-            
-            set(handles.cf_date,'string',selected_CF.date);
-            set(handles.cf_physicist,'string',selected_CF.physicist);
-            set(handles.default_cf,'string',cf);
-            
-             % set calibraion factor for pdf 
-      
-            handles.pdf_cal=get(handles.default_cf,'string');
-        
-            handles.pdf_cal_date=get(handles.cf_date,'string');
-            guidata(hObject,handles);
-        
-            setappdata(0,'pdf_cal',handles.pdf_cal); % For manual windows.
-        
-            setappdata(0,'pdf_cal_date',handles.pdf_cal_date);
-            
-                      
-        case 'M5'
-            
-            index=structfind(handles.M5_CAL,'date',selected);
-             
-            M5_CAL=handles.M5_CAL;
-        
-            selected_CF=M5_CAL(index);
-            
-             % if the selected CF has more than 2 same calibration factor
-            % chose the last one.
-            if length(selected_CF)>1
-                
-                selected_CF= selected_CF(end);
-                
-            end 
-            
-            cf=num2str(selected_CF.cal_factor);
-            
-            % set the date and Cal factor
-            
-            set(handles.cf_date,'string',selected_CF.date);
-            set(handles.cf_physicist,'string',selected_CF.physicist);
-            set(handles.default_cf,'string',cf);
-            
-             % set calibraion factor for pdf 
-      
-            handles.pdf_cal=get(handles.default_cf,'string');
-        
-            handles.pdf_cal_date=get(handles.cf_date,'string');
-            guidata(hObject,handles);
-        
-            setappdata(0,'pdf_cal',handles.pdf_cal); % For manual windows.
-        
-            setappdata(0,'pdf_cal_date',handles.pdf_cal_date);
-            
-         
-         case 'M7'
-            
-            index=structfind(handles.M7_CAL,'date',selected);
-             
-            M7_CAL=handles.M7_CAL;
-        
-            selected_CF=M7_CAL(index);
-            
-             % if the selected CF has more than 2 same calibration factor
-            % chose the last one.
-            if length(selected_CF)>1
-                
-                selected_CF= selected_CF(end);
-                
-            end 
-            
-            cf=num2str(selected_CF.cal_factor);
-            
-            % set the date and Cal factor
-            
-            set(handles.cf_date,'string',selected_CF.date);
-            set(handles.cf_physicist,'string',selected_CF.physicist);
-            set(handles.default_cf,'string',cf);
-            
-            
-            % set calibraion factor for pdf 
-      
-            handles.pdf_cal=get(handles.default_cf,'string');
-        
-            handles.pdf_cal_date=get(handles.cf_date,'string');
-            guidata(hObject,handles);
-        
-            setappdata(0,'pdf_cal',handles.pdf_cal); % For manual windows.
-        
-            setappdata(0,'pdf_cal_date',handles.pdf_cal_date);
-               
-          
-            
-    end 
- 
+contents = cellstr(get(hObject,'String'));
+selected=contents{get(hObject,'Value')};
+
+switch handles.which_machine
+
+    case 'M1'
+
+        index=structfind(handles.M1_CAL,'date',selected);
+
+        if length(index)>1
+
+            index=length(index); % get last one.
+
+        end
+
+        M1_CAL=handles.M1_CAL;
+
+        selected_CF=M1_CAL(index);
+
+        % if the selected CF has more than 2 same calibration factor
+        % chose the last one.
+        if length(selected_CF)>1
+
+            selected_CF= selected_CF(end);
+
+        end
+        cf=num2str(selected_CF.cal_factor);
+
+        % set the date and Cal factor
+
+        set(handles.cf_date,'string',selected_CF.date);
+        set(handles.cf_physicist,'string',selected_CF.physicist);
+        set(handles.default_cf,'string',cf);
+
+        % set calibraion factor for pdf
+
+        handles.pdf_cal=get(handles.default_cf,'string');
+
+        handles.pdf_cal_date=get(handles.cf_date,'string');
+        guidata(hObject,handles);
+
+        setappdata(0,'pdf_cal',handles.pdf_cal); % For manual windows.
+
+        setappdata(0,'pdf_cal_date',handles.pdf_cal_date);
+
+
+    case 'M2'
+
+        index=structfind(handles.M2_CAL,'date',selected);
+
+        M2_CAL=handles.M2_CAL;
+
+        selected_CF=M2_CAL(index);
+
+        % if the selected CF has more than 2 same calibration factor
+        % chose the last one.
+        if length(selected_CF)>1
+
+            selected_CF= selected_CF(end);
+
+        end
+
+        cf=num2str(selected_CF.cal_factor);
+
+        % set the date and Cal factor
+
+        set(handles.cf_date,'string',selected_CF.date);
+        set(handles.cf_physicist,'string',selected_CF.physicist);
+        set(handles.default_cf,'string',cf);
+
+        % set calibraion factor for pdf
+
+        handles.pdf_cal=get(handles.default_cf,'string');
+
+        handles.pdf_cal_date=get(handles.cf_date,'string');
+        guidata(hObject,handles);
+
+        setappdata(0,'pdf_cal',handles.pdf_cal); % For manual windows.
+
+        setappdata(0,'pdf_cal_date',handles.pdf_cal_date);
+
+
+    case 'M3'
+
+        index=structfind(handles.M3_CAL,'date',selected);
+
+
+        cf=num2str(M3_CAL(index).cal_factor);
+
+        set(handles.default_cf,'string',cf)
+
+        % set calibraion factor for pdf
+
+        handles.pdf_cal=get(handles.default_cf,'string');
+
+        handles.pdf_cal_date=get(handles.cf_date,'string');
+        guidata(hObject,handles);
+
+        setappdata(0,'pdf_cal',handles.pdf_cal); % For manual windows.
+
+        setappdata(0,'pdf_cal_date',handles.pdf_cal_date);
+
+
+
+    case 'M4'
+
+        index=structfind(handles.M4_CAL,'date',selected);
+
+        M4_CAL=handles.M4_CAL;
+
+        selected_CF=M4_CAL(index);
+
+        % if the selected CF has more than 2 same calibration factor
+        % chose the last one.
+        if length(selected_CF)>1
+
+            selected_CF= selected_CF(end);
+
+        end
+
+        cf=num2str(selected_CF.cal_factor);
+
+        % set the date and Cal factor
+
+        set(handles.cf_date,'string',selected_CF.date);
+        set(handles.cf_physicist,'string',selected_CF.physicist);
+        set(handles.default_cf,'string',cf);
+
+        % set calibraion factor for pdf
+
+        handles.pdf_cal=get(handles.default_cf,'string');
+
+        handles.pdf_cal_date=get(handles.cf_date,'string');
+        guidata(hObject,handles);
+
+        setappdata(0,'pdf_cal',handles.pdf_cal); % For manual windows.
+
+        setappdata(0,'pdf_cal_date',handles.pdf_cal_date);
+
+
+    case 'M5'
+
+        index=structfind(handles.M5_CAL,'date',selected);
+
+        M5_CAL=handles.M5_CAL;
+
+        selected_CF=M5_CAL(index);
+
+        % if the selected CF has more than 2 same calibration factor
+        % chose the last one.
+        if length(selected_CF)>1
+
+            selected_CF= selected_CF(end);
+
+        end
+
+        cf=num2str(selected_CF.cal_factor);
+
+        % set the date and Cal factor
+
+        set(handles.cf_date,'string',selected_CF.date);
+        set(handles.cf_physicist,'string',selected_CF.physicist);
+        set(handles.default_cf,'string',cf);
+
+        % set calibraion factor for pdf
+
+        handles.pdf_cal=get(handles.default_cf,'string');
+
+        handles.pdf_cal_date=get(handles.cf_date,'string');
+        guidata(hObject,handles);
+
+        setappdata(0,'pdf_cal',handles.pdf_cal); % For manual windows.
+
+        setappdata(0,'pdf_cal_date',handles.pdf_cal_date);
+
+
+    case 'M7'
+
+        index=structfind(handles.M7_CAL,'date',selected);
+
+        M7_CAL=handles.M7_CAL;
+
+        selected_CF=M7_CAL(index);
+
+        % if the selected CF has more than 2 same calibration factor
+        % chose the last one.
+        if length(selected_CF)>1
+
+            selected_CF= selected_CF(end);
+
+        end
+
+        cf=num2str(selected_CF.cal_factor);
+
+        % set the date and Cal factor
+
+        set(handles.cf_date,'string',selected_CF.date);
+        set(handles.cf_physicist,'string',selected_CF.physicist);
+        set(handles.default_cf,'string',cf);
+
+
+        % set calibraion factor for pdf
+
+        handles.pdf_cal=get(handles.default_cf,'string');
+
+        handles.pdf_cal_date=get(handles.cf_date,'string');
+        guidata(hObject,handles);
+
+        setappdata(0,'pdf_cal',handles.pdf_cal); % For manual windows.
+
+        setappdata(0,'pdf_cal_date',handles.pdf_cal_date);
+
+
+
+end
+
 
 % --- Executes during object creation, after setting all properties.
 function cf_list_CreateFcn(hObject, eventdata, handles)
@@ -1782,305 +1974,305 @@ end
 
 % --- Executes when selected object is changed in treatment_type.
 function treatment_type_SelectionChangeFcn(hObject, eventdata, handles)
-% hObject    handle to the selected object in treatment_type 
+% hObject    handle to the selected object in treatment_type
 % eventdata  structure with the following fields (see UIBUTTONGROUP)
 %	EventName: string 'SelectionChanged' (read only)
 %	OldValue: handle of the previously selected object or empty if none was selected
 %	NewValue: handle of the currently selected object
 % handles    structure with handles and user data (see GUIDATA)
 
- handles.treatment_type='';
- 
+handles.treatment_type='';
 
- switch get(eventdata.NewValue,'Tag') % Get Tag of selected object.
+
+switch get(eventdata.NewValue,'Tag') % Get Tag of selected object.
     case 'IMRT'
-        
+
         handles.treatment_type='IMRT';
         guidata(hObject,handles);
-        
+
         setappdata(0,'treatment_type','IMRT');
-        
+
         set(handles.all_output_dir,'string',handles.output_dir);
-        
+
         imrt_output_dir=get(handles.all_output_dir,'string');
-        
-%         imrt_output_dir1=imrt_output_dir{1};
+
+        %         imrt_output_dir1=imrt_output_dir{1};
         % when user change choice, setup different directory.
         setappdata(0,'output_dir',imrt_output_dir);
-        
-%         handles.output_dir=get(handles.all_output_dir,'string');
-%  
-%         guidata(hObject,handles);
-        
+
+        %         handles.output_dir=get(handles.all_output_dir,'string');
+        %
+        %         guidata(hObject,handles);
+
     case 'VMAT'
         % Code for when Xio is selected.
         handles.treatment_type='VMAT';
         guidata(hObject,handles);
-        
-        setappdata(0,'treatment_type','VMAT');
-        
-        set(handles.all_output_dir,'string',handles.output_dir_vmat);
-        
-        % set vmat dir for mannual mapping.
-        
-        % when user change choice, setup different directory.
-%         setappdata(0,'output_dir',handles.all_output_dir);
 
-          vmat_output_dir=get(handles.all_output_dir,'string');
-          setappdata(0,'output_dir',vmat_output_dir);
-       
-          guidata(hObject,handles);
-        
- end 
- 
- 
-        
- disp(handles.treatment_type)
- 
-  
- 
+        setappdata(0,'treatment_type','VMAT');
+
+        set(handles.all_output_dir,'string',handles.output_dir_vmat);
+
+        % set vmat dir for mannual mapping.
+
+        % when user change choice, setup different directory.
+        %         setappdata(0,'output_dir',handles.all_output_dir);
+
+        vmat_output_dir=get(handles.all_output_dir,'string');
+        setappdata(0,'output_dir',vmat_output_dir);
+
+        guidata(hObject,handles);
+
+end
+
+
+
+disp(handles.treatment_type)
+
+
+
 
 
 % --- Executes when selected object is changed in treatment_machine.
 function treatment_machine_SelectionChangeFcn(hObject, eventdata, handles)
-% hObject    handle to the selected object in treatment_machine 
+% hObject    handle to the selected object in treatment_machine
 % eventdata  structure with the following fields (see UIBUTTONGROUP)
 %	EventName: string 'SelectionChanged' (read only)
 %	OldValue: handle of the previously selected object or empty if none was selected
 %	NewValue: handle of the currently selected object
 % handles    structure with handles and user data (see GUIDATA)
 
- handles.which_machine='';
- 
+handles.which_machine='';
 
- switch get(eventdata.NewValue,'Tag') % Get Tag of selected object.
+
+switch get(eventdata.NewValue,'Tag') % Get Tag of selected object.
     case 'M1'
-        
+
         handles.which_machine='M1';
         guidata(hObject,handles);
-       
+
         % udpate the CF
-        
-        
+
+
         tmp2=handles.M1_CAL;
-        
+
         tmp=tmp2(length(tmp2));
-        
-            
+
+
         cal_factor=tmp.cal_factor;
-        
+
         date=tmp.date;
-        
+
         physicist=tmp.physicist;
-        
-        
+
+
         set(handles.default_cf,'string',num2str(cal_factor));
-        
+
         set(handles.cf_date,'string',date);
-        
+
         set(handles.cf_physicist,'string',physicist);
-        
-        %get CF list to cell 
-        
+
+        %get CF list to cell
+
         cf_list={};
         for k=1:length(tmp)
-            
-           cf_list{k}=tmp(k).date ;
-            
-        end 
-        
+
+            cf_list{k}=tmp(k).date ;
+
+        end
+
         set(handles.cf_list,'String',cf_list);
-        
+
     case 'M2'
         % Code for when Xio is selected.
         handles.which_machine='M2';
         guidata(hObject,handles);
-        
-        
+
+
         % update CF list
-        
-        
+
+
         tmp2=handles.M2_CAL;
-                 
+
         tmp=tmp2(end);
-            
+
         cal_factor=tmp.cal_factor;
-        
+
         date=tmp.date;
-        
+
         physicist=tmp.physicist;
-        
-        
+
+
         set(handles.default_cf,'string',num2str(cal_factor));
-        
+
         set(handles.cf_date,'string',date);
-        
+
         set(handles.cf_physicist,'string',physicist);
-        
-        % get CF list to cell 
-        
+
+        % get CF list to cell
+
         cf_list={};
         for k=1:length(tmp)
-            
-           cf_list{k}=tmp(k).date ;
-            
-        end 
-        
+
+            cf_list{k}=tmp(k).date ;
+
+        end
+
         set(handles.cf_list,'String',cf_list);
-        
-        
-        
-        
+
+
+
+
     case 'M3'
         % Code for when Xio is selected.
         handles.which_machine='M3';
         guidata(hObject,handles);
-        
-         % update CF list
+
+        % update CF list
         tmp2=handles.M3_CAL;
-        
+
         tmp=tmp2(end);
-        
-            
+
+
         cal_factor=tmp.cal_factor;
-        
+
         date=tmp.date;
-        
+
         physicist=tmp.physicist;
-        
-        
+
+
         set(handles.default_cf,'string',num2str(cal_factor));
-        
+
         set(handles.cf_date,'string',date);
-        
+
         set(handles.cf_physicist,'string',physicist);
-        
-        % get CF list to cell 
-        
+
+        % get CF list to cell
+
         cf_list={};
         for k=1:length(tmp)
-            
-           cf_list{k}=tmp(k).date ;
-            
-        end 
-        
+
+            cf_list{k}=tmp(k).date ;
+
+        end
+
         set(handles.cf_list,'String',cf_list);
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
     case 'M4'
         % Code for when Xio is selected.
         handles.which_machine='M4';
         guidata(hObject,handles);
-        
-         % update CF list
+
+        % update CF list
         tmp2=handles.M4_CAL;
-        
-        tmp=tmp2(end);    
+
+        tmp=tmp2(end);
         cal_factor=tmp.cal_factor;
-        
+
         date=tmp.date;
-        
+
         physicist=tmp.physicist;
-        
-        
+
+
         set(handles.default_cf,'string',num2str(cal_factor));
-        
+
         set(handles.cf_date,'string',date);
-        
+
         set(handles.cf_physicist,'string',physicist);
-        
-        % get CF list to cell 
-        
+
+        % get CF list to cell
+
         cf_list={};
         for k=1:length(tmp)
-            
-           cf_list{k}=tmp(k).date ;
-            
-        end 
-        
+
+            cf_list{k}=tmp(k).date ;
+
+        end
+
         set(handles.cf_list,'String',cf_list);
-        
-        
-               
+
+
+
     case 'M5'
         % Code for when Xio is selected.
         handles.which_machine='M5';
         guidata(hObject,handles);
-        
-         % update CF list
+
+        % update CF list
         tmp2=handles.M5_CAL;
-        
+
         tmp=tmp2(end);
-            
+
         cal_factor=tmp.cal_factor;
-        
+
         date=tmp.date;
-        
+
         physicist=tmp.physicist;
-        
-        
+
+
         set(handles.default_cf,'string',num2str(cal_factor));
-        
+
         set(handles.cf_date,'string',date);
-        
+
         set(handles.cf_physicist,'string',physicist);
-        
-        % get CF list to cell 
-        
+
+        % get CF list to cell
+
         cf_list={};
         for k=1:length(tmp)
-            
-           cf_list{k}=tmp(k).date ;
-            
-        end 
-        
+
+            cf_list{k}=tmp(k).date ;
+
+        end
+
         set(handles.cf_list,'String',cf_list);
-        
-             
-        
+
+
+
     case 'M7'
         % Code for when Xio is selected.
         handles.which_machine='M7';
         guidata(hObject,handles);
-        
-          % update CF list
+
+        % update CF list
         tmp2=handles.M7_CAL;
-        
+
         tmp=tmp2(end);
-            
+
         cal_factor=tmp.cal_factor;
-        
+
         date=tmp.date;
-        
+
         physicist=tmp.physicist;
-        
-        
+
+
         set(handles.default_cf,'string',num2str(cal_factor));
-        
+
         set(handles.cf_date,'string',date);
-        
+
         set(handles.cf_physicist,'string',physicist);
-        
-        % get CF list to cell 
-        
+
+        % get CF list to cell
+
         cf_list={};
         for k=1:length(tmp)
-            
-           cf_list{k}=tmp(k).date ;
-            
-        end 
-        
+
+            cf_list{k}=tmp(k).date ;
+
+        end
+
         set(handles.cf_list,'String',cf_list);
-        
-            
- end 
- 
- setappdata(0,'which_machine',handles.which_machine);
- disp(handles.which_machine)
+
+
+end
+
+setappdata(0,'which_machine',handles.which_machine);
+disp(handles.which_machine)
 
 
 % --- Executes on button press in epid_dose.
@@ -2097,70 +2289,70 @@ function pushbutton5_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 %  AUTOIMRT13_Callback3_CF(hObject,handles)
- 
- % handles has to be returned by fucntion, otherwise, it can not be seen by
- % next function. 
- 
- 
 
- registrationType=handles.registrationType;
- 
-  
- if strcmp(registrationType,'Reg')
- 
-    handles=AUTOIMRT13_Callback3_CF_PDF(hObject,handles); 
-    
-   
+% handles has to be returned by fucntion, otherwise, it can not be seen by
+% next function.
+
+
+
+registrationType=handles.registrationType;
+
+
+if strcmp(registrationType,'Reg')
+
+    handles=AUTOIMRT13_Callback3_CF_PDF(hObject,handles);
+
+
     disp('Reg');
- 
-  
- end 
- 
- 
- if strcmp(registrationType,'noReg')
-     
-    handles=AUTOIMRT13_Callback3_CF_PDF_noReg(hObject,handles);  
-    
+
+
+end
+
+
+if strcmp(registrationType,'noReg')
+
+    handles=AUTOIMRT13_Callback3_CF_PDF_noReg(hObject,handles);
+
     disp('noReg');
-    
-       
- end 
-     
-  % get comments from comment windows
-  
-  handles.comments=getappdata(0,'report_comments');
-  
-  guidata(hObject,handles);
- 
-  generateAutoEPIDPDFReport(handles);
-  
-  % reset the comments to ''
-  
-  setappdata(0,'report_comments',' ');
-  
-  guidata(hObject,handles);
- 
- % copy to escan 
- 
- if isfield(handles,'pdf_report_file_name')
-     
- copyfile(handles.pdf_report_file_name,handles.escan_dir);
- 
- end 
- 
- speakFinished();
- 
- % open the pdf report file for inspection if it exists
- 
- pdf_report_file_name=handles.pdf_report_file_name;
- 
- if exist(pdf_report_file_name,'file')
-     
-     open(pdf_report_file_name);
-     
- end 
- 
- 
+
+
+end
+
+% get comments from comment windows
+
+handles.comments=getappdata(0,'report_comments');
+
+guidata(hObject,handles);
+
+generateAutoEPIDPDFReport(handles);
+
+% reset the comments to ''
+
+setappdata(0,'report_comments',' ');
+
+guidata(hObject,handles);
+
+% copy to escan
+
+if isfield(handles,'pdf_report_file_name')
+
+    copyfile(handles.pdf_report_file_name,handles.escan_dir);
+
+end
+
+speakFinished();
+
+% open the pdf report file for inspection if it exists
+
+pdf_report_file_name=handles.pdf_report_file_name;
+
+if exist(pdf_report_file_name,'file')
+
+    open(pdf_report_file_name);
+
+end
+
+
 
 
 
@@ -2334,7 +2526,7 @@ tmp3_dir=uigetdir('.','Please select a output folder');
 
 set(handles.all_output_dir,'string',tmp3_dir);
 
-% for this figure 
+% for this figure
 handles.output_dir=tmp3_dir;
 
 guidata(hObject, handles);
@@ -2372,352 +2564,352 @@ function pushbutton9_Callback(hObject, eventdata, handles)
 tmp_dir2=uigetdir('V:\','Please select a root directory where  all patient TPS and EPID files sit.');
 
 if isdir(tmp_dir2)
-    
+
     set(handles.all_input_dir,'string',tmp_dir2);
-    
+
     % get patient root dir from dir box.
     tmp_dir=get(handles.all_input_dir,'string');
 
     pat_list1=listPatientByDate(tmp_dir);
 
-  
-   if length(pat_list1)<1
-       
-       pat_list1{1}='No patient found. Please select another folder.';
-       
-       set(handles.listbox1,'String',pat_list1);
-       
-   else
-       
-       
-     set(handles.listbox1,'String',pat_list1);
-   
-   end 
 
-pat_list = cellstr(get(hObject,'String'));
+    if length(pat_list1)<1
 
-if ~isempty(pat_list)
+        pat_list1{1}='No patient found. Please select another folder.';
 
-pat_name=pat_list{get(hObject','Value')};
+        set(handles.listbox1,'String',pat_list1);
 
-% return patient subdirectory
-
-% handles.patient_name=[handles.all_input_dir '\' pat_name];
-
-handles.patient_name=fullfile(tmp_dir,pat_name);
- 
-all_file_list2=getFileList(handles.patient_name);
-    
-if isempty(all_file_list2)
-
-   set(handles.patient_folder,'string','No TPS or EPID files exist. Please check.');
-else
-    
-    
-  set(handles.patient_folder,'string',handles.patient_name);
-  
-  % find the machine and selected which machine 
-  
-  machine_name=findMachineFromDir(handles.patient_name);
-  
-  handles.which_machine=machine_name;
-  
-  if machine_name==0
-      
-      set(handles.machine_name,'string','');
-      
-      % set calibration factor to none
-       set(handles.default_cf,'string','');
-        
-       set(handles.cf_date,'string','');
-        
-       set(handles.cf_physicist,'string','');
-       
-       set(handles.cf_list,'String',{});
-      
-      
-  else
-            
-       handles.which_machine=machine_name;
-       
-       setappdata(0,'which_machine',machine_name);
-       
-       set(handles.machine_name,'string',machine_name);
-       guidata(hObject,handles);
-       
-       % set the calibration factors if epid file exist.
-       
-       switch machine_name % Get Tag of selected object.
-    
-       case 'M1'
-        
-        handles.which_machine='M1';
-        guidata(hObject,handles);
-       
-        % udpate the CF
-        
-        
-        tmp2=handles.M1_CAL;
-        
-        tmp=tmp2(end);
-        
-            
-        cal_factor=tmp.cal_factor;
-        
-        date=tmp.date;
-        
-        physicist=tmp.physicist;
-        
-        
-        set(handles.default_cf,'string',num2str(cal_factor));
-        
-        set(handles.cf_date,'string',date);
-        
-        set(handles.cf_physicist,'string',physicist);
-        
-        % get CF list to cell 
-        
-        cf_list={};
-        for k=1:length(tmp)
-            
-           cf_list{k}=tmp(k).date ;
-            
-        end 
-        
-        set(handles.cf_list,'String',cf_list);
-        
-    case 'M2'
-        % Code for when Xio is selected.
-        handles.which_machine='M2';
-        guidata(hObject,handles);
-        
-        
-        % update CF list
-        
-        
-        tmp2=handles.M2_CAL;
-                 
-        tmp=tmp2(end);
-            
-        cal_factor=tmp.cal_factor;
-        
-        date=tmp.date;
-        
-        physicist=tmp.physicist;
-        
-        
-        set(handles.default_cf,'string',num2str(cal_factor));
-        
-        set(handles.cf_date,'string',date);
-        
-        set(handles.cf_physicist,'string',physicist);
-        
-        % get CF list to cell 
-        
-        cf_list={};
-        for k=1:length(tmp)
-            
-           cf_list{k}=tmp(k).date ;
-            
-        end 
-        
-        set(handles.cf_list,'String',cf_list);
-        
-        
-        
-        
-    case 'M3'
-        % Code for when Xio is selected.
-        handles.which_machine='M3';
-        guidata(hObject,handles);
-        
-         % update CF list
-        tmp2=handles.M3_CAL;
-        
-        tmp=tmp2(end);
-        
-            
-        cal_factor=tmp.cal_factor;
-        
-        date=tmp.date;
-        
-        physicist=tmp.physicist;
-        
-        
-        set(handles.default_cf,'string',num2str(cal_factor));
-        
-        set(handles.cf_date,'string',date);
-        
-        set(handles.cf_physicist,'string',physicist);
-        
-        % get CF list to cell 
-        
-        cf_list={};
-        for k=1:length(tmp)
-            
-           cf_list{k}=tmp(k).date ;
-            
-        end 
-        
-        set(handles.cf_list,'String',cf_list);
-        
-           
-        
-    case 'M4'
-        % Code for when Xio is selected.
-        handles.which_machine='M4';
-        guidata(hObject,handles);
-        
-         % update CF list
-        tmp2=handles.M4_CAL;
-        
-        tmp=tmp2(end);    
-        cal_factor=tmp.cal_factor;
-        
-        date=tmp.date;
-        
-        physicist=tmp.physicist;
-        
-        
-        set(handles.default_cf,'string',num2str(cal_factor));
-        
-        set(handles.cf_date,'string',date);
-        
-        set(handles.cf_physicist,'string',physicist);
-        
-        % get CF list to cell 
-        
-        cf_list={};
-        for k=1:length(tmp)
-            
-           cf_list{k}=tmp(k).date ;
-            
-        end 
-        
-        set(handles.cf_list,'String',cf_list);
-        
-        
-               
-    case 'M5'
-        % Code for when Xio is selected.
-        handles.which_machine='M5';
-        guidata(hObject,handles);
-        
-         % update CF list
-        tmp2=handles.M5_CAL;
-        
-        tmp=tmp2(end);
-            
-        cal_factor=tmp.cal_factor;
-        
-        date=tmp.date;
-        
-        physicist=tmp.physicist;
-        
-        
-        set(handles.default_cf,'string',num2str(cal_factor));
-        
-        set(handles.cf_date,'string',date);
-        
-        set(handles.cf_physicist,'string',physicist);
-        
-        % get CF list to cell 
-        
-        cf_list={};
-        for k=1:length(tmp)
-            
-           cf_list{k}=tmp(k).date ;
-            
-        end 
-        
-        set(handles.cf_list,'String',cf_list);
-        
-             
-        
-    case 'M6'
-        % Code for when Xio is selected.
-        handles.which_machine='M6';
-        guidata(hObject,handles);
-        
- end
-            
-       
-  end 
-  
-end 
-
-
-tps_folder=fullfile(handles.patient_name,'TPS');
-
-if exist(tps_folder,'dir')
-    
-    set(handles.tps_folder,'string',tps_folder);
-    
-    all_file_list=getFileList(tps_folder);
-    
-    if isempty(all_file_list)
-        
-      set(handles.tps_folder,'string','No TPS files exist');
-        
-    end 
-    
-        
-else
-     set(handles.tps_folder,'string','TPS subfolder does not exist.Please check.');
-        
-end     
-
-handles.patient_name
-epid_folder=fullfile(handles.patient_name,'EPID')
-
-if exist(epid_folder,'dir')
-    
-    set(handles.epid_folder,'string',epid_folder);
-    
-    all_file_list=getFileList(epid_folder);
-    
-    
-    if isempty(all_file_list)
-        
-      set(handles.epid_folder,'string','No EPID files exist');
-      
     else
-        
-     common_cf2=get(handles.default_cf,'string');
 
-     common_cf=str2double(common_cf2);
-     
-     setappdata(0,'default_cf', common_cf);  
-        
-              
-    end 
-    
-       
+
+        set(handles.listbox1,'String',pat_list1);
+
+    end
+
+    pat_list = cellstr(get(hObject,'String'));
+
+    if ~isempty(pat_list)
+
+        pat_name=pat_list{get(hObject','Value')};
+
+        % return patient subdirectory
+
+        % handles.patient_name=[handles.all_input_dir '\' pat_name];
+
+        handles.patient_name=fullfile(tmp_dir,pat_name);
+
+        all_file_list2=getFileList(handles.patient_name);
+
+        if isempty(all_file_list2)
+
+            set(handles.patient_folder,'string','No TPS or EPID files exist. Please check.');
+        else
+
+
+            set(handles.patient_folder,'string',handles.patient_name);
+
+            % find the machine and selected which machine
+
+            machine_name=findMachineFromDir(handles.patient_name);
+
+            handles.which_machine=machine_name;
+
+            if machine_name==0
+
+                set(handles.machine_name,'string','');
+
+                % set calibration factor to none
+                set(handles.default_cf,'string','');
+
+                set(handles.cf_date,'string','');
+
+                set(handles.cf_physicist,'string','');
+
+                set(handles.cf_list,'String',{});
+
+
+            else
+
+                handles.which_machine=machine_name;
+
+                setappdata(0,'which_machine',machine_name);
+
+                set(handles.machine_name,'string',machine_name);
+                guidata(hObject,handles);
+
+                % set the calibration factors if epid file exist.
+
+                switch machine_name % Get Tag of selected object.
+
+                    case 'M1'
+
+                        handles.which_machine='M1';
+                        guidata(hObject,handles);
+
+                        % udpate the CF
+
+
+                        tmp2=handles.M1_CAL;
+
+                        tmp=tmp2(end);
+
+
+                        cal_factor=tmp.cal_factor;
+
+                        date=tmp.date;
+
+                        physicist=tmp.physicist;
+
+
+                        set(handles.default_cf,'string',num2str(cal_factor));
+
+                        set(handles.cf_date,'string',date);
+
+                        set(handles.cf_physicist,'string',physicist);
+
+                        % get CF list to cell
+
+                        cf_list={};
+                        for k=1:length(tmp)
+
+                            cf_list{k}=tmp(k).date ;
+
+                        end
+
+                        set(handles.cf_list,'String',cf_list);
+
+                    case 'M2'
+                        % Code for when Xio is selected.
+                        handles.which_machine='M2';
+                        guidata(hObject,handles);
+
+
+                        % update CF list
+
+
+                        tmp2=handles.M2_CAL;
+
+                        tmp=tmp2(end);
+
+                        cal_factor=tmp.cal_factor;
+
+                        date=tmp.date;
+
+                        physicist=tmp.physicist;
+
+
+                        set(handles.default_cf,'string',num2str(cal_factor));
+
+                        set(handles.cf_date,'string',date);
+
+                        set(handles.cf_physicist,'string',physicist);
+
+                        % get CF list to cell
+
+                        cf_list={};
+                        for k=1:length(tmp)
+
+                            cf_list{k}=tmp(k).date ;
+
+                        end
+
+                        set(handles.cf_list,'String',cf_list);
+
+
+
+
+                    case 'M3'
+                        % Code for when Xio is selected.
+                        handles.which_machine='M3';
+                        guidata(hObject,handles);
+
+                        % update CF list
+                        tmp2=handles.M3_CAL;
+
+                        tmp=tmp2(end);
+
+
+                        cal_factor=tmp.cal_factor;
+
+                        date=tmp.date;
+
+                        physicist=tmp.physicist;
+
+
+                        set(handles.default_cf,'string',num2str(cal_factor));
+
+                        set(handles.cf_date,'string',date);
+
+                        set(handles.cf_physicist,'string',physicist);
+
+                        % get CF list to cell
+
+                        cf_list={};
+                        for k=1:length(tmp)
+
+                            cf_list{k}=tmp(k).date ;
+
+                        end
+
+                        set(handles.cf_list,'String',cf_list);
+
+
+
+                    case 'M4'
+                        % Code for when Xio is selected.
+                        handles.which_machine='M4';
+                        guidata(hObject,handles);
+
+                        % update CF list
+                        tmp2=handles.M4_CAL;
+
+                        tmp=tmp2(end);
+                        cal_factor=tmp.cal_factor;
+
+                        date=tmp.date;
+
+                        physicist=tmp.physicist;
+
+
+                        set(handles.default_cf,'string',num2str(cal_factor));
+
+                        set(handles.cf_date,'string',date);
+
+                        set(handles.cf_physicist,'string',physicist);
+
+                        % get CF list to cell
+
+                        cf_list={};
+                        for k=1:length(tmp)
+
+                            cf_list{k}=tmp(k).date ;
+
+                        end
+
+                        set(handles.cf_list,'String',cf_list);
+
+
+
+                    case 'M5'
+                        % Code for when Xio is selected.
+                        handles.which_machine='M5';
+                        guidata(hObject,handles);
+
+                        % update CF list
+                        tmp2=handles.M5_CAL;
+
+                        tmp=tmp2(end);
+
+                        cal_factor=tmp.cal_factor;
+
+                        date=tmp.date;
+
+                        physicist=tmp.physicist;
+
+
+                        set(handles.default_cf,'string',num2str(cal_factor));
+
+                        set(handles.cf_date,'string',date);
+
+                        set(handles.cf_physicist,'string',physicist);
+
+                        % get CF list to cell
+
+                        cf_list={};
+                        for k=1:length(tmp)
+
+                            cf_list{k}=tmp(k).date ;
+
+                        end
+
+                        set(handles.cf_list,'String',cf_list);
+
+
+
+                    case 'M6'
+                        % Code for when Xio is selected.
+                        handles.which_machine='M6';
+                        guidata(hObject,handles);
+
+                end
+
+
+            end
+
+        end
+
+
+        tps_folder=fullfile(handles.patient_name,'TPS');
+
+        if exist(tps_folder,'dir')
+
+            set(handles.tps_folder,'string',tps_folder);
+
+            all_file_list=getFileList(tps_folder);
+
+            if isempty(all_file_list)
+
+                set(handles.tps_folder,'string','No TPS files exist');
+
+            end
+
+
+        else
+            set(handles.tps_folder,'string','TPS subfolder does not exist.Please check.');
+
+        end
+
+        handles.patient_name
+        epid_folder=fullfile(handles.patient_name,'EPID')
+
+        if exist(epid_folder,'dir')
+
+            set(handles.epid_folder,'string',epid_folder);
+
+            all_file_list=getFileList(epid_folder);
+
+
+            if isempty(all_file_list)
+
+                set(handles.epid_folder,'string','No EPID files exist');
+
+            else
+
+                common_cf2=get(handles.default_cf,'string');
+
+                common_cf=str2double(common_cf2);
+
+                setappdata(0,'default_cf', common_cf);
+
+
+            end
+
+
+        else
+            set(handles.epid_folder,'string','EPID subfolder does not exist.Please check.');
+
+
+
+        end
+
+
+
+        guidata(hObject,handles);
+
+        setappdata(0,'patient_dir',handles.patient_name)
+
+    end
+
+
+
+
 else
-     set(handles.epid_folder,'string','EPID subfolder does not exist.Please check.');
-     
-    
-        
-end     
 
 
+    set(handles.all_input_dir,'string','Please selected a directory');
 
-guidata(hObject,handles);
 
-setappdata(0,'patient_dir',handles.patient_name)
-
-end 
-    
-    
- 
-    
-else
-    
-    
-   set(handles.all_input_dir,'string','Please selected a directory'); 
-    
-       
-end 
+end
 
 
 % --- Executes during object creation, after setting all properties.
@@ -2734,12 +2926,12 @@ function patient_list_dir_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 pat_dir=uigetdir('.','Choose the default directory for patient list');
- if pat_dir==0
-    
+if pat_dir==0
+
     handles.patient_list_dir='C:\';
     guidata(hObject,handles);
-    
- else
+
+else
     handles.patient_list_dir=pat_dir;
     guidata(hObject, handles);
     patient_list_dir=handles.patient_list_dir;
@@ -2747,7 +2939,7 @@ pat_dir=uigetdir('.','Choose the default directory for patient list');
     disp(handles.patient_list_dir);
     guidata(hObject,handles);
 
- end 
+end
 
 % list patient name
 pat_list=listPatient(handles.patient_list_dir);
@@ -2760,12 +2952,12 @@ function reset_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 pat_dir=uigetdir('.','Choose the default directory for patient list');
- if pat_dir==0
-    
+if pat_dir==0
+
     handles.patient_list_dir='C:\';
     guidata(hObject,handles);
-    
- else
+
+else
     handles.patient_list_dir=pat_dir;
     guidata(hObject, handles);
     patient_list_dir=handles.patient_list_dir;
@@ -2773,7 +2965,7 @@ pat_dir=uigetdir('.','Choose the default directory for patient list');
     disp(handles.patient_list_dir);
     guidata(hObject,handles);
 
- end 
+end
 
 % list patient name
 pat_list=listPatient(handles.patient_list_dir);
@@ -2788,12 +2980,12 @@ function output_dir_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 output_dir=uigetdir('.','Choose the default directory for output');
- if output_dir==0
-    
+if output_dir==0
+
     handles.patient_list_dir='C:\';
     guidata(hObject,handles);
-    
- else
+
+else
     handles.output_dir=output_dir;
     guidata(hObject, handles);
     output_dir=handles.output_dir;
@@ -2801,7 +2993,7 @@ output_dir=uigetdir('.','Choose the default directory for output');
     disp(handles.output_dir);
     guidata(hObject,handles);
 
- end 
+end
 
 
 % --- Executes on button press in pushbutton11.
@@ -2833,39 +3025,39 @@ function Pinnacle_Callback(hObject, eventdata, handles)
 
 % --- Executes when selected object is changed in reg_pannel.
 function reg_pannel_SelectionChangedFcn(hObject, eventdata, handles)
-% hObject    handle to the selected object in reg_pannel 
+% hObject    handle to the selected object in reg_pannel
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
 % added handles to reg_pannel buttons
 
-handles.registrationType=''; 
+handles.registrationType='';
 
 
 switch get(eventdata.NewValue,'Tag') % Get Tag of selected object.
-    
+
     case 'Reg'
-        
+
         handles.registrationType='Reg';
         guidata(hObject,handles);
-        
+
         setappdata(0,'registrationType','Reg');
-        
-       
+
+
     case 'noReg'
-       
-        
+
+
         handles.registrationType='noReg';
         guidata(hObject,handles);
-        
+
         setappdata(0,'registrationType','noReg');
-       
-        
-end 
+
+
+end
 
 % handles.registrationType
- 
- 
+
+
 
 
 % --- Executes on button press in pushbutton12.
@@ -2885,7 +3077,7 @@ tmp_dir=get(handles.all_input_dir,'string');
 
 pat_list=listPatientByDate(tmp_dir);
 
-  
+
 set(handles.listbox1,'String',pat_list);
 
 guidata(hObject,handles);
@@ -2927,7 +3119,7 @@ tmp_dir=get(handles.all_input_dir,'string');
 
 pat_list=listPatientByDate( tmp_dir);
 
-  
+
 set(handles.listbox1,'String',pat_list);
 
 guidata(hObject,handles);
@@ -2949,17 +3141,17 @@ function user_guide_Callback(hObject, eventdata, handles)
 
 
 user_guide='N:\PROJECTS\IMRT implementation\EPID Dosimetry Commissioning\autoEPID documents\AutoEPID user guide.pdf';
- if exist(user_guide,'file')
-     
-     open(user_guide);
-     
- else
-     
-     message='can not find user guide which is suppose to be sitting at N:\PROJECTS\IMRT implementation\EPID Dosimetry Commissioning\autoEPID documents';
-     eventLogger(message,'INFO','AutoEPID');
-     
- end 
- 
+if exist(user_guide,'file')
+
+    open(user_guide);
+
+else
+
+    message='can not find user guide which is suppose to be sitting at N:\PROJECTS\IMRT implementation\EPID Dosimetry Commissioning\autoEPID documents';
+    eventLogger(message,'INFO','AutoEPID');
+
+end
+
 
 
 % --- Executes on button press in add_comment.
@@ -2968,8 +3160,8 @@ function add_comment_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% get comments 
+% get comments
 
 %open the comments windows to add the comments.
 
-comments;
+
